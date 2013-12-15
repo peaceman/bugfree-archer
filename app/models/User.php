@@ -22,6 +22,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	const STATE_INACTIVE = 'inactive';
 	const STATE_TMP_BAN = 'tmp_ban';
 	const STATE_PERMA_BAN = 'perma_ban';
+	const EVENT_SIGNUP = 'user.signup';
 
 	/**
 	 * The database table used by the model.
@@ -65,6 +66,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	public function getReminderEmail()
 	{
 		return $this->email;
+	}
+
+	public function getEmailConfirmationHash()
+	{
+		return md5($this->id, $this->email);
 	}
 
 }

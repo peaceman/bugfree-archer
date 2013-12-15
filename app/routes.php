@@ -21,3 +21,4 @@ Route::post('auth/log-in', ['as' => 'auth.perform.log-in', 'uses' => 'AuthContro
 Route::any('auth/log-out', ['as' => 'auth.log-out', 'uses' => 'AuthController@performLogOut']);
 Route::get('users/sign-up', ['as' => 'user.sign-up', 'uses' => 'UserController@showSignUpForm']);
 Route::post('users/sign-up', ['as' => 'user.perform.sign-up', 'uses' => 'UserController@performSignUp']);
+Route::get('users/confirm-email/{confirmationHash}', ['as' => 'user.perform.email-confirmation', 'uses' => 'UserController@performEmailConfirmation']);

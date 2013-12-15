@@ -32,6 +32,7 @@ class UserController extends BaseController
 		$user->password = Hash::make(Input::get('signup[password]'));
 
 		if ($user->save()) {
+			Event::fire(User::EVENT_SIGNUP, $user);
 			return Redirect::route('frontpage');
 		} else {
 			return Redirect::route('user.sign-up')->withErrors(['general' => 'User creation failed. Try again later']);
