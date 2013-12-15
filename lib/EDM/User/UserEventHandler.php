@@ -18,9 +18,11 @@ class UserEventHandler
 	 */
 	public function onUserSignUp($user)
 	{
+		$emailConfirmation = $user->createEmailConfirmation();
+
 		Mail::queue(
 			'emails.user.signup',
-			['user' => $user, 'confirmationHash' => $user->getEmailConfirmationHash()],
+			['user' => $user, 'confirmationHash' => $emailConfirmation->hash],
 			function ($message) use ($user) {
 				$message->to($user->email)->subject('Your registration at EDM Market');
 			}

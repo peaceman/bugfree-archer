@@ -23,7 +23,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	const STATE_TMP_BAN = 'tmp_ban';
 	const STATE_PERMA_BAN = 'perma_ban';
 	const EVENT_SIGNUP = 'user.signup';
-
 	/**
 	 * The database table used by the model.
 	 *
@@ -71,6 +70,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	public function getEmailConfirmationHash()
 	{
 		return md5($this->id, $this->email);
+	}
+
+	public function createEmailConfirmation()
+	{
+		$emailConfirmation = new UserEmailConfirmation();
+		$emailConfirmation->hash = Hash::make($this->id . \Illuminate\Support\Str::quickRandom());
+
+		$this->emailConfirmations()->save($emailConfirmation);
+
+		return $emailConfirmation;
 	}
 
 	public function emailConfirmations()
