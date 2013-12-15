@@ -107,6 +107,8 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
+		// third party
+		'Webpatser\Countries\CountriesServiceProvider',
 	),
 
 	/*
@@ -173,6 +175,8 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 
+		// third party
+		'Countries' => 'Webpatser\Countries\CountriesFacade',
 	),
 
 );
