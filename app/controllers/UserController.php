@@ -63,6 +63,7 @@ class UserController extends BaseController
 		$emailConfirmation->used = true;
 		$emailConfirmation->save();
 
+		Event::fire(User::EVENT_EMAIL_CONFIRMATION, $user);
 		Auth::login($user);
 		// todo flash message
 		return Redirect::route('frontpage');

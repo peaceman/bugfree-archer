@@ -23,6 +23,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	const STATE_TMP_BAN = 'tmp_ban';
 	const STATE_PERMA_BAN = 'perma_ban';
 	const EVENT_SIGNUP = 'user.signup';
+	const EVENT_EMAIL_CONFIRMATION = 'user.email-confirmation';
 	/**
 	 * The database table used by the model.
 	 *
