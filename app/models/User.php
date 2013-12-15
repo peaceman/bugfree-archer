@@ -1,9 +1,27 @@
 <?php
 
-use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Auth\UserInterface;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+/**
+ * Class User
+ *
+ * @property int $id
+ * @property string $email
+ * @property string $username
+ * @property string $password
+ * @property string $real_name
+ * @property string $state
+ * @property Carbon\Carbon $created_at
+ * @property Carbon\Carbon $updated_at
+ */
+class User extends Eloquent implements UserInterface, RemindableInterface
+{
+	const STATE_UNCONFIRMED_EMAIL = 'unconfirmed_email';
+	const STATE_ACTIVE = 'active';
+	const STATE_INACTIVE = 'inactive';
+	const STATE_TMP_BAN = 'tmp_ban';
+	const STATE_PERMA_BAN = 'perma_ban';
 
 	/**
 	 * The database table used by the model.
@@ -11,13 +29,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 * @var string
 	 */
 	protected $table = 'users';
-
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
 	protected $hidden = array('password');
+	protected $fillable = ['email', 'username', 'real_name'];
 
 	/**
 	 * Get the unique identifier for the user.
