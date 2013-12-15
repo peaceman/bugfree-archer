@@ -47,7 +47,11 @@ class UserController extends BaseController
 	public function performEmailConfirmation($confirmationHash)
 	{
 		/** @var UserEmailConfirmation $emailConfirmation */
-		$emailConfirmation = UserEmailConfirmation::where('hash', $confirmationHash);
+		$emailConfirmation = UserEmailConfirmation::where('hash', $confirmationHash)->orderBy(
+			'created_at',
+			'desc'
+		)->first();
+
 		if ($emailConfirmation === null) {
 			App::abort(404);
 		}
