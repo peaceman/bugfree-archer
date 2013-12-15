@@ -38,4 +38,33 @@ class UserController extends BaseController
 			return Redirect::route('user.sign-up')->withErrors(['general' => 'User creation failed. Try again later']);
 		}
 	}
+
+	/**
+	 * @param string $confirmationHash
+	 *
+	 * @todo calls with non existing hashes, should be logged for security measures
+	 */
+	public function performEmailConfirmation($confirmationHash)
+	{
+		/** @var UserEmailConfirmation $emailConfirmation */
+		$emailConfirmation = UserEmailConfirmation::where('hash', $confirmationHash);
+		if ($emailConfirmation === null) {
+			App::abort(404);
+		}
+
+		if ($emailConfirmation->used) {
+			return View::make('user.used-confirmation-hash');
+		}
+
+		$user = $emailConfirmation->user;
+		$user->state = User::STATE_ACTIVE;
+		$user->save();
+
+		$emailConfirmation->used = true;
+		$emailConfirmation->save();
+
+		Auth::login($user);
+		// todo flash message
+		return Redirect::route('frontpage');
+	}
 }
