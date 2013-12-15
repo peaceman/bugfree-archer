@@ -22,3 +22,5 @@ Route::any('auth/log-out', ['as' => 'auth.log-out', 'uses' => 'AuthController@pe
 Route::get('users/sign-up', ['as' => 'user.sign-up', 'uses' => 'UserController@showSignUpForm']);
 Route::post('users/sign-up', ['as' => 'user.perform.sign-up', 'uses' => 'UserController@performSignUp']);
 Route::get('users/confirm-email/{confirmationHash}', ['as' => 'user.perform.email-confirmation', 'uses' => 'UserController@performEmailConfirmation']);
+Route::get('me/settings', ['as' => 'user.settings', 'uses' => 'UserController@showSettingsForm']);
+Route::get('me/password', ['as' => 'user.password', 'uses' => 'UserController@showPasswordForm']);

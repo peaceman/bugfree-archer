@@ -14,6 +14,11 @@
 					<h2 class="panel-title">Already a member? Log in:</h2>
 				</div>
 				<div class="panel-body">
+					@if ($errors->has('login'))
+					<div class="alert alert-warning">
+						{{ $errors->first('login') }}
+					</div>
+					@endif
 					<div class="form-group {{ $errors->has('login.username') ? 'has-error' : '' }}">
 						{{ Form::label('login[username]', 'Username', ['class' => 'col-md-2 control-label']) }}
 

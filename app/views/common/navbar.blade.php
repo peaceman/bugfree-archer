@@ -26,7 +26,7 @@
 				<li>
 					<a href="/sell">{{ trans('navbar.start-selling') }}</a>
 				</li>
-				@if ($user)
+				@if (Auth::check())
 				<li class="dropdown">
 					<a class="dropdown-toggle" href="" data-toggle="dropdown">{{ $user->username }} <b
 							class="caret"></b></a>

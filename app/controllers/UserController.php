@@ -29,7 +29,7 @@ class UserController extends BaseController
 
 		$user = new User(Input::get('signup'));
 		$user->state = User::STATE_UNCONFIRMED_EMAIL;
-		$user->password = Hash::make(Input::get('signup[password]'));
+		$user->password = Hash::make(Input::get('signup.password'));
 
 		if ($user->save()) {
 			Event::fire(User::EVENT_SIGNUP, $user);
