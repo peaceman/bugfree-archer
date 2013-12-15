@@ -73,4 +73,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return md5($this->id, $this->email);
 	}
 
+	public function emailConfirmations()
+	{
+		return $this->hasMany('UserEmailConfirmation');
+	}
+
 }
