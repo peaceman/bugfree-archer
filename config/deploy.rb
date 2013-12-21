@@ -1,7 +1,7 @@
 set :application, 'edm-market'
 set :repo_url, 'git@github.com:peaceman/bugfree-archer.git'
 
-SSHKit.config.command_map[:artisan] = '/usr/bin/env php artisan'
+SSHKit.config.command_map[:artisan] = '/usr/bin/env php artisan --no-interaction'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
@@ -32,8 +32,10 @@ namespace :deploy do
   desc 'executes database migrations through laravel artisan'
   task :migrate_database do
     on roles(:app), in: :parallel do
-      within release_path do
-        execute :artisan, :migrate
+      with({'APPLICATION_ENV' => fetch(:stage)}) do
+        within release_path do
+          execute :artisan, :migrate
+        end
       end
     end
   end
