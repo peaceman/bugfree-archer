@@ -29,7 +29,7 @@ namespace :deploy do
     set_release_path env.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
   end
   
-  desc 'executes database migrations through laravel artisan'
+  desc 'executes database migrations through laravels artisan'
   task :migrate_database do
     on roles(:app), in: :parallel do
       with({'APPLICATION_ENV' => fetch(:stage)}) do
