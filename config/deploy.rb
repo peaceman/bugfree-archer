@@ -1,5 +1,5 @@
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'edm-market'
+set :repo_url, 'git@github.com:peaceman/bugfree-archer.git'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
@@ -34,7 +34,17 @@ namespace :deploy do
       # end
     end
   end
+  
+  desc 'Install PHP dependencies via composer'
+  task :composer do
+    on roles(:app), in: :parallel do
+      within release_path do
+        execute :php, 'composer.phar', :install
+      end
+    end
+  end
 
+  before :updated, 'deploy:composer'
   after :finishing, 'deploy:cleanup'
 
 end
