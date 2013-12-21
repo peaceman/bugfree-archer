@@ -31,14 +31,19 @@ namespace :deploy do
   
   desc 'executes database migrations through laravel artisan'
   task :migrate_database do
-    on roles(:db), in: :parallel do
+    on roles(:app), in: :parallel do
       within release_path do
         execute :artisan, :migrate
       end
     end
   end
+  
+  task :extract_database_credentials do
+    # noop
+  end
 
   before :starting, 'composer:install_executable'
+  before :updated, 'deploy:extract_database_credentials'
   after :updated, 'deploy:migrate_database'
   after :finishing, 'deploy:cleanup'
 

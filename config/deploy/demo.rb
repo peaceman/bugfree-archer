@@ -45,3 +45,17 @@ server 'octans.uberspace.de', user: 'edm', roles: %w{web app db}
 # setting per server overrides global ssh_options
 
 # fetch(:default_env).merge!(rails_env: :demo)
+namespace :deploy do
+  desc 'use database credentials from ~/.my.cnf'
+  task :extract_database_credentials do
+    on roles(:app), in: :parallel do
+      db_credentials_file_path = "#{release_path}/app/config/#{fetch(:stage)}/database.php"
+      execute <<-EOCOMMAND
+        tail -n 4 ~/.my.cnf > vars && source vars && rm vars && \
+        sed --expression="s/###USERNAME###/$user/g" \
+        --expression="s/###PASSWORD###/$password/g" \
+        --in-place #{db_credentials_file_path}
+      EOCOMMAND
+    end
+  end
+end
