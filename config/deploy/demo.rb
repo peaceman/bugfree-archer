@@ -3,6 +3,7 @@ set :stage, :demo
 set :tmp_dir, '/home/edm/tmp'
 set :branch, 'master'
 set :deploy_to, '/var/www/virtual/edm'
+SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
 
 # Simple Role Syntax
 # ==================

@@ -17,34 +17,11 @@ set :repo_url, 'git@github.com:peaceman/bugfree-archer.git'
 # set :keep_releases, 5
 
 namespace :deploy do
-
-  desc 'Restart application'
   task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
-    end
+    # noop
   end
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-  
-  desc 'Install PHP dependencies via composer'
-  task :composer do
-    on roles(:app), in: :parallel do
-      within release_path do
-        execute :php, 'composer.phar', :install
-      end
-    end
-  end
-
-  before :updated, 'deploy:composer'
+  before :starting, 'composer:install_executable'
   after :finishing, 'deploy:cleanup'
 
 end
