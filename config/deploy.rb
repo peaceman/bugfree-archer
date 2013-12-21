@@ -39,13 +39,8 @@ namespace :deploy do
       end
     end
   end
-  
-  task :extract_database_credentials do
-    # noop
-  end
 
   before :starting, 'composer:install_executable'
-  before :updated, 'deploy:extract_database_credentials'
   after :updated, 'deploy:migrate_database'
   after :finishing, 'deploy:cleanup'
 
