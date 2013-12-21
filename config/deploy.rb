@@ -22,6 +22,7 @@ namespace :deploy do
     # noop
   end
   
+  desc 'create a human friendly string to use as the release folder name'
   task :new_release_path do
     set_release_path env.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
   end
