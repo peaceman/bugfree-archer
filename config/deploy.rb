@@ -20,6 +20,10 @@ namespace :deploy do
   task :restart do
     # noop
   end
+  
+  task :new_release_path do
+    set_release_path env.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
+  end
 
   before :starting, 'composer:install_executable'
   after :finishing, 'deploy:cleanup'
