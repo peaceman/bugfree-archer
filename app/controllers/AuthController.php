@@ -20,7 +20,8 @@ class AuthController extends BaseController
 			// todo flash message
 			return Redirect::route('frontpage');
 		} else {
-			return Redirect::route('auth.log-in')->withErrors(['login' => 'Invalid credentials']);
+			return Redirect::route('auth.log-in')
+				->withErrors(['login' => 'flash.auth.invalid_credentials']);
 		}
 	}
 

@@ -4,12 +4,12 @@
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
+				<span class="sr-only">{{ trans('navbar.toggle_navigation') }}</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">EDM Market</a>
+			<a class="navbar-brand" href="/">{{ trans('navbar.brand') }}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -24,7 +24,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="/sell">{{ trans('navbar.start-selling') }}</a>
+					<a href="/sell">{{ trans('navbar.start_selling') }}</a>
 				</li>
 				@if (Auth::check())
 				<li class="dropdown">
@@ -34,16 +34,16 @@
 						<li>
 							<a href="{{ route('user.settings') }}">{{ trans('navbar.settings') }}</a>
 						</li>
-						<li><a href="{{ route('user.password') }}">{{ trans('navbar.change-password') }}</a></li>
+						<li><a href="{{ route('user.password') }}">{{ trans('navbar.password_settings') }}</a></li>
 						<li class="divider"></li>
 						<li>
-							<a href="{{ route('auth.log-out') }}">{{ trans('navbar.log-out') }}</a>
+							<a href="{{ route('auth.log-out') }}">{{ trans('navbar.log_out') }}</a>
 						</li>
 					</ul>
 				</li>
 				@else
-				<li><a href="{{ route('user.sign-up') }}">{{ trans('navbar.sign-up') }}</a></li>
-				<li><a href="{{ route('auth.log-in') }}">{{ trans('navbar.log-in') }}</a></li>
+				<li><a href="{{ route('user.sign-up') }}">{{ trans('navbar.sign_up') }}</a></li>
+				<li><a href="{{ route('auth.log-in') }}">{{ trans('navbar.log_in') }}</a></li>
 				@endif
 			</ul>
 		</div>

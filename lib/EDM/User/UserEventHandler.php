@@ -24,7 +24,8 @@ class UserEventHandler
 			'emails.user.signup',
 			['user' => $user, 'confirmationHash' => $emailConfirmation->hash],
 			function ($message) use ($user) {
-				$message->to($user->email)->subject('Your registration at EDM Market');
+				$message->to($user->email)
+				->subject(trans('mail.user.sign_up_confirmation.subject'));
 			}
 		);
 	}

@@ -35,7 +35,8 @@ class UserController extends BaseController
 			Event::fire(User::EVENT_SIGNUP, $user);
 			return Redirect::route('frontpage');
 		} else {
-			return Redirect::route('user.sign-up')->withErrors(['general' => 'User creation failed. Try again later']);
+			return Redirect::route('user.sign-up')
+				->withErrors(['general' => 'flash.user.creation_failed']);
 		}
 	}
 

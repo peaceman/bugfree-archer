@@ -76,7 +76,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	public function createEmailConfirmation()
 	{
 		$emailConfirmation = new UserEmailConfirmation();
-		$emailConfirmation->hash = Hash::make($this->id . \Illuminate\Support\Str::quickRandom());
+		$emailConfirmation->hash = sha1($this->id . \Illuminate\Support\Str::quickRandom());
 
 		$this->emailConfirmations()->save($emailConfirmation);
 
