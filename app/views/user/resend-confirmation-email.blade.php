@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('content')
 <div class="page-header">
-    <h1>{{ trans('user.resend_confirmation_email.page_header') }}</h1>
+    <h1>{{ trans('user.resend_confirmation_email.page_header') }} <small>{{ trans('user.resend_confirmation_email.page_header_small') }}</small></h1>
 </div>
 <form class="form-horizontal" method="POST" action="{{ route('user.perform.resend-confirmation-email') }}">
     <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">

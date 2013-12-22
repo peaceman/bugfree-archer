@@ -123,5 +123,5 @@
 		</form>
 	</div>
 </div>
-<a href="{{ route('user.resend-confirmation-email') }}" class="btn btn-notice">{{ trans('common.resend_confirmation_email') }}</a>
+<a href="{{ route('user.resend-confirmation-email') }}" class="btn btn-link">{{ trans('common.resend_confirmation_email') }}</a>
 @stop

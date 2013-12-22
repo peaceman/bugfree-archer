@@ -21,7 +21,7 @@ class AuthController extends BaseController
 			return Redirect::route('frontpage');
 		} else {
 			return Redirect::route('auth.log-in')
-				->withErrors(['login' => 'flash.auth.invalid_credentials']);
+				->withErrors(['login' => trans('flash.auth.invalid_credentials')]);
 		}
 	}
 
