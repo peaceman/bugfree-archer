@@ -109,6 +109,11 @@ return array(
 
 		// third party
 		'Webpatser\Countries\CountriesServiceProvider',
+		'Slushie\Middleware\MiddlewareServiceProvider',
+	),
+
+	'middleware' => array(
+		'EDM\User\UserTrackingMiddleware',
 	),
 
 	/*
