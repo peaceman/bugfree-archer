@@ -24,6 +24,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	const STATE_PERMA_BAN = 'perma_ban';
 	const EVENT_SIGNUP = 'user.signup';
 	const EVENT_EMAIL_CONFIRMATION = 'user.email-confirmation';
+	const EVENT_LOGIN = 'auth.login';
 
 	public static $validLoginStates = [self::STATE_ACTIVE, self::STATE_TMP_BAN, self::STATE_PERMA_BAN];
 	/**
@@ -118,5 +119,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	public function trackingSessions()
 	{
 		return $this->hasMany('UserTrackingSession');
+	}
+
+	public function createTrackingSession()
+	{
+		$userAgent = UserAgent::firstOrCreate(['value' => Request::server('HTTP_USER_AGENT')]);
+		$trackingSession = $this->trackingSessions()->create([
+			'ip_address' => Request::server('REMOTE_ADDR'),
+			'useragent_id' => $userAgent->id,
+		]);
 	}
 }

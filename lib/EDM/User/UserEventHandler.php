@@ -11,6 +11,12 @@ class UserEventHandler
 	public function subscribe($events)
 	{
 		$events->listen(\User::EVENT_SIGNUP, __CLASS__ . '@onUserSignUp');
+		$events->listen(\User::EVENT_LOGIN, __CLASS__ . '@onUserLogin');
+	}
+
+	public function onUserLogin($user)
+	{
+		$user->createTrackingSession();
 	}
 
 	/**
