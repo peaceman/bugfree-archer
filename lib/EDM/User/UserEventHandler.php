@@ -14,6 +14,9 @@ class UserEventHandler
 		$events->listen(\User::EVENT_LOGIN, __CLASS__ . '@onUserLogin');
 	}
 
+	/**
+	 * @param \User $user
+	 */
 	public function onUserLogin($user)
 	{
 		$user->createTrackingSession();
