@@ -24,6 +24,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	const STATE_PERMA_BAN = 'perma_ban';
 	const EVENT_SIGNUP = 'user.signup';
 	const EVENT_EMAIL_CONFIRMATION = 'user.email-confirmation';
+
+	public static $validLoginStates = [self::STATE_ACTIVE, self::STATE_TMP_BAN, self::STATE_PERMA_BAN];
 	/**
 	 * The database table used by the model.
 	 *
@@ -37,6 +39,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 */
 	protected $hidden = array('password');
 	protected $fillable = ['email', 'username', 'real_name'];
+
+	public function isAllowedToLogin()
+	{
+		return in_array($this->state, static::$validLoginStates);
+	}
 
 	/**
 	 * Get the unique identifier for the user.

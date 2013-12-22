@@ -16,8 +16,7 @@ class AuthController extends BaseController
 			unset($credentials['remember']);
 		}
 
-		$validLoginStates = [User::STATE_ACTIVE, User::STATE_TMP_BAN, User::STATE_PERMA_BAN];
-		if (Auth::attempt($credentials, $remember) && in_array(Auth::user()->state, $validLoginStates)) {
+		if (Auth::attempt($credentials, $remember) && Auth::user()->isAllowedToLogin()) {
 			// todo flash message
 			return Redirect::route('frontpage');
 		} else {
