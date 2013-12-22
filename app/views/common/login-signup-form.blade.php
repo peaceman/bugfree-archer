@@ -116,11 +116,12 @@
 
 				<div class="panel-footer">
 					<button type="submit"
-							class="btn btn-default btn-block btn-success">Sign up
+							class="btn btn-default btn-block btn-success">{{ trans('common.sign_up') }}
 					</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
+<a href="{{ route('user.resend-confirmation-email') }}" class="btn btn-notice">{{ trans('common.resend_confirmation_email') }}</a>
 @stop

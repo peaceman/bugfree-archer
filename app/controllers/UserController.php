@@ -10,8 +10,8 @@ class UserController extends BaseController
 	{
 		$validationRules = [
 			'real_name' => ['required', 'max:255'],
-			'username' => ['required', 'alpha_dash', 'unique:users'],
-			'email' => ['required', 'email', 'unique:users'],
+			'username' => ['required', 'max:255', 'alpha_dash', 'unique:users'],
+			'email' => ['required', 'email', 'max:255', 'unique:users'],
 			'password' => ['required', 'confirmed'],
 		];
 
@@ -71,6 +71,41 @@ class UserController extends BaseController
 		Event::fire(User::EVENT_EMAIL_CONFIRMATION, $user);
 		Auth::login($user);
 		// todo flash message
+		return Redirect::route('frontpage');
+	}
+	
+	public function showResendConfirmationEmail()
+	{
+		return View::make('user.resend-confirmation-email');
+	}
+	
+	public function performResendConfirmationEmail()
+	{
+		$validationRules = [
+			'username' => ['required', 'max:255', 'alpha_dash'],
+			'email' => ['required', 'max:255', 'email'],
+		];
+		
+		$data = Input::only(array_keys($validationRules));
+		$validator = Validator::make($data, $validationRules);
+		
+		if ($validator->fails()) {
+			return Redirect::route('user.resend-confirmation-email')
+				->withInput()->withErrors($validator);
+		}
+		
+		$user = User::where('username', '=', $data['username'])
+			->where('email', '=', $data['email'])->first();
+			
+		if (!$user) {
+			// todo alert flash.user.not_found
+			return Redirect::route('user.resend-confirmation-email');
+		}
+		
+		$userEventHandler = App::make('EDM\User\UserEventHandler');
+		$userEventHandler->onUserSignUp($user);
+		
+		// todo flash.user.confirmation_mail_resent
 		return Redirect::route('frontpage');
 	}
 }

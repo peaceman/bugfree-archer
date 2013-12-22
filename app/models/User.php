@@ -67,6 +67,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	{
 		return $this->email;
 	}
+	
+	public function sendEmailConfirmation(UserEmailConfirmation $emailConfirmation)
+	{
+    	   if ($emailConfirmation->used) {
+        	   Log::notice('tried to send already used confirmation', ['context' => $emailConfirmation->toArray()]);
+        	   return false;
+    	   }
+    	   
+    	   $user = $this;
+    	   Mail::queue(
+    	       'emails.user.signup',
+    	       ['user' => $this, 'confirmationHash' => $emailConfirmation->hash],
+    	       function ($msg) use ($user) {
+        	       $msg->to($user->email)
+        	           ->subject(trans('mail.user.sign_up_confirmation.subject'));
+    	       }
+    	   );
+    	   
+    	   return true;
+	}
 
 	public function getEmailConfirmationHash()
 	{
@@ -87,5 +107,4 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	{
 		return $this->hasMany('UserEmailConfirmation');
 	}
-
 }

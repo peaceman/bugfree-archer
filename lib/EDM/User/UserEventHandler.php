@@ -18,15 +18,7 @@ class UserEventHandler
 	 */
 	public function onUserSignUp($user)
 	{
-		$emailConfirmation = $user->createEmailConfirmation();
-
-		Mail::queue(
-			'emails.user.signup',
-			['user' => $user, 'confirmationHash' => $emailConfirmation->hash],
-			function ($message) use ($user) {
-				$message->to($user->email)
-				->subject(trans('mail.user.sign_up_confirmation.subject'));
-			}
-		);
+    	   $emailConfirmation = $user->createEmailConfirmation();
+    	   $user->sendEmailConfirmation($emailConfirmation);
 	}
 }
