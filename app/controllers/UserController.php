@@ -73,7 +73,7 @@ class UserController extends BaseController
 		// todo flash message
 		return Redirect::route('frontpage');
 	}
-	
+
 	public function showResendConfirmationEmail()
 	{
 		return View::make('user.resend-confirmation-email');
