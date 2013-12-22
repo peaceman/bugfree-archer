@@ -1,5 +1,6 @@
 <?php
 return [
+	'dashboard' => 'Dashboard',
     'toggle_navigation' => 'Toggle navigation',
     'brand' => 'EDM Market',
     'start_selling' => 'Start selling',

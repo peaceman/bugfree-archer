@@ -21,6 +21,17 @@ Route::get('php.nfo', function () {
 	exit;
 });
 
+Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@showHome']);
+Route::group(['prefix' => 'dashboard'], function () {
+	Route::resource('private-messages', 'Dashboard\PrivateMessageController');
+
+	Route::resource('orders', 'Dashboard\OrderController');
+	Route::resource('order-conflicts', 'Dashboard\OrderConflictController');
+
+	Route::resource('items', 'Dashboard\ItemController');
+	Route::resource('customer-questions', 'Dashboard\CustomerQuestionController');
+});
+
 Route::get('auth/log-in', ['as' => 'auth.log-in', 'uses' => 'AuthController@showLogInForm']);
 Route::post('auth/log-in', ['as' => 'auth.perform.log-in', 'uses' => 'AuthController@performLogin']);
 Route::any('auth/log-out', ['as' => 'auth.log-out', 'uses' => 'AuthController@performLogOut']);
@@ -30,12 +41,4 @@ Route::get('users/confirm-email/{confirmationHash}', ['as' => 'user.perform.emai
 Route::get('users/resend-confirmation-email', ['as' => 'user.resend-confirmation-email', 'uses' => 'UserController@showResendConfirmationEmail']);
 Route::post('users/resend-confirmation-email', ['as' => 'user.perform.resend-confirmation-email', 'uses' => 'UserController@performResendConfirmationEmail']);
 
-Route::get('me/dashboard', ['as' => 'user.dashboard', 'uses' => 'DashboardController@showHome']);
-Route::get('me/dashboard/private-messages', ['as' => 'dashboard.private-messages', 'uses' => 'DashBoardController@showPrivateMessages']);
-Route::get('me/dashboard/orders', ['as' => 'dashboard.order.history', 'uses' => 'DashBoardController@showOrders']);
-Route::get('me/dashboard/order-conflicts', ['as' => 'dashboard.order.conflicts', 'uses' => 'DashBoardController@showOrderConflicts']);
-
-Route::get('me/dashboard/items', ['as' => 'dashboard.items', 'uses' => 'DashBoardController@showItems']);
-Route::get('me/dashboard/upload-item', ['as' => 'dashboard.item-upload', 'uses' => 'DashBoardController@showItemUpload']);
-Route::get('me/dashboard/customer-questions', ['as' => 'dashboard.customer-questions', 'uses' => 'DashBoardController@showCustomerQuestions']);
 Route::get('me/password', ['as' => 'user.password', 'uses' => 'UserController@showPasswordForm']);
