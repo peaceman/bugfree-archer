@@ -10,4 +10,5 @@ return [
 	'resend_confirmation_email' => 'Missing confirmation mail?',
 	'submit' => 'Submit',
 	'general' => 'General',
+	'save_failed' => 'There was a problem while storing your data. Please try again.',
 ];

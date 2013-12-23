@@ -11,6 +11,9 @@ return [
 			'payment' => 'Payment',
 			'account' => 'Account',
 			'address' => 'Address'
-		]
+		],
+		'leave_password_empty' => "leave empty if you don't want to change your password",
+		'change_password' => 'Change password',
+		'password_change_successful' => 'We updated your password',
 	],
 ];

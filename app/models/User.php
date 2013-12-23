@@ -140,4 +140,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 		return $trackingSession;
 	}
+
+	public function checkPassword($clearTextPassword)
+	{
+		return Hash::check($clearTextPassword, $this->password);
+	}
 }

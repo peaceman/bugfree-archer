@@ -51,18 +51,27 @@
 					@endif
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-2">
+					<button class="btn btn-default ">{{ trans('common.submit') }}</button>
+				</div>
+			</div>
 		</fieldset>
+		{{ Form::close() }}
 
+		{{ Form::open(['route' => ['user.profile.perform.password', $user->username], 'class' => 'form-horizontal']) }}
 		<fieldset>
 			<legend>{{ trans('common.password') }}</legend>
-			<div class="form-group">
+			<div class="form-group {{ $errors->has('current_password') ? 'has-error' : '' }}">
 				{{ Form::label('current_password', trans('common.current_password'), ['class' => 'control-label
 				col-md-2']) }}
 				<div class="col-md-5">
 					{{ Form::password('current_password', ['class' => 'form-control', 'autocomplete' => 'off']) }}
-						<span class="help-block">
-							leave empty if you don't want to change your password
-						</span>
+					@if ($errors->has('current_password'))
+					{{ $errors->first('current_password') }}
+					@else
+					<span class="help-block">{{ trans('user.profile.leave_password_empty') }}</span>
+					@endif
 				</div>
 			</div>
 
@@ -83,15 +92,17 @@
 					{{ Form::password('password_confirmation', ['class' => 'form-control']) }}
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-2">
+					<button class="btn btn-default ">{{ trans('user.profile.change_password') }}</button>
+				</div>
+			</div>
 		</fieldset>
 
-
-		<div class="form-group">
-			<div class="col-md-offset-2 col-md-2">
-				<button class="btn btn-default ">{{ trans('common.submit') }}</button>
-			</div>
-		</div>
 		{{ Form::close() }}
+
+
+
 	</div>
 	<div class="tab-pane" id="address">
 		address
