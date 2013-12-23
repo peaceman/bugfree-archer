@@ -44,32 +44,25 @@ class ProfileController extends UserBaseController
 
 	public function postAccount()
 	{
-		$emailValidation = User::$validationRules['email'];
-		$uniqueEmailValidatorKey = array_search('unique:users,email', $emailValidation);
-		$emailValidation[$uniqueEmailValidatorKey] .= ',' . $this->user->id;
-
 		$validationRules = [
-			'email' => $emailValidation,
+			'email' => $this->user->getEmailValidationRule(),
 			'real_name' => User::$validationRules['real_name'],
-			'current_password' => ['required_with:password'],
-			'password' => ['confirmed'],
 		];
+		$inputData = Input::only(array_keys($validationRules));
+		$profileRedirect = Redirect::route('user.profile', ['username' => $this->user->username]);
 
-		$currentPassword = Input::get('current_password');
-		if (!empty($currentPassword)) {
-			$passwordCheckResult = Hash::check($currentPassword, $this->user->password);
-			if (!$passwordCheckResult) {
-				Notification::error(trans('user.profile.incorrect_password'));
-				return Redirect::route('user.profile', ['username' => $this->user->username]);
-			}
-		}
-
-		$validator = Validator::make(Input::all(), $validationRules);
+		$validator = Validator::make($inputData, $validationRules);
 		if ($validator->fails()) {
-			return Redirect::route('user.profile', ['username' => $this->user->username])->withErrors($validator);
-			echo '<pre>';
-			var_dump($validator->messages());
-			exit;
+			return $profileRedirect->withErrors($validator);
 		}
+
+		$this->user->fill($inputData);
+		if (!$this->user->save()) {
+			Notification::error(trans('common.save_failed'));
+			return $profileRedirect;
+		}
+
+		Notification::success(trans('common.data_update_successful'));
+		return $profileRedirect;
 	}
 }

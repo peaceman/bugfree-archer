@@ -48,6 +48,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		'password' => ['required', 'confirmed'],
 	];
 
+	public function getEmailValidationRule()
+	{
+		$emailRule = static::$validationRules['email'];
+		$emailRule[3] .= ',' . $this->id;
+		return $emailRule;
+	}
+
 	public function isAllowedToLogin()
 	{
 		return in_array($this->state, static::$validLoginStates);
