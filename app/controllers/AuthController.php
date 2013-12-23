@@ -17,7 +17,7 @@ class AuthController extends BaseController
 		}
 
 		if (Auth::attempt($credentials, $remember) && Auth::user()->isAllowedToLogin()) {
-			// todo flash message
+			Notification::success(trans('flash.auth.login_successful'));
 			return Redirect::route('frontpage');
 		} else {
 			Auth::logout();
@@ -29,7 +29,7 @@ class AuthController extends BaseController
 	public function performLogOut()
 	{
 		Auth::logout();
-		// todo flash message
+		Notification::info(trans('flash.auth.logout_successful'));
 		return Redirect::route('frontpage');
 	}
 }

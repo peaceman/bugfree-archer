@@ -33,6 +33,7 @@ class UserController extends BaseController
 
 		if ($user->save()) {
 			Event::fire(User::EVENT_SIGNUP, $user);
+			Notification::info(trans('flash.user.signup_complete'));
 			return Redirect::route('frontpage');
 		} else {
 			return Redirect::route('user.sign-up')
@@ -73,7 +74,7 @@ class UserController extends BaseController
 		Event::fire(User::EVENT_EMAIL_CONFIRMATION, $user);
 		Auth::login($user);
 
-		// todo flash message
+		Notification::success(trans('flash.user.email_confirmation_successful'));
 		return Redirect::route('frontpage');
 	}
 
@@ -101,14 +102,14 @@ class UserController extends BaseController
 			->where('email', '=', $data['email'])->first();
 
 		if (!$user) {
-			// todo alert flash.user.not_found
+			Notification::error(trans('flash.user.not_found'));
 			return Redirect::route('user.resend-confirmation-email');
 		}
 
 		$userEventHandler = App::make('EDM\User\UserEventHandler');
 		$userEventHandler->onUserSignUp($user);
 
-		// todo flash.user.confirmation_mail_resent
+		Notification::info(trans('flash.user.confirmation_mail_resent'));
 		return Redirect::route('frontpage');
 	}
 }
