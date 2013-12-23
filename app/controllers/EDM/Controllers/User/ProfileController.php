@@ -1,10 +1,8 @@
 <?php
 namespace EDM\Controllers\User;
-
 use View;
-use BaseController;
 
-class ProfileController extends BaseController
+class ProfileController extends UserBaseController
 {
 	public function getIndex()
 	{

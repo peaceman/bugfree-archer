@@ -2,7 +2,7 @@
 namespace EDM\Controllers\User;
 use View;
 
-class PrivateMessageController extends \BaseController
+class PrivateMessageController extends UserBaseController
 {
 	public function getIndex()
 	{

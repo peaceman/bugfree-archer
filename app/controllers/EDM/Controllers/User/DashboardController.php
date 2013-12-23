@@ -3,9 +3,9 @@ namespace EDM\Controllers\User;
 
 use View;
 
-class DashboardController extends \BaseController
+class DashboardController extends UserBaseController
 {
-	public function show($username)
+	public function show()
 	{
 		return View::make('user.dashboard.home');
 	}

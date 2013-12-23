@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @section('dashboard.header')
 <h1>Profile
-	<small>of {{ Auth::user()->username }}</small>
+	<small>of {{ $user->username }}</small>
 </h1>
 @overwrite
 @section('content.dashboard')
@@ -21,14 +21,14 @@
 </ul>
 <div class="tab-content">
 	<div class="tab-pane active" id="account">
-		{{ Form::model(Auth::user(), ['route' => ['user.profile.perform.account', Auth::user()->username], 'class' =>
+		{{ Form::model($user, ['route' => ['user.profile.perform.account', $user->username], 'class' =>
 		'form-horizontal']) }}
 		<fieldset>
 			<legend>{{ trans('common.general') }}</legend>
 			<div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
 				{{ Form::label('username', trans('common.username'), ['class' => 'control-label col-md-2']) }}
 				<div class="col-md-5">
-					<p class="form-control-static">{{ Auth::user()->username }}</p>
+					<p class="form-control-static">{{ $user->username }}</p>
 				</div>
 			</div>
 
