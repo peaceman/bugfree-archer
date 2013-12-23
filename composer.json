@@ -19,6 +19,7 @@
 			"app/tests/TestCase.php"
 		],
 		"psr-0": {
+			"EDM\\Controllers": "app/controllers",
 			"EDM": "lib/"
 		}
 	},

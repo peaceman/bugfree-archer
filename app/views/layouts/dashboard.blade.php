@@ -21,10 +21,10 @@
 				<a>{{ trans('dashboard.nav.header') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard') }}">{{ trans('dashboard.nav.home') }}</a>
+				<a href="{{ route('user.dashboard', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.home') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.private-messages.index') }}">{{ trans('dashboard.nav.private_messages')
+				<a href="{{ route('user.private-messages', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.private_messages')
 					}}</a>
 			</li>
 
@@ -32,10 +32,10 @@
 				<a>{{ trans('dashboard.nav.orders_header') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.orders.index') }}">{{ trans('dashboard.nav.orders.history') }}</a>
+				<a href="{{ route('user.orders', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.orders.history') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.order-conflicts.index') }}">{{ trans('dashboard.nav.orders.conflicts')
+				<a href="{{ route('user.order-conflicts', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.orders.conflicts')
 					}}</a>
 			</li>
 
@@ -43,18 +43,19 @@
 				<a>{{ trans('dashboard.nav.items_header') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.items.create') }}">{{ trans('dashboard.nav.items.upload') }}</a>
+				<a href="{{ route('user.items.create', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.items.upload') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.items.index') }}">{{ trans('dashboard.nav.items.list') }}</a>
+				<a href="{{ route('user.items', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.items.list') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.customer-questions.index') }}">{{
+				<a href="{{ route('user.customer-questions', ['username' => Auth::user()->username]) }}">{{
 					trans('dashboard.nav.items.customer_questions') }}</a>
 			</li>
 		</ul>
 	</div>
 	<div class="col-md-9">
+		@yield('content.dashboard')
 	</div>
 </div>
 @stop
