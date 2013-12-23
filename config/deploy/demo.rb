@@ -25,6 +25,12 @@ server 'octans.uberspace.de', user: 'edm', roles: %w{web app db}
 
 namespace :deploy do
   before :updated, 'uberspace:extract_database_credentials'
+
+  task :restart do
+    on roles(:app), in: :parallel do
+      execute :killall, '-u', :edm, '-9', 'php-cgi'
+    end
+  end
 end
 
 # you can set custom ssh options
