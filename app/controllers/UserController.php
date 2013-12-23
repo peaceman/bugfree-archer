@@ -42,8 +42,6 @@ class UserController extends BaseController
 
 	/**
 	 * @param string $confirmationHash
-	 *
-	 * @todo calls with non existing hashes, should be logged for security measures
 	 */
 	public function performEmailConfirmation($confirmationHash)
 	{
@@ -54,6 +52,10 @@ class UserController extends BaseController
 		)->first();
 
 		if ($emailConfirmation === null) {
+			Log::info(
+				'tried to confirm an account with a non existing confirmation hash',
+				['hash' => $confirmationHash, 'ip' => Request::server('REMOTE_ADDR')]
+			);
 			App::abort(404);
 		}
 
@@ -70,6 +72,7 @@ class UserController extends BaseController
 
 		Event::fire(User::EVENT_EMAIL_CONFIRMATION, $user);
 		Auth::login($user);
+
 		// todo flash message
 		return Redirect::route('frontpage');
 	}

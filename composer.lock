@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ce0297f189ed604cc6b6d5fbc12cd612",
+    "hash": "718393f293aa064bd6acb81e168d32aa",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -85,6 +85,55 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "time": "2013-11-18 12:13:16"
+        },
+        {
+            "name": "edvinaskrucas/notification",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/edvinaskrucas/notification.git",
+                "reference": "27d0f8d3d9e0a52789335e56cf96b8851476fe9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/edvinaskrucas/notification/zipball/27d0f8d3d9e0a52789335e56cf96b8851476fe9f",
+                "reference": "27d0f8d3d9e0a52789335e56cf96b8851476fe9f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "4.*",
+                "illuminate/session": "4.*",
+                "illuminate/support": "4.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Krucas\\Notification": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Edvinas Kručas",
+                    "email": "edv.krucas@gmail.com"
+                }
+            ],
+            "description": "Package for Laravel for helping to manage flash / instant notifications / messages.",
+            "keywords": [
+                "flash",
+                "instant",
+                "laravel",
+                "messages",
+                "notifications"
+            ],
+            "time": "2013-12-07 20:38:37"
         },
         {
             "name": "filp/whoops",
@@ -556,12 +605,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "0dc8b27a6a47c22a20efd7172fd71d88234869ca"
+                "reference": "4bd9a546ab5cfa9838eaabe4e0c32643e4eed412"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/0dc8b27a6a47c22a20efd7172fd71d88234869ca",
-                "reference": "0dc8b27a6a47c22a20efd7172fd71d88234869ca",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/4bd9a546ab5cfa9838eaabe4e0c32643e4eed412",
+                "reference": "4bd9a546ab5cfa9838eaabe4e0c32643e4eed412",
                 "shasum": ""
             },
             "require": {
@@ -642,7 +691,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2013-12-17 19:55:56"
+            "time": "2013-12-22 17:53:35"
         },
         {
             "name": "predis/predis",
@@ -650,12 +699,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nrk/predis.git",
-                "reference": "317fa42891f647b69603708d96d3a16db1ff1559"
+                "reference": "d2debfd43eb8a5201204bb70275a0ef83b3d11ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/317fa42891f647b69603708d96d3a16db1ff1559",
-                "reference": "317fa42891f647b69603708d96d3a16db1ff1559",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/d2debfd43eb8a5201204bb70275a0ef83b3d11ff",
+                "reference": "d2debfd43eb8a5201204bb70275a0ef83b3d11ff",
                 "shasum": ""
             },
             "require": {
@@ -689,7 +738,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2013-12-21 11:00:44"
+            "time": "2013-12-22 16:51:18"
         },
         {
             "name": "psr/log",

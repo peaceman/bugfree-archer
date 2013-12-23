@@ -130,5 +130,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 				'useragent_id' => $userAgent->id,
 			]
 		);
+
+		return $trackingSession;
 	}
 }

@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"webpatser/laravel-countries": "dev-master",
-		"slushie/laravel-middleware": "dev-master"
+		"slushie/laravel-middleware": "dev-master",
+		"edvinaskrucas/notification": "1.*"
 	},
 	"autoload": {
 		"classmap": [

@@ -110,6 +110,7 @@ return array(
 		// third party
 		'Webpatser\Countries\CountriesServiceProvider',
 		'Slushie\Middleware\MiddlewareServiceProvider',
+		'Krucas\Notification\NotificationServiceProvider',
 	),
 
 	'middleware' => array(
@@ -182,6 +183,7 @@ return array(
 
 		// third party
 		'Countries' => 'Webpatser\Countries\CountriesFacade',
+		'Notification' => 'Krucas\Notification\Facades\Notification',
 	),
 
 );

@@ -14,6 +14,10 @@
 Route::get(
 	'/',
 	['as' => 'frontpage', function () {
+		Notification::infoInstant('info test');
+		Notification::successInstant('info test');
+		Notification::errorInstant('error test');
+		Notification::warningInstant('warning test');
 		return View::make('home/index');
 	}]
 );
