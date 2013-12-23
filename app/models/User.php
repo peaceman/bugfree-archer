@@ -41,6 +41,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	protected $hidden = array('password');
 	protected $fillable = ['email', 'username', 'real_name'];
 
+	public static $validationRules = [
+		'real_name' => ['required', 'max:255'],
+		'username' => ['required', 'max:255', 'alpha_dash', 'unique:users'],
+		'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+		'password' => ['required', 'confirmed'],
+	];
+
 	public function isAllowedToLogin()
 	{
 		return in_array($this->state, static::$validLoginStates);

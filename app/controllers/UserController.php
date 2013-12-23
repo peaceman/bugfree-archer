@@ -8,15 +8,8 @@ class UserController extends BaseController
 
 	public function performSignUp()
 	{
-		$validationRules = [
-			'real_name' => ['required', 'max:255'],
-			'username' => ['required', 'max:255', 'alpha_dash', 'unique:users'],
-			'email' => ['required', 'email', 'max:255', 'unique:users'],
-			'password' => ['required', 'confirmed'],
-		];
-
 		/** @var \Illuminate\Validation\Validator $validator */
-		$validator = Validator::make(Input::get('signup'), $validationRules);
+		$validator = Validator::make(Input::get('signup'), User::$validationRules);
 
 		if ($validator->fails()) {
 			$errors = [];
