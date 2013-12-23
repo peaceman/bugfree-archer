@@ -95,3 +95,5 @@ View::composer(
 		}
 	}
 );
+
+View::shared('errors')->setFormat('<span class="help-block">:message</span>');
