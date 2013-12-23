@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class RenameUserFk extends Migration {
+class RenameUserFk extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,12 +13,14 @@ class RenameUserFk extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('user_addresses', function(Blueprint $table)
-		{
-			$table->dropForeign('user_addresses_user_id_foreign');
-			$table->foreign('user_id', 'ua_u_fk')
-				->references('id')->on('users');
-		});
+		Schema::table(
+			'user_addresses',
+			function (Blueprint $table) {
+				$table->dropForeign('user_addresses_user_id_foreign');
+				$table->foreign('user_id', 'ua_u_fk')
+					->references('id')->on('users');
+			}
+		);
 	}
 
 	/**
@@ -27,12 +30,14 @@ class RenameUserFk extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('user_addresses', function(Blueprint $table)
-		{
-			$table->dropForeign('ua_u_fk');
-			$table->foreign('user_id')
-				->references('id')->on('users');
-		});
+		Schema::table(
+			'user_addresses',
+			function (Blueprint $table) {
+				$table->dropForeign('ua_u_fk');
+				$table->foreign('user_id')
+					->references('id')->on('users');
+			}
+		);
 	}
 
 }

@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration {
+class CreateUsersTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,16 +13,18 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('email')->unique();
-			$table->string('username')->unique();
-			$table->string('password');
-			$table->string('real_name');
-			$table->enum('state', ['unconfirmed_email', 'active', 'inactive', 'tmp_ban', 'perma_ban']);
-			$table->timestamps();
-		});
+		Schema::create(
+			'users',
+			function (Blueprint $table) {
+				$table->increments('id');
+				$table->string('email')->unique();
+				$table->string('username')->unique();
+				$table->string('password');
+				$table->string('real_name');
+				$table->enum('state', ['unconfirmed_email', 'active', 'inactive', 'tmp_ban', 'perma_ban']);
+				$table->timestamps();
+			}
+		);
 	}
 
 	/**

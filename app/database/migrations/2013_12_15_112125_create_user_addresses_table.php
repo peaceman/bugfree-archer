@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateUserAddressesTable extends Migration {
+class CreateUserAddressesTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,21 +13,23 @@ class CreateUserAddressesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_addresses', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->unsignedInteger('user_id');
-			$table->unsignedInteger('country_id');
-			$table->string('locality');
-			$table->string('postcode');
-			$table->mediumText('address_lines');
+		Schema::create(
+			'user_addresses',
+			function (Blueprint $table) {
+				$table->increments('id');
+				$table->unsignedInteger('user_id');
+				$table->unsignedInteger('country_id');
+				$table->string('locality');
+				$table->string('postcode');
+				$table->mediumText('address_lines');
 
-			$table->timestamps();
+				$table->timestamps();
 
-			$table->foreign('user_id')
-				->references('id')->on('users')
-				->onDelete('cascade');
-		});
+				$table->foreign('user_id')
+					->references('id')->on('users')
+					->onDelete('cascade');
+			}
+		);
 	}
 
 	/**

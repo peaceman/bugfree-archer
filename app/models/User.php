@@ -75,25 +75,25 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	{
 		return $this->email;
 	}
-	
+
 	public function sendEmailConfirmation(UserEmailConfirmation $emailConfirmation)
 	{
-    	   if ($emailConfirmation->used) {
-        	   Log::notice('tried to send already used confirmation', ['context' => $emailConfirmation->toArray()]);
-        	   return false;
-    	   }
-    	   
-    	   $user = $this;
-    	   Mail::queue(
-    	       'emails.user.signup',
-    	       ['user' => $this, 'confirmationHash' => $emailConfirmation->hash],
-    	       function ($msg) use ($user) {
-        	       $msg->to($user->email)
-        	           ->subject(trans('mail.user.sign_up_confirmation.subject'));
-    	       }
-    	   );
-    	   
-    	   return true;
+		if ($emailConfirmation->used) {
+			Log::notice('tried to send already used confirmation', ['context' => $emailConfirmation->toArray()]);
+			return false;
+		}
+
+		$user = $this;
+		Mail::queue(
+			'emails.user.signup',
+			['user' => $this, 'confirmationHash' => $emailConfirmation->hash],
+			function ($msg) use ($user) {
+				$msg->to($user->email)
+					->subject(trans('mail.user.sign_up_confirmation.subject'));
+			}
+		);
+
+		return true;
 	}
 
 	public function getEmailConfirmationHash()
@@ -124,9 +124,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	public function createTrackingSession()
 	{
 		$userAgent = UserAgent::firstOrCreate(['value' => Request::server('HTTP_USER_AGENT')]);
-		$trackingSession = $this->trackingSessions()->create([
-			'ip_address' => Request::server('REMOTE_ADDR'),
-			'useragent_id' => $userAgent->id,
-		]);
+		$trackingSession = $this->trackingSessions()->create(
+			[
+				'ip_address' => Request::server('REMOTE_ADDR'),
+				'useragent_id' => $userAgent->id,
+			]
+		);
 	}
 }

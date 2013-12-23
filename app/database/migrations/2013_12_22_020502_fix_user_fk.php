@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class FixUserFk extends Migration {
+class FixUserFk extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,13 +13,15 @@ class FixUserFk extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('user_email_confirmations', function(Blueprint $table)
-		{
-			$table->dropForeign('uec_u_fk');
-			$table->foreign('user_id', 'uec_u_fk')
-				->references('id')->on('users')
-				->onDelete('cascade');
-		});
+		Schema::table(
+			'user_email_confirmations',
+			function (Blueprint $table) {
+				$table->dropForeign('uec_u_fk');
+				$table->foreign('user_id', 'uec_u_fk')
+					->references('id')->on('users')
+					->onDelete('cascade');
+			}
+		);
 	}
 
 	/**
@@ -28,12 +31,14 @@ class FixUserFk extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('user_email_confirmations', function(Blueprint $table)
-		{
-			$table->dropForeign('uec_u_fk');
-			$table->foreign('user_id', 'uec_u_fk')
-				->references('id')->on('users');
-		});
+		Schema::table(
+			'user_email_confirmations',
+			function (Blueprint $table) {
+				$table->dropForeign('uec_u_fk');
+				$table->foreign('user_id', 'uec_u_fk')
+					->references('id')->on('users');
+			}
+		);
 	}
 
 }

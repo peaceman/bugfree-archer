@@ -1,7 +1,9 @@
 @extends('layouts.master')
 @section('content')
 <div class="page-header">
-	<h1>{{ trans('user.dashboard.page_header') }} <small>{{ trans('user.dashboard.page_header_small') }}</small></h1>
+	<h1>{{ trans('user.dashboard.page_header') }}
+		<small>{{ trans('user.dashboard.page_header_small') }}</small>
+	</h1>
 </div>
 <div class="row">
 	<div class="col-md-3">

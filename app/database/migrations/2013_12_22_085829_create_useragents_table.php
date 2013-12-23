@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateUseragentsTable extends Migration {
+class CreateUseragentsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,12 +13,14 @@ class CreateUseragentsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('useragents', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('value')->unique();
-			$table->timestamps();
-		});
+		Schema::create(
+			'useragents',
+			function (Blueprint $table) {
+				$table->increments('id');
+				$table->string('value')->unique();
+				$table->timestamps();
+			}
+		);
 	}
 
 	/**

@@ -1,7 +1,9 @@
 @extends('layouts.master')
 @section('content')
 <div class="page-header">
-	<h1>{{ trans('dashboard.page_header.big') }} <small>{{ trans('dashboard.page_header.small') }}</small></h1>
+	<h1>{{ trans('dashboard.page_header.big') }}
+		<small>{{ trans('dashboard.page_header.small') }}</small>
+	</h1>
 </div>
 <style>
 	.nav > li.disabled.nav-header > a {
@@ -22,7 +24,8 @@
 				<a href="{{ route('dashboard') }}">{{ trans('dashboard.nav.home') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.private-messages.index') }}">{{ trans('dashboard.nav.private_messages') }}</a>
+				<a href="{{ route('dashboard.private-messages.index') }}">{{ trans('dashboard.nav.private_messages')
+					}}</a>
 			</li>
 
 			<li class="nav-header disabled">
@@ -32,7 +35,8 @@
 				<a href="{{ route('dashboard.orders.index') }}">{{ trans('dashboard.nav.orders.history') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.order-conflicts.index') }}">{{ trans('dashboard.nav.orders.conflicts') }}</a>
+				<a href="{{ route('dashboard.order-conflicts.index') }}">{{ trans('dashboard.nav.orders.conflicts')
+					}}</a>
 			</li>
 
 			<li class="nav-header disabled">
@@ -45,7 +49,8 @@
 				<a href="{{ route('dashboard.items.index') }}">{{ trans('dashboard.nav.items.list') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('dashboard.customer-questions.index') }}">{{ trans('dashboard.nav.items.customer_questions') }}</a>
+				<a href="{{ route('dashboard.customer-questions.index') }}">{{
+					trans('dashboard.nav.items.customer_questions') }}</a>
 			</li>
 		</ul>
 	</div>

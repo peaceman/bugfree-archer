@@ -104,10 +104,12 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group {{ $errors->has('signup[password_confirmation]') ? 'has-error' : '' }}">
-								{{ Form::label('signup[password_confirmation]', 'Password (again)', ['class' => 'control-label']) }}
+								{{ Form::label('signup[password_confirmation]', 'Password (again)', ['class' =>
+								'control-label']) }}
 								{{ Form::password('signup[password_confirmation]', ['class' => 'form-control']) }}
 								@if ($errors->has('signup[password_confirmation]'))
-								{{ $errors->first('signup[password_confirmation]', '<span class="help-block">:message</span>') }}
+								{{ $errors->first('signup[password_confirmation]',
+								'<span class="help-block">:message</span>') }}
 								@endif
 							</div>
 						</div>
@@ -123,5 +125,6 @@
 		</form>
 	</div>
 </div>
-<a href="{{ route('user.resend-confirmation-email') }}" class="btn btn-link">{{ trans('common.resend_confirmation_email') }}</a>
+<a href="{{ route('user.resend-confirmation-email') }}" class="btn btn-link">{{
+	trans('common.resend_confirmation_email') }}</a>
 @stop
