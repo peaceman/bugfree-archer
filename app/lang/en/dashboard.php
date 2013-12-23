@@ -1,8 +1,9 @@
 <?php
 return [
 	'nav' => [
-		'header' => 'Dashboard',
+		'header' => 'General',
 		'home' => 'Home',
+		'profile' => 'Profile',
 		'private_messages' => 'Private messages',
 		'orders_header' => 'Orders',
 		'orders' => [
@@ -18,6 +19,6 @@ return [
 	],
 	'page_header' => [
 		'big' => 'Dashboard',
-		'small' => 'the user control panel',
+		'small' => 'your control center',
 	],
 ];

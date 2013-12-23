@@ -4,5 +4,13 @@ return [
 		'page_header' => 'Resend confirmation email',
 		'page_header_small' => 'got no mail? try to resend',
 		'submit_button' => 'Resend',
-	]
+	],
+	'profile' => [
+		'nav' => [
+			'basic' => 'Basic',
+			'payment' => 'Payment',
+			'account' => 'Account',
+			'address' => 'Address'
+		]
+	],
 ];

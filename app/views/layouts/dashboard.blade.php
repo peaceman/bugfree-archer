@@ -1,9 +1,12 @@
 @extends('layouts.master')
+@section('dashboard.header')
+<h1>{{ trans('dashboard.page_header.big') }}
+	<small>{{ trans('dashboard.page_header.small') }}</small>
+</h1>
+@stop
 @section('content')
 <div class="page-header">
-	<h1>{{ trans('dashboard.page_header.big') }}
-		<small>{{ trans('dashboard.page_header.small') }}</small>
-	</h1>
+	@yield('dashboard.header')
 </div>
 <style>
 	.nav > li.disabled.nav-header > a {
@@ -22,6 +25,9 @@
 			</li>
 			<li>
 				<a href="{{ route('user.dashboard', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.home') }}</a>
+			</li>
+			<li>
+				<a href="{{ route('user.profile', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.profile') }}</a>
 			</li>
 			<li>
 				<a href="{{ route('user.private-messages', ['username' => Auth::user()->username]) }}">{{ trans('dashboard.nav.private_messages')
@@ -54,7 +60,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-10">
 		@yield('content.dashboard')
 	</div>
 </div>

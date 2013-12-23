@@ -57,6 +57,9 @@ Route::group(
 			['as' => 'user.private-messages', 'uses' => 'PrivateMessageController@getIndex']
 		);
 
+		Route::get('users/{username}/profile', ['as' => 'user.profile', 'uses' => 'ProfileController@getIndex']);
+		Route::post('users/{username}/profile/account', ['as' => 'user.profile.perform.account', 'uses' => 'ProfileController@postAccount']);
+
 		Route::get('users/{username}/orders', ['as' => 'user.orders', 'uses' => 'OrderController@getIndex']);
 		Route::get('users/{username}/order-conflicts', ['as' => 'user.order-conflicts', 'uses' => 'OrderConflictController@getIndex']);
 
