@@ -28,7 +28,7 @@ namespace :deploy do
 
   task :restart do
     on roles(:app), in: :parallel do
-      execute :killall, '-u', :edm, '-9', 'php-cgi'
+      execute 'killall -u edm -9 php-cgi; true'
     end
   end
 end
