@@ -122,4 +122,10 @@ class FilesystemStorage implements StorageInterface
 	{
 		return asset($this->urlPrefix . '/' . $resourceFileLocation->identifier);
 	}
+
+	public function getProtectedUrl(\ResourceFileLocation $resourceFileLocation)
+	{
+		// todo url protection
+		return $this->getUrl($resourceFileLocation) . '?protected=trololo';
+	}
 }

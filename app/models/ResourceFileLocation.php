@@ -43,4 +43,12 @@ class ResourceFileLocation extends Eloquent
 		$this->state = $newState;
 		$this->save();
 	}
+
+	public function getUrl()
+	{
+		$storage = $this->resourceLocation->getStorage();
+		return $this->resourceFile->protected ?
+			$storage->getProtectedUrl($this) :
+			$storage->getUrl($this);
+	}
 }

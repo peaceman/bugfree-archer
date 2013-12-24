@@ -11,11 +11,13 @@ Route::get(
 		$resourceFile->original_name = $file->getBasename();
 		$resourceFile->mime_type = $file->getMimeType();
 		$resourceFile->size = $file->getSize();
+		$resourceFile->protected = true;
 		$resourceFile->save();
 
 		$storageDirector->initialStorageTransport($resourceFile, $filePath);
 
 		echo '<pre>';
+		var_dump($resourceFile->getUrl());
 		dd($resourceFile->resourceFileLocations()->get()->toArray());
 	}
 );
