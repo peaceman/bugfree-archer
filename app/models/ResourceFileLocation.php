@@ -36,4 +36,10 @@ class ResourceFileLocation extends Eloquent
 	{
 		return $this->hasMany('ResourceFileDownloads');
 	}
+
+	public function saveWithState($newState)
+	{
+		$this->state = $newState;
+		$this->save();
+	}
 }
