@@ -8,6 +8,7 @@ class StorageServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->registerFilesystemStorage();
+		$this->registerAWSStorage();
 		$this->registerStorageDirector();
 	}
 
@@ -18,6 +19,19 @@ class StorageServiceProvider extends ServiceProvider
 			function ($app) {
 				return new FilesystemStorage(
 					$app->config->get('storage.' . FilesystemStorage::TYPE)
+				);
+			}
+		);
+	}
+
+	public function registerAWSStorage()
+	{
+		$this->app->bind(
+			'storage.' . AWSStorage::TYPE,
+			function ($app) {
+				return new AWSStorage(
+					$app->config->get('storage.' . AWSStorage::TYPE, []),
+					$app['aws']
 				);
 			}
 		);

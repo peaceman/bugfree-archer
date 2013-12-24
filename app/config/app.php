@@ -113,6 +113,7 @@ return array(
 		'Webpatser\Countries\CountriesServiceProvider',
 		'Slushie\Middleware\MiddlewareServiceProvider',
 		'Krucas\Notification\NotificationServiceProvider',
+		'Aws\Laravel\AwsServiceProvider',
 
 		// app
 		'EDM\Resource\Storage\StorageServiceProvider',

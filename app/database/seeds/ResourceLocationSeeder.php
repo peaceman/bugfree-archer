@@ -24,11 +24,24 @@ class ResourceLocationSeeder extends Seeder
 				'is_backup' => false,
 				'upload_order' => 5,
 				'download_order' => 5,
-				'settings' => json_encode([
-					'storage_path' => public_path(),
-					'url_prefix' => '/',
-				])
+				'settings' => json_encode(
+					[
+						'storage_path' => public_path(),
+						'url_prefix' => '/',
+					]
+				)
 			],
+			[
+				'type' => 'aws',
+				'state' => 'active',
+				'upload_order' => 1,
+				'download_order' => 1,
+				'settings' => json_encode(
+					[
+						'bucket' => 'peacedev-edm',
+					]
+				)
+			]
 		];
 
 		foreach ($data as $dataRow) {
