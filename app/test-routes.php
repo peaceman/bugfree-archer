@@ -2,8 +2,19 @@
 Route::get(
 	'test',
 	function () {
-		$user = User::findOrFail(10);
-		$handler = new EDM\User\UserEventHandler;
-		$handler->onUserSignUp($user);
+		/** @var \EDM\Resource\Storage\StorageDirector $storageDirector */
+		$storageDirector = App::make('storage-director');
+
+		$filePath = app_path('database/production.sqlite');
+		$file = new \Symfony\Component\HttpFoundation\File\File($filePath);
+		$resourceFile = new ResourceFile();
+		$resourceFile->original_name = $file->getBasename();
+		$resourceFile->mime_type = $file->getMimeType();
+		$resourceFile->size = $file->getSize();
+		$resourceFile->save();
+
+		$storageDirector->initialStorageTransport($resourceFile, $filePath);
+
+		dd($resourceFile->resourceFileLocations()->get()->toArray());
 	}
 );

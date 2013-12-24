@@ -1,6 +1,7 @@
 <?php
 namespace EDM\Resource\Storage;
 
+use Illuminate\Database\Eloquent\Collection;
 use Queue;
 use ResourceFile;
 use ResourceFileLocation;
@@ -9,44 +10,16 @@ use ResourceLocation;
 class StorageDirector
 {
 	/**
-	 * @var \ResourceLocations[]
+	 * @var Collection|\ResourceLocation[]
 	 */
 	protected $resourceLocations = [];
-	/**
-	 * @var StorageInterface[]
-	 */
-	protected $storagesByType = [];
-
-	/**
-	 * @param \ResourceLocation[] $resourceLocations
-	 * @param StorageInterface[] $storages
-	 */
-	public function __construct(array $resourceLocations, array $storages)
-	{
-		$this->setResourceLocations($resourceLocations);
-		$this->setStorages($storages);
-	}
 
 	/**
 	 * @param \ResourceLocation[] $resourceLocations
 	 */
-	public function setResourceLocations(array $resourceLocations)
+	public function __construct($resourceLocations)
 	{
-		$this->resourceLocations = [];
-		foreach ($resourceLocations as $resourceLocation) {
-			$this->resourceLocations[$resourceLocation->type] = $resourceLocation;
-		}
-	}
-
-	/**
-	 * @param StorageInterface[] $storages
-	 */
-	public function setStorages(array $storages)
-	{
-		$this->storagesByType = [];
-		foreach ($storages as $storage) {
-			$this->storagesByType[$storage->getType()] = $storage;
-		}
+		$this->resourceLocations = $resourceLocations;
 	}
 
 	public function initialStorageTransport(ResourceFile $resourceFile, $filePath)
@@ -66,38 +39,50 @@ class StorageDirector
 	}
 
 	/**
-	 * @return array
+	 * @return Collection|\ResourceLocation[]
+	 */
+	protected function getLocationsForInstantTransport()
+	{
+		return $this->resourceLocations->filter(
+			function ($resourceLocation) {
+				/** @var ResourceLocation $resourceLocation */
+				return $resourceLocation->qualifiesForInstantTransport();
+			}
+		);
+	}
+
+	/**
+	 * @return Collection|\ResourceLocation[]
 	 */
 	protected function getLocationsForQueuedTransport()
 	{
-		$locationsForQueuedStore = array_filter(
-			$this->resourceLocations,
+		$locationsForQueuedStore = $this->resourceLocations->filter(
 			function ($resourceLocation) {
 				/** @var ResourceLocation $resourceLocation */
 				return !$resourceLocation->qualifiesForInstantTransport();
 			}
 		);
 
-		uasort(
-			$locationsForQueuedStore,
+		$locationsForQueuedStore = $locationsForQueuedStore->sort(
 			function ($a, $b) {
 				if ($a->priority === $b->priority) return 0;
 				return $a->priority < $b->priority ? -1 : 1;
 			}
 		);
+
 		return $locationsForQueuedStore;
 	}
 
 	public function executeStorageTransport(ResourceLocation $resourceLocation, ResourceFile $resourceFile, $filePath)
 	{
-		$storage = $this->storagesByType[$resourceLocation->type];
+		$storage = $resourceLocation->getStorage();
 		$resourceFileLocation = $this->createOrFindResourceFileLocation($resourceLocation, $resourceFile);
 		$storage->store($resourceFileLocation, $filePath);
 	}
 
 	protected function createOrFindResourceFileLocation(ResourceLocation $resourceLocation, ResourceFile $resourceFile)
 	{
-		$storage = $this->storagesByType[$resourceLocation->type];
+		$storage = $resourceLocation->getStorage();
 		/** @var ResourceFileLocation $resourceFileLocation */
 		$resourceFileLocation = ResourceFileLocation::firstOrNew(
 			[
@@ -140,6 +125,17 @@ class StorageDirector
 		}
 	}
 
+	/**
+	 * @param $resourceFileLocation
+	 */
+	public function queueDeletionOfResourceFileLocation($resourceFileLocation)
+	{
+		Queue::push(
+			QueueJobHandler::class . '@' . 'deleteResourceFileLocation',
+			['resource_file_location' => $resourceFileLocation->id]
+		);
+	}
+
 	public function queueFillingOfResourceLocation(ResourceLocation $resourceLocation)
 	{
 		Queue::push(
@@ -154,31 +150,5 @@ class StorageDirector
 			QueueJobHandler::class . '@' . 'wipeResourceLocation',
 			['resource_location_id' => $resourceLocation->id]
 		);
-	}
-
-	/**
-	 * @param $resourceFileLocation
-	 */
-	public function queueDeletionOfResourceFileLocation($resourceFileLocation)
-	{
-		Queue::push(
-			QueueJobHandler::class . '@' . 'deleteResourceFileLocation',
-			['resource_file_location' => $resourceFileLocation->id]
-		);
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getLocationsForInstantTransport()
-	{
-		$locationsForInstantTransport = array_filter(
-			$this->resourceLocations,
-			function ($resourceLocation) {
-				/** @var ResourceLocation $resourceLocation */
-				return $resourceLocation->qualifiesForInstantTransport();
-			}
-		);
-		return $locationsForInstantTransport;
 	}
 }

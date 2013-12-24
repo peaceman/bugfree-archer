@@ -113,6 +113,9 @@ return array(
 		'Webpatser\Countries\CountriesServiceProvider',
 		'Slushie\Middleware\MiddlewareServiceProvider',
 		'Krucas\Notification\NotificationServiceProvider',
+
+		// app
+		'EDM\Resource\Storage\StorageServiceProvider',
 	),
 
 	'middleware' => array(

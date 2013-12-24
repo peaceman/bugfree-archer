@@ -7,6 +7,7 @@ use Carbon\Carbon;
  * @property int $id
  * @property bool $protected
  * @property string $original_name
+ * @property string $mime_type
  * @property int $size
  * @property Carbon $created_at
  * @property Carbon $updated_at

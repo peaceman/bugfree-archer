@@ -8,4 +8,5 @@ interface StorageInterface
 	public function getUrl(\ResourceFileLocation $resourceFileLocation);
 	public function getNewFileIdentifier();
 	public function getType();
+	public function setSettings(array $settings);
 }

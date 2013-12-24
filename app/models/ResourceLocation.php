@@ -34,4 +34,17 @@ class ResourceLocation extends Eloquent
 	{
 		return $this->is_backup;
 	}
+
+	public function getStorage()
+	{
+		/** @var \EDM\Resource\Storage\StorageInterface $storage */
+		$storage = App::make('storage.' . $this->type);
+
+		$settings = $this->settings;
+		if (!empty($settings)) {
+			$storage->setSettings(json_decode($settings, true));
+		}
+
+		return $storage;
+	}
 }

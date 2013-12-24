@@ -1,25 +1,39 @@
 <?php
 namespace EDM\Resource\Storage;
 
+use Illuminate\Queue\Jobs\Job;
+
 class QueueJobHandler
 {
+	/**
+	 * @param Job $job
+	 * @param array $data
+	 */
 	public function deleteResourceFileLocation($job, $data)
 	{
-		var_dump(func_get_args());
 	}
 
+	/**
+	 * @param Job $job
+	 * @param array $data
+	 */
 	public function fillResourceLocation($job, $data)
 	{
-		var_dump(func_get_args());
 	}
 
+	/**
+	 * @param Job $job
+	 * @param array $data
+	 */
 	public function transportToStorage($job, $data)
 	{
-		var_dump(func_get_args());
 	}
 
+	/**
+	 * @param Job $job
+	 * @param array $data
+	 */
 	public function wipeResourceLocation($job, $data)
 	{
-		var_dump(func_get_args());
 	}
 }

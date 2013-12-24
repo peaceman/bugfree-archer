@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
 		Eloquent::unguard();
 
 		$this->call('CountriesSeeder');
+		$this->call('ResourceLocationSeeder');
 		// $this->call('UserTableSeeder');
 	}
 

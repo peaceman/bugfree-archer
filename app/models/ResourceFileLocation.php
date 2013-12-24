@@ -21,6 +21,7 @@ class ResourceFileLocation extends Eloquent
 	const STATE_UPLOADED = 'uploaded';
 	const STATE_DELETED = 'deleted';
 	protected $table = 'resource_file_locations';
+	public static $unguarded = true;
 
 	public function resourceLocation()
 	{

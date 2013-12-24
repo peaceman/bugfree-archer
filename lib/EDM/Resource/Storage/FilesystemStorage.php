@@ -1,26 +1,25 @@
 <?php
 namespace EDM\Resource\Storage;
+
 use Log;
 
 class FilesystemStorage implements StorageInterface
 {
 	const TYPE = 'filesystem';
+	protected $config = [];
 	protected $storagePath;
+	protected $urlPrefix;
 
 	public function __construct(array $config)
 	{
-		$this->setStoragePath(array_get($config, 'storage_path'));
-		$this->urlPrefix = rtrim(array_get($config, 'url_prefix'), '/');
+		$this->config = $config;
+		$this->setSettings($config);
 	}
 
-	public function getType()
+	public function setSettings(array $settings)
 	{
-		return static::TYPE;
-	}
-
-	public function getNewFileIdentifier()
-	{
-		return uniqid();
+		$this->setStoragePath(array_get($settings, 'storage_path', array_get($this->config, 'storage_path')));
+		$this->urlPrefix = array_get($settings, 'url_prefix', array_get($this->config, 'url_prefix', '/'));
 	}
 
 	public function setStoragePath($storagePath)
@@ -40,15 +39,14 @@ class FilesystemStorage implements StorageInterface
 		}
 	}
 
-	public function checkResourceFileLocation(\ResourceFileLocation $resourceFileLocation)
+	public function getType()
 	{
-		$checkResult = $resourceFileLocation->resourceLocation->type === static::TYPE;
-		if (!$checkResult) {
-			throw new \LogicException(sprintf(
-				'got resource file location object with invalid type: %s for this transport',
-				$resourceFileLocation->resourceLocation->type
-			));
-		}
+		return static::TYPE;
+	}
+
+	public function getNewFileIdentifier()
+	{
+		return uniqid();
 	}
 
 	public function store(\ResourceFileLocation $resourceFileLocation, $filePath)
@@ -80,19 +78,15 @@ class FilesystemStorage implements StorageInterface
 		$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADED);
 	}
 
-	public function delete(\ResourceFileLocation $resourceFileLocation)
+	public function checkResourceFileLocation(\ResourceFileLocation $resourceFileLocation)
 	{
-		$this->checkResourceFileLocation($resourceFileLocation);
-		$filePath = $this->generateFilePath($resourceFileLocation->identifier);
-		$this->checkFile($filePath);
-
-		unlink($filePath);
-		$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_DELETED);
-	}
-
-	protected function generateFilePath($identifier)
-	{
-		return sprintf('%s/%s', $this->storagePath, $identifier);
+		$checkResult = $resourceFileLocation->resourceLocation->type === static::TYPE;
+		if (!$checkResult) {
+			throw new \LogicException(sprintf(
+				'got resource file location object with invalid type: %s for this transport',
+				$resourceFileLocation->resourceLocation->type
+			));
+		}
 	}
 
 	public function checkFile($filePath)
@@ -107,6 +101,21 @@ class FilesystemStorage implements StorageInterface
 				$filePath
 			));
 		}
+	}
+
+	protected function generateFilePath($identifier)
+	{
+		return sprintf('%s/%s', $this->storagePath, $identifier);
+	}
+
+	public function delete(\ResourceFileLocation $resourceFileLocation)
+	{
+		$this->checkResourceFileLocation($resourceFileLocation);
+		$filePath = $this->generateFilePath($resourceFileLocation->identifier);
+		$this->checkFile($filePath);
+
+		unlink($filePath);
+		$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_DELETED);
 	}
 
 	public function getUrl(\ResourceFileLocation $resourceFileLocation)
