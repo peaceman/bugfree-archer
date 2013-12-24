@@ -162,7 +162,7 @@ class StorageDirector
 	public function queueDeletionOfResourceFileLocation($resourceFileLocation)
 	{
 		Queue::push(
-			QueueJobHandler::class . '@' . 'deleteResourceFileLoction',
+			QueueJobHandler::class . '@' . 'deleteResourceFileLocation',
 			['resource_file_location' => $resourceFileLocation->id]
 		);
 	}
