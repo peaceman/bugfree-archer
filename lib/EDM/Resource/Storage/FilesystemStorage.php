@@ -103,7 +103,7 @@ class FilesystemStorage implements StorageInterface
 		}
 	}
 
-	protected function generateFilePath($identifier)
+	public function generateFilePath($identifier)
 	{
 		return sprintf('%s/%s', $this->storagePath, $identifier);
 	}

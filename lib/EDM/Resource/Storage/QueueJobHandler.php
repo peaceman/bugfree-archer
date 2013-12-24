@@ -2,6 +2,7 @@
 namespace EDM\Resource\Storage;
 
 use Illuminate\Queue\Jobs\Job;
+use ResourceFileLocation;
 
 class QueueJobHandler
 {
@@ -11,6 +12,17 @@ class QueueJobHandler
 	 */
 	public function deleteResourceFileLocation($job, $data)
 	{
+		/** @var ResourceFileLocation $resourceFileLocation */
+		$resourceFileLocation = ResourceFileLocation::findOrFail($data['resource_file_location_id']);
+		$storage = $resourceFileLocation->resourceLocation->getStorage();
+
+		$result = $storage->delete($resourceFileLocation);
+
+		if ($result) {
+			$job->delete();
+		} else {
+			$job->release();
+		}
 	}
 
 	/**
@@ -27,6 +39,20 @@ class QueueJobHandler
 	 */
 	public function transportToStorage($job, $data)
 	{
+		/** @var ResourceFileLocation $targetFileLocation */
+		$targetFileLocation = ResourceFileLocation::findOrFail($data['resource_file_location_id']);
+		$targetStorage = $targetFileLocation->resourceLocation->getStorage();
+
+		$result = $targetStorage->store(
+			$targetFileLocation,
+			$targetFileLocation->resourceFile->fetchLocalFilesystemPath()
+		);
+
+		if ($result) {
+			$job->delete();
+		} else {
+			$job->release();
+		}
 	}
 
 	/**

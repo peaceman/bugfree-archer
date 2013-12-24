@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use EDM\Resource\Storage\FilesystemStorage;
 
 /**
  * Class ResourceFile
@@ -59,5 +60,26 @@ class ResourceFile extends Eloquent
 	public function resourceFileLocations()
 	{
 		return $this->hasMany('ResourceFileLocation');
+	}
+
+	/**
+	 * @return string
+	 */
+	public function fetchLocalFilesystemPath()
+	{
+		$resourceLocationFilterClosure = function ($query) {
+			$query->where('type', '=', FilesystemStorage::TYPE)
+				->where('state', '!=', ResourceLocation::STATE_INACTIVE);
+		};
+
+		/** @var \ResourceFileLocation $localResourceFileLocation */
+		$localResourceFileLocation = $this->resourceFileLocations()
+			->with(['resourceLocation' => $resourceLocationFilterClosure])
+			->where('state', '=', ResourceFileLocation::STATE_UPLOADED)
+			->first();
+
+		/** @var FilesystemStorage $localStorage */
+		$localStorage = $localResourceFileLocation->resourceLocation->getStorage();
+		return $localStorage->generateFilePath($localResourceFileLocation->identifier);
 	}
 }
