@@ -15,6 +15,7 @@ Route::get(
 
 		$storageDirector->initialStorageTransport($resourceFile, $filePath);
 
+		echo '<pre>';
 		dd($resourceFile->resourceFileLocations()->get()->toArray());
 	}
 );

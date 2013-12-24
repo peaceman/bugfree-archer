@@ -8,7 +8,8 @@ use Carbon\Carbon;
  * @property string $type
  * @property string $state
  * @property bool $is_backup
- * @property int $priority
+ * @property int $upload_order
+ * @property int $download_order
  * @property array $settings
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -27,7 +28,7 @@ class ResourceLocation extends Eloquent
 
 	public function qualifiesForInstantTransport()
 	{
-		return $this->priority === Config::get('storage.instant_store_priority');
+		return $this->upload_order === Config::get('storage.instant_transport_upload_order');
 	}
 
 	public function isBackupLocation()

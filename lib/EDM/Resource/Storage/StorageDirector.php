@@ -65,8 +65,8 @@ class StorageDirector
 
 		$locationsForQueuedStore = $locationsForQueuedStore->sort(
 			function ($a, $b) {
-				if ($a->priority === $b->priority) return 0;
-				return $a->priority < $b->priority ? -1 : 1;
+				if ($a->upload_order === $b->upload_order) return 0;
+				return $a->upload_order < $b->upload_order ? -1 : 1;
 			}
 		);
 
