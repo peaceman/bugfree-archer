@@ -8,15 +8,6 @@
 <div class="page-header">
 	@yield('dashboard.header')
 </div>
-<style>
-	.nav > li.disabled.nav-header > a {
-		cursor: default;
-		font-size: 12px;
-		font-weight: bold;
-		text-transform: uppercase;
-		padding-left: 0px;
-	}
-</style>
 <div class="row">
 	<div class="col-md-2">
 		<ul class="nav nav-pills nav-stacked">

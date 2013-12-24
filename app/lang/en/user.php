@@ -24,5 +24,8 @@ return [
 		'change_password' => 'Change password',
 		'password_change_successful' => 'We updated your password',
 		'confirm_new_email' => 'You have to confirm the entered email, before the change will be effective',
+		'last_email_confirmations' => 'Last email confirmations',
+		'email_confirmation_created' => 'Created at: :date',
+		'email_confirmation_updated' => 'Updated at: :date',
 	],
 ];

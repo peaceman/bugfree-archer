@@ -18,6 +18,12 @@ class UserEmailConfirmation extends Eloquent
 	const STATE_DEACTIVATED = 'deactivated';
 	const STATE_EXPIRED = 'expired';
 	public static $defaultExpiryMinutes = 15;
+	public static $stateContext = [
+		'unused' => 'info',
+		'used' => 'success',
+		'deactivated' => 'danger',
+		'expired' => 'warning',
+	];
 	protected $table = 'user_email_confirmations';
 
 	public function user()
@@ -39,5 +45,10 @@ class UserEmailConfirmation extends Eloquent
 		$expiredAt = $this->created_at->copy()->addMinutes($expiryInterval);
 
 		return $expiredAt->isPast();
+	}
+
+	public function stateContext()
+	{
+		return static::$stateContext[$this->state];
 	}
 }
