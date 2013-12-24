@@ -1,12 +1,13 @@
 <?php
 namespace EDM\Controllers\User;
+
 use Hash;
-use View;
+use Input;
+use Notification;
+use Redirect;
 use User;
 use Validator;
-use Input;
-use Redirect;
-use Notification;
+use View;
 
 class ProfileController extends UserBaseController
 {
@@ -65,7 +66,11 @@ class ProfileController extends UserBaseController
 
 		if ($this->user->email !== $inputData['email']) {
 			$emailConfirmation = $this->user->createEmailConfirmation($inputData['email']);
-			$this->user->sendEmailConfirmation($emailConfirmation);
+			$this->user->sendEmailConfirmation(
+				$emailConfirmation,
+				'emails.user.email-confirmation',
+				'mail.user.email_confirmation.subject'
+			);
 			Notification::info(trans('user.profile.confirm_new_email'));
 		}
 

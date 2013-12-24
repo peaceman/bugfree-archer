@@ -90,20 +90,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->email;
 	}
 
-	public function sendEmailConfirmation(UserEmailConfirmation $emailConfirmation)
+	public function sendEmailConfirmation(UserEmailConfirmation $emailConfirmation, $mailView, $subject)
 	{
-		if ($emailConfirmation->used) {
-			Log::notice('tried to send already used confirmation', ['context' => $emailConfirmation->toArray()]);
+		if ($emailConfirmation->state == UserEmailConfirmation::STATE_UNUSED) {
+			Log::notice('tried to send confirmation in invalid state', ['context' => $emailConfirmation->toArray()]);
 			return false;
 		}
 
-		$user = $this;
 		Mail::queue(
-			'emails.user.signup',
+			$mailView,
 			['user' => $this, 'confirmationHash' => $emailConfirmation->hash],
-			function ($msg) use ($user) {
-				$msg->to($user->email)
-					->subject(trans('mail.user.sign_up_confirmation.subject'));
+			function ($msg) use ($emailConfirmation, $subject) {
+				$msg->to($emailConfirmation->email)
+					->subject(trans($subject));
 			}
 		);
 

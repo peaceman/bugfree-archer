@@ -28,6 +28,10 @@ class UserEventHandler
 	public function onUserSignUp($user)
 	{
 		$emailConfirmation = $user->createEmailConfirmation();
-		$user->sendEmailConfirmation($emailConfirmation);
+		$user->sendEmailConfirmation(
+			$emailConfirmation,
+			'emails.user.signup',
+			'mail.user.sign_up_confirmation.subject'
+		);
 	}
 }
