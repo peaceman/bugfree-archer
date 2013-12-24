@@ -47,7 +47,7 @@ class UserController extends BaseController
 
 		if ($emailConfirmation === null) {
 			Log::info(
-				'tried to confirm an account with a non existing confirmation hash',
+				'tried to confirm an email with a non existing confirmation hash',
 				['hash' => $confirmationHash, 'ip' => Request::server('REMOTE_ADDR')]
 			);
 			App::abort(404);
@@ -58,7 +58,14 @@ class UserController extends BaseController
 		}
 
 		$user = $emailConfirmation->user;
-		$user->state = User::STATE_ACTIVE;
+		$user->email = $emailConfirmation->email;
+
+		// only change user state to active, if it was in the unconfirmed state
+		// to prevent unintentional user state changes
+		if ($user->state === User::STATE_UNCONFIRMED_EMAIL) {
+			$user->state = User::STATE_ACTIVE;
+		}
+
 		$user->save();
 
 		$emailConfirmation->used = true;

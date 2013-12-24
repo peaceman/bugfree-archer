@@ -15,5 +15,6 @@ return [
 		'leave_password_empty' => "leave empty if you don't want to change your password",
 		'change_password' => 'Change password',
 		'password_change_successful' => 'We updated your password',
+		'confirm_new_email' => 'You have to confirm the entered email, before the change will be effective',
 	],
 ];

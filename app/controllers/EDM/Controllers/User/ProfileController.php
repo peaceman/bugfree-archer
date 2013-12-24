@@ -56,13 +56,19 @@ class ProfileController extends UserBaseController
 			return $profileRedirect->withErrors($validator);
 		}
 
-		$this->user->fill($inputData);
+		$this->user->real_name = $inputData['real_name'];
 		if (!$this->user->save()) {
 			Notification::error(trans('common.save_failed'));
 			return $profileRedirect;
 		}
-
 		Notification::success(trans('common.data_update_successful'));
+
+		if ($this->user->email !== $inputData['email']) {
+			$emailConfirmation = $this->user->createEmailConfirmation($inputData['email']);
+			$this->user->sendEmailConfirmation($emailConfirmation);
+			Notification::info(trans('user.profile.confirm_new_email'));
+		}
+
 		return $profileRedirect;
 	}
 }

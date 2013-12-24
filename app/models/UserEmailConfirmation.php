@@ -4,6 +4,7 @@
  *
  * @property int $id
  * @property int $user_id
+ * @property string $email
  * @property User $user
  * @property string $hash
  * @property bool $used

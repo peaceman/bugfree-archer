@@ -102,7 +102,6 @@
 		{{ Form::close() }}
 
 
-
 	</div>
 	<div class="tab-pane" id="basic">basic</div>
 	<div class="tab-pane" id="address">
