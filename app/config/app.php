@@ -15,6 +15,8 @@ return array(
 
 	'debug' => true,
 
+	'email_confirmation_expiry_interval_in_minutes' => 10,
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application URL

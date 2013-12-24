@@ -53,8 +53,33 @@ class UserController extends BaseController
 			App::abort(404);
 		}
 
-		if ($emailConfirmation->used) {
-			return View::make('user.used-confirmation-hash');
+		if ($emailConfirmation->state !== UserEmailConfirmation::STATE_UNUSED) {
+			$data = [
+				'header' => trans('common.email_confirmation'),
+				'header_small' => trans(
+					'user.email_confirmation.error.small_header',
+					['email' => $emailConfirmation->email]
+				),
+				'text' => trans('user.email_confirmation.error.' . $emailConfirmation->state),
+			];
+			return Redirect::route('full-page-error')
+				->with(['full-page-error' => $data]);
+		}
+
+		if ($emailConfirmation->isExpired()) {
+			$emailConfirmation->state = UserEmailConfirmation::STATE_EXPIRED;
+			$emailConfirmation->save();
+
+			$data = [
+				'header' => trans('common.email_confirmation'),
+				'header_small' => trans(
+					'user.email_confirmation.error.small_header',
+					['email' => $emailConfirmation->email]
+				),
+				'text' => trans('user.email_confirmation.error.expired'),
+			];
+			return Redirect::route('full-page-error')
+				->with(['full-page-error' => $data]);
 		}
 
 		$user = $emailConfirmation->user;
@@ -68,7 +93,12 @@ class UserController extends BaseController
 
 		$user->save();
 
-		$emailConfirmation->used = true;
+		// deactivate unused email confirmations for the same address
+		UserEmailConfirmation::where('state', '=', UserEmailConfirmation::STATE_UNUSED)
+			->where('email', '=', $emailConfirmation->email)
+			->update(['state' => UserEmailConfirmation::STATE_DEACTIVATED]);
+
+		$emailConfirmation->state = UserEmailConfirmation::STATE_USED;
 		$emailConfirmation->save();
 
 		Event::fire(User::EVENT_EMAIL_CONFIRMATION, $user);

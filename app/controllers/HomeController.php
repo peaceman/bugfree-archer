@@ -22,4 +22,15 @@ class HomeController extends BaseController
 		return View::make('hello');
 	}
 
+	public function showFullPageError()
+	{
+		if (!Session::has('full-page-error')) {
+			return Redirect::route('frontpage');
+		}
+
+		$data = Session::get('full-page-error');
+		return View::make('full-page-error')
+			->with($data);
+	}
+
 }

@@ -7,12 +7,17 @@
  * @property string $email
  * @property User $user
  * @property string $hash
- * @property bool $used
+ * @property string $state
  * @property Carbon\Carbon $created_at
  * @property Carbon\Carbon $updated_at
  */
 class UserEmailConfirmation extends Eloquent
 {
+	const STATE_UNUSED = 'unused';
+	const STATE_USED = 'used';
+	const STATE_DEACTIVATED = 'deactivated';
+	const STATE_EXPIRED = 'expired';
+	public static $defaultExpiryMinutes = 15;
 	protected $table = 'user_email_confirmations';
 
 	public function user()
@@ -23,5 +28,16 @@ class UserEmailConfirmation extends Eloquent
 	public function scopeUnused($query)
 	{
 		return $query->where('used', false);
+	}
+
+	public function isExpired()
+	{
+		$expiryInterval = Config::get(
+			'app.email_confirmation_expiry_interval_in_minutes',
+			static::$defaultExpiryMinutes
+		);
+		$expiredAt = $this->created_at->copy()->addMinutes($expiryInterval);
+
+		return $expiredAt->isPast();
 	}
 }
