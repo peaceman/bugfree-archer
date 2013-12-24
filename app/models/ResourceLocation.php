@@ -23,4 +23,9 @@ class ResourceLocation extends Eloquent
 	{
 		return $this->hasMany('ResourceFileLocation');
 	}
+
+	public function qualifiesForInstantTransport()
+	{
+		return $this->priority === Config::get('storage.instant_store_priority');
+	}
 }

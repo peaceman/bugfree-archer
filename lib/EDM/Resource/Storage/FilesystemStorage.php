@@ -13,6 +13,16 @@ class FilesystemStorage implements StorageInterface
 		$this->urlPrefix = rtrim(array_get($config, 'url_prefix'), '/');
 	}
 
+	public function getType()
+	{
+		return static::TYPE;
+	}
+
+	public function getNewFileIdentifier()
+	{
+		return uniqid();
+	}
+
 	public function setStoragePath($storagePath)
 	{
 		$this->checkStoragePath($storagePath);
