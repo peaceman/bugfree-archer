@@ -51,4 +51,12 @@ class ResourceFileLocation extends Eloquent
 			$storage->getProtectedUrl($this) :
 			$storage->getUrl($this);
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function needsUpload()
+	{
+		return in_array($this->state, [static::STATE_NEW, static::STATE_DELETED]);
+	}
 }

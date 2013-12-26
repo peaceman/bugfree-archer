@@ -82,4 +82,27 @@ class ResourceFile extends Eloquent
 		$localStorage = $localResourceFileLocation->resourceLocation->getStorage();
 		return $localStorage->generateFilePath($localResourceFileLocation->identifier);
 	}
+
+	/**
+	 * @param ResourceLocation $resourceLocation
+	 *
+	 * @return ResourceFileLocation
+	 */
+	public function getOrCreateResourceFileLocationForResourceLocation($resourceLocation)
+	{
+		$fileLocation = $this->resourceFileLocations()
+			->where(['resource_location_id' => $resourceLocation->id])
+			->first();
+
+		if (!$fileLocation) {
+			$locationStorage = $resourceLocation->getStorage();
+			$fileLocation = ResourceFileLocation::create([
+				'resource_location_id' => $resourceLocation->id,
+				'resource_file_id' => $this->id,
+				'identifier' => $locationStorage->getNewFileIdentifier(),
+			]);
+		}
+
+		return $fileLocation;
+	}
 }

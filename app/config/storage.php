@@ -5,4 +5,7 @@ return [
 		'storage_path' => public_path('storage'),
 		'url_prefix' => 'storage',
 	],
+	'resource_file' => [
+		'chunk_size' => 100,
+	],
 ];

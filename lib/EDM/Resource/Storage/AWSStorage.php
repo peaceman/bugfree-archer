@@ -28,6 +28,7 @@ class AWSStorage implements StorageInterface
 	{
 		/** @var S3Client $s3 */
 		$s3 = $this->aws->get('s3');
+		$originalResourceFileLocationState = $resourceFileLocation->state;
 
 		try {
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADING);
@@ -45,7 +46,7 @@ class AWSStorage implements StorageInterface
 				['e' => $e, 'filePath' => $filePath, 'resourceFileLocation' => $resourceFileLocation->toArray()]
 			);
 
-			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_NEW);
+			$resourceFileLocation->saveWithState($originalResourceFileLocationState);
 			return false;
 		}
 	}

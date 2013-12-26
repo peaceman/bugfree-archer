@@ -2,7 +2,10 @@
 namespace EDM\Resource\Storage;
 
 use Illuminate\Queue\Jobs\Job;
+use Queue;
+use ResourceFile;
 use ResourceFileLocation;
+use ResourceLocation;
 
 class QueueJobHandler
 {
@@ -31,6 +34,29 @@ class QueueJobHandler
 	 */
 	public function fillResourceLocation($job, $data)
 	{
+		/** @var ResourceLocation $resourceLocation */
+		$resourceLocation = ResourceLocation::findOrFail($data['resource_location_id']);
+
+		ResourceFile::chunk(
+			Config::get('storage.resource_file.chunk_size', 100),
+			function ($resourceFiles) use ($resourceLocation) {
+				/** @var $resourceLocation ResourceLocation */
+				/** @var ResourceFile $resourceFile */
+				foreach ($resourceFiles as $resourceFile) {
+					$resourceFileLocation = $resourceFile->getOrCreateResourceFileLocationForResourceLocation($resourceLocation);
+					if (!$resourceFileLocation->needsUpload()) {
+						continue;
+					}
+
+					Queue::push(
+						__CLASS__ . '@transportToStorage',
+						['resource_file_location_id' => $resourceFileLocation->id]
+					);
+				}
+			}
+		);
+
+		$job->delete();
 	}
 
 	/**
