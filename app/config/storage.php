@@ -8,4 +8,5 @@ return [
 	'resource_file' => [
 		'chunk_size' => 100,
 	],
+	'protected_url_lifetime_in_minutes' => 10,
 ];

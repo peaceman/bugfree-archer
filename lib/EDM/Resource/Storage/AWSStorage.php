@@ -3,12 +3,12 @@ namespace EDM\Resource\Storage;
 
 use Aws\Common\Aws;
 use Aws\S3\S3Client;
-use Illuminate\Support\Facades\Log;
+use Config;
+use Log;
 
 class AWSStorage implements StorageInterface
 {
 	const TYPE = 'aws';
-
 	/**
 	 * @var array
 	 */
@@ -57,10 +57,12 @@ class AWSStorage implements StorageInterface
 		$s3 = $this->aws->get('s3');
 
 		try {
-			$s3->deleteObject([
+			$s3->deleteObject(
+				[
 					'Bucket' => $this->config['bucket'],
 					$resourceFileLocation->identifier,
-				]);
+				]
+			);
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_DELETED);
 			return true;
 		} catch (\Exception $e) {
@@ -75,7 +77,22 @@ class AWSStorage implements StorageInterface
 
 	public function getProtectedUrl(\ResourceFileLocation $resourceFileLocation)
 	{
-		// TODO: Implement getProtectedUrl() method.
+		/** @var S3Client $s3 */
+		$s3 = $this->aws->get('s3');
+
+		try {
+			return $s3->getObjectUrl(
+				$this->config['bucket'],
+				$resourceFileLocation->identifier,
+				'+' . Config::get('storage.protected_url_lifetime_in_minutes') . ' minutes'
+			);
+		} catch (\Exception $e) {
+			Log::error(
+				'protected getObjectUrl on amazon s3 failed',
+				['e' => $e, 'resourceFileLocation' => $resourceFileLocation->toArray()]
+			);
+			return false;
+		}
 	}
 
 	public function getUrl(\ResourceFileLocation $resourceFileLocation)
@@ -90,7 +107,7 @@ class AWSStorage implements StorageInterface
 				'getObjectUrl on amazon s3 failed',
 				['e' => $e, 'resourceFileLocation' => $resourceFileLocation->toArray()]
 			);
-			return null;
+			return false;
 		}
 	}
 
