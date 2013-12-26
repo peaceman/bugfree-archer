@@ -38,6 +38,7 @@ class AWSStorage implements StorageInterface
 				fopen($filePath, 'r'),
 				$resourceFileLocation->resourceFile->protected ? 'private' : 'public-read'
 			);
+
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADED);
 			return true;
 		} catch (\Exception $e) {

@@ -27,5 +27,8 @@ return [
 		'last_email_confirmations' => 'Last email confirmations',
 		'email_confirmation_created' => 'Created at: :date',
 		'email_confirmation_updated' => 'Updated at: :date',
+		'basic_information' => 'Basic information',
+		'pictures' => 'Pictures',
+		'updated_basic_profile' => 'Updated basic profile information',
 	],
 ];

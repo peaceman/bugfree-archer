@@ -16,6 +16,7 @@ use EDM\Resource\Storage\FilesystemStorage;
 class ResourceFile extends Eloquent
 {
 	protected $table = 'resource_files';
+	protected $fillable = ['protected', 'original_name', 'mime_type', 'size'];
 
 	/**
 	 * @return string|null
@@ -41,25 +42,17 @@ class ResourceFile extends Eloquent
 	 */
 	protected function fetchResourceFileLocationForDownload()
 	{
-		$resourceFileLocation = $this->resourceFileLocations()
-			->with(
-				[
-					'resourceLocation' =>
-						function ($query) {
-							$query
-								->where('state', '=', 'active')
-								->orderBy('download_order', 'asc');
-						}
-				]
-			)
-			->where('state', '=', ResourceFileLocation::STATE_UPLOADED)
-			->first();
-		return $resourceFileLocation;
-	}
+		$query = DB::table('resource_file_locations')
+			->join('resource_locations', 'resource_file_locations.resource_location_id', '=', 'resource_locations.id')
+			->where('resource_file_locations.resource_file_id', '=', $this->id)
+			->where('resource_locations.state', '=', ResourceLocation::STATE_ACTIVE)
+			->where('resource_file_locations.state', '=', ResourceFileLocation::STATE_UPLOADED)
+			->orderBy('resource_locations.download_order', 'asc')
+			->groupBy('resource_file_locations.id')
+			->limit(1);
 
-	public function resourceFileLocations()
-	{
-		return $this->hasMany('ResourceFileLocation');
+		$result = $query->select('resource_file_locations.id')->pluck('id');
+		return ResourceFileLocation::findOrFail($result);
 	}
 
 	/**
@@ -83,6 +76,11 @@ class ResourceFile extends Eloquent
 		return $localStorage->generateFilePath($localResourceFileLocation->identifier);
 	}
 
+	public function resourceFileLocations()
+	{
+		return $this->hasMany('ResourceFileLocation');
+	}
+
 	/**
 	 * @param ResourceLocation $resourceLocation
 	 *
@@ -96,11 +94,13 @@ class ResourceFile extends Eloquent
 
 		if (!$fileLocation) {
 			$locationStorage = $resourceLocation->getStorage();
-			$fileLocation = ResourceFileLocation::create([
-				'resource_location_id' => $resourceLocation->id,
-				'resource_file_id' => $this->id,
-				'identifier' => $locationStorage->getNewFileIdentifier(),
-			]);
+			$fileLocation = ResourceFileLocation::create(
+				[
+					'resource_location_id' => $resourceLocation->id,
+					'resource_file_id' => $this->id,
+					'identifier' => $locationStorage->getNewFileIdentifier(),
+				]
+			);
 		}
 
 		return $fileLocation;

@@ -14,4 +14,8 @@ return [
 	'data_update_successful' => 'We updated your data sucessfully',
 	'email_confirmation' => 'Email confirmation',
 	'state' => 'State',
+	'website' => 'Website',
+	'about' => 'About',
+	'avatar' => 'Avatar',
+	'delete' => 'Delete',
 ];

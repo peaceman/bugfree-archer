@@ -23,7 +23,9 @@
 	<div class="tab-pane active" id="account">
 		@include('user.profile.tab.account')
 	</div>
-	<div class="tab-pane" id="basic">basic</div>
+	<div class="tab-pane" id="basic">
+		@include('user.profile.tab.basic')
+	</div>
 	<div class="tab-pane" id="address">
 		address
 	</div>

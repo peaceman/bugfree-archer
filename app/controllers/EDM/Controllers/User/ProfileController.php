@@ -1,19 +1,68 @@
 <?php
 namespace EDM\Controllers\User;
 
+use EDM\Resource\Storage\StorageDirector;
 use Hash;
 use Input;
 use Notification;
 use Redirect;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use User;
+use UserProfile;
 use Validator;
 use View;
+use App;
+use ResourceFile;
 
 class ProfileController extends UserBaseController
 {
 	public function getIndex()
 	{
-		return View::make('user.profile.index');
+		$userProfile = $this->user->profile;
+		$userAvatar = $userProfile ? $userProfile->avatar : null;
+		return View::make('user.profile.index', compact('userProfile', 'userAvatar'));
+	}
+
+	public function postBasic()
+	{
+		$validationRules = [
+			'website' => ['url'],
+			'about' => ['max:5000'],
+			'avatar' => ['image'],
+		];
+		$profileRedirect = Redirect::route('user.profile', ['username' => $this->user->username]);
+
+		$validator = Validator::make(Input::all(), $validationRules);
+		if ($validator->fails()) {
+			return $profileRedirect->withErrors($validator);
+		}
+
+		$userProfile = $this->user->profile ?: new UserProfile();
+		$userProfile->fill(Input::only(['website', 'about']));
+
+		if (Input::has('avatar-delete')) {
+			$userProfile->picture_file_id = null;
+		} elseif (Input::hasFile('avatar')) {
+			/** @var UploadedFile $avatar */
+			$avatar = Input::file('avatar');
+			/** @var \ResourceFile $avatarResourceFile */
+			$avatarResourceFile = ResourceFile::create([
+				'protected' => false,
+				'original_name' => $avatar->getClientOriginalName(),
+				'mime_type' => $avatar->getMimeType(),
+				'size' => $avatar->getSize(),
+			]);
+
+			/** @var StorageDirector $storageDirector */
+			$storageDirector = App::make('storage-director');
+			$storageDirector->initialStorageTransport($avatarResourceFile, $avatar->getRealPath());
+
+			$userProfile->picture_file_id = $avatarResourceFile->id;
+		}
+
+		$this->user->profile()->save($userProfile);
+		Notification::success(trans('user.profile.updated_basic_profile'));
+		return $profileRedirect;
 	}
 
 	public function postChangePassword()

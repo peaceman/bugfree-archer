@@ -14,6 +14,8 @@ use Illuminate\Auth\UserInterface;
  * @property string $state
  * @property Carbon\Carbon $created_at
  * @property Carbon\Carbon $updated_at
+ *
+ * @property UserProfile $profile
  */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
@@ -137,6 +139,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	public function trackingSessions()
 	{
 		return $this->hasMany('UserTrackingSession');
+	}
+
+	public function profile()
+	{
+		return $this->hasOne('UserProfile');
 	}
 
 	public function createTrackingSession()
