@@ -126,12 +126,12 @@ class StorageDirector
 	}
 
 	/**
-	 * @param $resourceFileLocation
+	 * @param ResourceFileLocation $resourceFileLocation
 	 */
-	public function queueDeletionOfResourceFileLocation($resourceFileLocation)
+	public function queueDeletionOfResourceFileLocation(ResourceFileLocation $resourceFileLocation)
 	{
 		Queue::push(
-			QueueJobHandler::class . '@' . 'deleteResourceFileLocation',
+			QueueJobHandler::class . '@' . 'deleteFromStorage',
 			['resource_file_location' => $resourceFileLocation->id]
 		);
 	}

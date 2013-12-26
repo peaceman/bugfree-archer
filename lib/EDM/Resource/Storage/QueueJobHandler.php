@@ -13,7 +13,7 @@ class QueueJobHandler
 	 * @param Job $job
 	 * @param array $data
 	 */
-	public function deleteResourceFileLocation($job, $data)
+	public function deleteFromStorage($job, $data)
 	{
 		/** @var ResourceFileLocation $resourceFileLocation */
 		$resourceFileLocation = ResourceFileLocation::findOrFail($data['resource_file_location_id']);
@@ -43,7 +43,9 @@ class QueueJobHandler
 				/** @var $resourceLocation ResourceLocation */
 				/** @var ResourceFile $resourceFile */
 				foreach ($resourceFiles as $resourceFile) {
-					$resourceFileLocation = $resourceFile->getOrCreateResourceFileLocationForResourceLocation($resourceLocation);
+					$resourceFileLocation = $resourceFile->getOrCreateResourceFileLocationForResourceLocation(
+						$resourceLocation
+					);
 					if (!$resourceFileLocation->needsUpload()) {
 						continue;
 					}
@@ -87,5 +89,21 @@ class QueueJobHandler
 	 */
 	public function wipeResourceLocation($job, $data)
 	{
+		/** @var ResourceLocation $resourceLocation */
+		$resourceLocation = ResourceLocation::findOrFail($data['resource_location_id']);
+		$resourceLocation->resourceFileLocations()->where('state', '=', ResourceFileLocation::STATE_UPLOADED)
+			->chunk(
+				Config::get('storage.resource_file.chunk_size', 100),
+				function ($resourceFileLocations) {
+					foreach ($resourceFileLocations as $resourceFileLocation) {
+						Queue::push(
+							__CLASS__ . '@deleteFromStorage',
+							['resource_file_location_id' => $resourceFileLocation->id]
+						);
+					}
+				}
+			);
+
+		$job->delete();
 	}
 }
