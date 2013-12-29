@@ -27,6 +27,37 @@ namespace :uberspace do
       execute :rm, cmd_filename
     end
   end
+  
+  desc 'read configuration variables from a file on the deployment host and replace placeholders in the application code'
+  task :replace_placeholders do
+    on roles(:app), in: :parallel do
+      source_files = fetch(:uberspace_config_source_files, [])
+      code_files = fetch(:uberspace_config_target_files, [])
+      placeholders_mapping = fetch(:uberspace_config_placeholders_mapping, {})
+      
+      if source_files.empty? or code_files.empty? or placeholders_mapping.empty?
+        info "skip placeholder replacement; incomplete configuration"
+        next
+      end
+      
+      sed_expressions = placeholders_mapping.collect do |placeholder, variable_name|
+        '--expression="s/' + placeholder + '/$' + variable_name + '/g"'
+      end
+      
+      cmd_buffer = <<-EOCOMMAND
+        source <(grep --regexp='^\\w' #{source_files.join(' ')}) && \
+        sed #{sed_expressions.join(' ')} \
+        --in-place #{code_files.join(' ')}
+      EOCOMMAND
+      
+      cmd_filename = capture("mktemp #{fetch(:tmp_dir)}/replace-placeholders_XXXXX")
+      upload! StringIO.new(cmd_buffer), cmd_filename
+      
+      execute :bash, cmd_filename
+      info "replaced placeholders in the following files: " + code_files.join(', ')
+      execute :rm, cmd_filename
+    end
+  end
 end
 
 namespace :load do

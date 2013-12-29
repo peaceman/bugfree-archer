@@ -4,6 +4,10 @@ set :tmp_dir, '/home/edm/tmp'
 set :branch, 'master'
 set :deploy_to, '/var/www/virtual/edm'
 set :database_credentials_path, "app/config/#{fetch(:stage)}/database.php"
+
+set :uberspace_config_source_files, ["/home/edm/aws.env"]
+set :uberspace_config_target_files, ["app/config/packages/aws/aws-sdk-php-laravel/#{fetch(:stage)}/config.php"]
+set :uberspace_config_placeholders_mapping, {'##AWS_KEY##' => 'AWS_KEY', '##AWS_SECRET##' => 'AWS_SECRET'}
 SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
 
 # Simple Role Syntax
@@ -25,6 +29,7 @@ server 'octans.uberspace.de', user: 'edm', roles: %w{web app db}
 
 namespace :deploy do
   before :updated, 'uberspace:extract_database_credentials'
+  before :updated, 'uberspace:replace_placeholders'
 
   task :restart do
     on roles(:app), in: :parallel do
