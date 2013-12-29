@@ -1,33 +1,4 @@
 namespace :uberspace do
-  desc 'use database credentials from ~/.my.cnf'
-  task :extract_database_credentials do
-    on roles(:app), in: :parallel do
-      database_credentials_path = release_path.join(fetch(:database_credentials_path))
-      username_placeholder = fetch(:uberspace_username_placeholder)
-      password_placeholder = fetch(:uberspace_password_placeholder)
-      mysql_client_configuration_path = fetch(:uberspace_mysql_client_configuration_path)
-      
-      unless database_credentials_path
-        msg = 'Path to the mysql client configuration is not configured, please set :database_credentials_path'
-        warn msg
-        fail StandardError, msg
-      end
-      
-      cmd_buffer = <<-EOCOMMAND
-        source <(grep -e '^\\w' #{mysql_client_configuration_path}) && \
-        sed --expression="s/#{username_placeholder}/$user/g" \
-        --expression="s/#{password_placeholder}/$password/g" \
-        --in-place #{database_credentials_path}
-      EOCOMMAND
-      
-      cmd_filename = capture("mktemp #{fetch(:tmp_dir)}/database-credential-extraction_XXXXX")
-      upload! StringIO.new(cmd_buffer), cmd_filename
-      execute :bash, cmd_filename
-      info "replaced database credentials placeholders in #{database_credentials_path}"
-      execute :rm, cmd_filename
-    end
-  end
-  
   desc 'read configuration variables from a file on the deployment host and replace placeholders in the application code'
   task :replace_placeholders do
     on roles(:app), in: :parallel do
@@ -46,7 +17,7 @@ namespace :uberspace do
       
       cmd_buffer = <<-EOCOMMAND
         cd #{release_path} && \
-        source <(grep --regexp='^\\w' #{source_files.join(' ')}) && \
+        source <(grep --no-filename --regexp='^\\w' #{source_files.join(' ')}) && \
         sed #{sed_expressions.join(' ')} \
         --in-place #{code_files.join(' ')}
       EOCOMMAND
@@ -58,13 +29,5 @@ namespace :uberspace do
       info "replaced placeholders in the following files: " + code_files.join(', ')
       execute :rm, cmd_filename
     end
-  end
-end
-
-namespace :load do
-  task :defaults do
-    set :uberspace_mysql_client_configuration_path, '~/.my.cnf'
-    set :uberspace_username_placeholder, '###USERNAME###'
-    set :uberspace_password_placeholder, '###PASSWORD###'
   end
 end

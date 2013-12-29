@@ -5,9 +5,18 @@ set :branch, 'master'
 set :deploy_to, '/var/www/virtual/edm'
 set :database_credentials_path, "app/config/#{fetch(:stage)}/database.php"
 
-set :uberspace_config_source_files, ["/home/edm/aws.env"]
-set :uberspace_config_target_files, ["app/config/packages/aws/aws-sdk-php-laravel/#{fetch(:stage)}/config.php"]
-set :uberspace_config_placeholders_mapping, {'##AWS_KEY##' => 'AWS_KEY', '##AWS_SECRET##' => 'AWS_SECRET'}
+set :uberspace_config_source_files, ["/home/edm/aws.env", "/home/edm/.my.cnf"]
+set :uberspace_config_target_files, [
+  "app/config/packages/aws/aws-sdk-php-laravel/#{fetch(:stage)}/config.php",
+  "app/config/#{fetch(:stage)}/database.php"
+]
+set :uberspace_config_placeholders_mapping, {
+  '##AWS_KEY##' => 'AWS_KEY',
+  '##AWS_SECRET##' => 'AWS_SECRET',
+  '###USERNAME###' => 'user',
+  '###PASSWORD###' => 'password'
+}
+
 SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
 
 # Simple Role Syntax
@@ -28,7 +37,6 @@ SSHKit.config.command_map[:composer] = "#{shared_path.join("composer.phar")}"
 server 'octans.uberspace.de', user: 'edm', roles: %w{web app db}
 
 namespace :deploy do
-  before :updated, 'uberspace:extract_database_credentials'
   before :updated, 'uberspace:replace_placeholders'
 
   task :restart do
