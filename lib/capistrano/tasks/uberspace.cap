@@ -45,6 +45,7 @@ namespace :uberspace do
       end
       
       cmd_buffer = <<-EOCOMMAND
+        cd #{release_path} && \
         source <(grep --regexp='^\\w' #{source_files.join(' ')}) && \
         sed #{sed_expressions.join(' ')} \
         --in-place #{code_files.join(' ')}
