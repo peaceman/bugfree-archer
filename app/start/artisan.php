@@ -11,4 +11,5 @@
 |
 */
 Artisan::add(new FillResourceLocation);
+Artisan::add(new WipeResourceLocation);
 

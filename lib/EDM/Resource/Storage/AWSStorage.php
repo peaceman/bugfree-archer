@@ -61,7 +61,7 @@ class AWSStorage implements StorageInterface
 			$s3->deleteObject(
 				[
 					'Bucket' => $this->config['bucket'],
-					$resourceFileLocation->identifier,
+					'Key' => $resourceFileLocation->identifier,
 				]
 			);
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_DELETED);
