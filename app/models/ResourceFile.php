@@ -56,6 +56,7 @@ class ResourceFile extends Eloquent
 	}
 
 	/**
+	 * @throws RuntimeException
 	 * @return string
 	 */
 	public function fetchLocalFilesystemPath()
@@ -70,6 +71,13 @@ class ResourceFile extends Eloquent
 			->with(['resourceLocation' => $resourceLocationFilterClosure])
 			->where('state', '=', ResourceFileLocation::STATE_UPLOADED)
 			->first();
+
+		if (!$localResourceFileLocation) {
+			throw new RuntimeException(sprintf(
+				"Can't examine local filesystem path of resource file with id: %d",
+				$this->id
+			));
+		}
 
 		/** @var FilesystemStorage $localStorage */
 		$localStorage = $localResourceFileLocation->resourceLocation->getStorage();
@@ -89,7 +97,7 @@ class ResourceFile extends Eloquent
 	public function getOrCreateResourceFileLocationForResourceLocation($resourceLocation)
 	{
 		$fileLocation = $this->resourceFileLocations()
-			->where(['resource_location_id' => $resourceLocation->id])
+			->where('resource_location_id', '=', $resourceLocation->id)
 			->first();
 
 		if (!$fileLocation) {
@@ -103,6 +111,6 @@ class ResourceFile extends Eloquent
 			);
 		}
 
-		return $fileLocation;
+		return ResourceFileLocation::find($fileLocation->id);
 	}
 }

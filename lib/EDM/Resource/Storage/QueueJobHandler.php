@@ -6,6 +6,7 @@ use Queue;
 use ResourceFile;
 use ResourceFileLocation;
 use ResourceLocation;
+use Config;
 
 class QueueJobHandler
 {
