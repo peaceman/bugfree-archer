@@ -38,9 +38,15 @@ class WipeResourceLocation extends Command {
 	public function fire()
 	{
 		$resourceLocationId = $this->argument('id');
+		/** @var ResourceLocation $resourceLocation */
 		$resourceLocation = ResourceLocation::find($resourceLocationId);
 		if (!$resourceLocation) {
 			$this->error("Can't find a resource location with id $resourceLocationId");
+			return 1;
+		}
+
+		if ($resourceLocation->isBackupLocation() && !$this->option('force')) {
+			$this->error("You tried to wipe a backup resource location. If you really want to do this use --force");
 			return 1;
 		}
 
@@ -69,6 +75,7 @@ class WipeResourceLocation extends Command {
 	protected function getOptions()
 	{
 		return array(
+			['force', null, InputOption::VALUE_NONE, 'Force the wipe of a backup location'],
 //			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
 		);
 	}
