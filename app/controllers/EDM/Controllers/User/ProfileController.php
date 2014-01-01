@@ -13,6 +13,7 @@ use Validator;
 use View;
 use App;
 use ResourceFile;
+use URL;
 
 class ProfileController extends UserBaseController
 {
@@ -20,7 +21,15 @@ class ProfileController extends UserBaseController
 	{
 		$userProfile = $this->user->profile;
 		$userAvatar = $userProfile ? $userProfile->avatar : null;
+
 		return View::make('user.profile.index', compact('userProfile', 'userAvatar'));
+	}
+
+	protected function getRedirectForTab($tabName)
+	{
+		return Redirect::to(
+			URL::route('user.profile', ['username' => $this->user->username]) . '#!' . $tabName
+		);
 	}
 
 	public function postBasic()
@@ -30,14 +39,14 @@ class ProfileController extends UserBaseController
 			'about' => ['max:5000'],
 			'avatar' => ['image'],
 		];
-		$profileRedirect = Redirect::route('user.profile', ['username' => $this->user->username]);
+		$profileRedirect = $this->getRedirectForTab('basic');
 
 		$validator = Validator::make(Input::all(), $validationRules);
 		if ($validator->fails()) {
 			return $profileRedirect->withErrors($validator);
 		}
 
-		$userProfile = $this->user->profile ?: new UserProfile();
+		$userProfile = $this->user->profile ? : new UserProfile();
 		$userProfile->fill(Input::only(['website', 'about']));
 
 		if (Input::has('avatar-delete')) {
@@ -62,6 +71,7 @@ class ProfileController extends UserBaseController
 
 		$this->user->profile()->save($userProfile);
 		Notification::success(trans('user.profile.updated_basic_profile'));
+
 		return $profileRedirect;
 	}
 
@@ -71,7 +81,7 @@ class ProfileController extends UserBaseController
 			'current_password' => ['required'],
 			'password' => ['required', 'confirmed'],
 		];
-		$profileRedirect = Redirect::route('user.profile', ['username' => $this->user->username]);
+		$profileRedirect = $this->getRedirectForTab('account');
 		if (!$this->user->checkPassword(Input::get('current_password'))) {
 			return $profileRedirect->withErrors(['current_password' => 'Invalid password']);
 		}
@@ -85,10 +95,12 @@ class ProfileController extends UserBaseController
 		$this->user->password = $newHashedPassword;
 		if (!$this->user->save()) {
 			Notification::error(trans('common.save_failed'));
+
 			return $profileRedirect;
 		}
 
 		Notification::success(trans('user.profile.password_change_successful'));
+
 		return $profileRedirect;
 	}
 
@@ -99,7 +111,7 @@ class ProfileController extends UserBaseController
 			'real_name' => User::$validationRules['real_name'],
 		];
 		$inputData = Input::only(array_keys($validationRules));
-		$profileRedirect = Redirect::route('user.profile', ['username' => $this->user->username]);
+		$profileRedirect = $this->getRedirectForTab('account');
 
 		$validator = Validator::make($inputData, $validationRules);
 		if ($validator->fails()) {
@@ -109,6 +121,7 @@ class ProfileController extends UserBaseController
 		$this->user->real_name = $inputData['real_name'];
 		if (!$this->user->save()) {
 			Notification::error(trans('common.save_failed'));
+
 			return $profileRedirect;
 		}
 		Notification::success(trans('common.data_update_successful'));
