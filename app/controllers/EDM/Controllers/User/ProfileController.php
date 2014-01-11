@@ -2,6 +2,8 @@
 namespace EDM\Controllers\User;
 
 use EDM\Resource\Storage\StorageDirector;
+use EDM\User\ValidationRules;
+use EDM\User\Process;
 use Hash;
 use Input;
 use Notification;
@@ -106,36 +108,29 @@ class ProfileController extends UserBaseController
 
 	public function postAccount()
 	{
-		$validationRules = [
-			'email' => $this->user->getEmailValidationRule(),
-			'real_name' => User::$validationRules['real_name'],
-		];
-		$inputData = Input::only(array_keys($validationRules));
-		$profileRedirect = $this->getRedirectForTab('account');
+		$validator = Validator::make(
+			Request::all(),
+			(new ValidationRules\AccountInformation($this->user))->getValidationRules()
+		);
 
-		$validator = Validator::make($inputData, $validationRules);
 		if ($validator->fails()) {
-			return $profileRedirect->withErrors($validator);
+			return $this->getRedirectForTab('account')->withErrors($validator);
 		}
 
-		$this->user->real_name = $inputData['real_name'];
+		$this->user->real_name = Request::get('real_name');
 		if (!$this->user->save()) {
 			Notification::error(trans('common.save_failed'));
-
-			return $profileRedirect;
+			return $this->getRedirectForTab('account');
 		}
+
 		Notification::success(trans('common.data_update_successful'));
 
-		if ($this->user->email !== $inputData['email']) {
-			$emailConfirmation = $this->user->createEmailConfirmation($inputData['email']);
-			$this->user->sendEmailConfirmation(
-				$emailConfirmation,
-				'emails.user.email-confirmation',
-				'mail.user.email_confirmation.subject'
-			);
+		if ($this->user->email !== ($email = Request::get('email'))) {
+			with(new Process\StartEmailChange($this->user))
+				->process(['new_email' => Request::get('email')]);
 			Notification::info(trans('user.profile.confirm_new_email'));
 		}
 
-		return $profileRedirect;
+		return $this->getRedirectForTab('account');
 	}
 }
