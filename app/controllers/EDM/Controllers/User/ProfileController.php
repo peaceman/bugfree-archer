@@ -35,14 +35,9 @@ class ProfileController extends UserBaseController
 
 	public function postBasic()
 	{
-		$validationRules = [
-			'website' => ['url'],
-			'about' => ['max:5000'],
-			'avatar' => ['image'],
-		];
 		$profileRedirect = $this->getRedirectForTab('basic');
+		$validator = Validator::make(Input::all(), new ValidationRules\BasicInformation());
 
-		$validator = Validator::make(Input::all(), $validationRules);
 		if ($validator->fails()) {
 			return $profileRedirect->withErrors($validator);
 		}
@@ -51,7 +46,17 @@ class ProfileController extends UserBaseController
 		$userProfile->fill(Input::only(['website', 'about']));
 
 		if (Input::has('avatar-delete')) {
-			$userProfile->picture_file_id = null;
+			try {
+				$process = App::make(Process\DeleteAvatar::class, ['user' => $this->user]);
+				$process->process();
+			} catch (Exception $e) {
+				Log::error(
+					'uncaught exception in the delete avatar process',
+					['exception' => $e]
+				);
+
+				throw $e;
+			}
 		} elseif (Input::hasFile('avatar')) {
 			/** @var UploadedFile $avatar */
 			$avatar = Input::file('avatar');
@@ -83,6 +88,7 @@ class ProfileController extends UserBaseController
 			'password' => ['required', 'confirmed'],
 		];
 		$profileRedirect = $this->getRedirectForTab('account');
+
 		if (!$this->user->checkPassword(Input::get('current_password'))) {
 			return $profileRedirect->withErrors(['current_password' => 'Invalid password']);
 		}
@@ -128,7 +134,7 @@ class ProfileController extends UserBaseController
 		if ($this->user->email !== ($email = Request::get('email'))) {
 			(new Process\StartEmailConfirmation($this->user))
 				->process(['new_email' => Request::get('email')]);
-			
+
 			Notification::info(trans('user.profile.confirm_new_email'));
 		}
 

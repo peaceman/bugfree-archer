@@ -24,4 +24,9 @@ class UserProfile extends Eloquent
 	{
 		return $this->belongsTo('ResourceFile', 'picture_file_id');
 	}
+
+	public function hasAvatar()
+	{
+		return $this->picture_file_id !== null;
+	}
 }

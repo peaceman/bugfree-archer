@@ -3,5 +3,5 @@ namespace EDM;
 
 interface ProcessInterface
 {
-	public function process(array $data);
+	public function process(array $data = null);
 }
