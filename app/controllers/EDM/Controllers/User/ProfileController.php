@@ -1,21 +1,20 @@
 <?php
 namespace EDM\Controllers\User;
 
+use App;
 use EDM\Resource\Storage\StorageDirector;
-use EDM\User\ValidationRules;
 use EDM\User\Process;
+use EDM\User\ValidationRules;
 use Hash;
 use Input;
 use Notification;
 use Redirect;
+use ResourceFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use User;
+use URL;
 use UserProfile;
 use Validator;
 use View;
-use App;
-use ResourceFile;
-use URL;
 
 class ProfileController extends UserBaseController
 {
@@ -120,14 +119,16 @@ class ProfileController extends UserBaseController
 		$this->user->real_name = Request::get('real_name');
 		if (!$this->user->save()) {
 			Notification::error(trans('common.save_failed'));
+
 			return $this->getRedirectForTab('account');
 		}
 
 		Notification::success(trans('common.data_update_successful'));
 
 		if ($this->user->email !== ($email = Request::get('email'))) {
-			with(new Process\StartEmailConfirmation($this->user))
+			(new Process\StartEmailConfirmation($this->user))
 				->process(['new_email' => Request::get('email')]);
+			
 			Notification::info(trans('user.profile.confirm_new_email'));
 		}
 
