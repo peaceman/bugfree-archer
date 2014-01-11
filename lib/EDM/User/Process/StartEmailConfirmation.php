@@ -1,7 +1,7 @@
 <?php
 namespace EDM\User\Process;
 
-class StartEmailChange extends AbstractUserProcess
+class StartEmailConfirmation extends AbstractUserProcess
 {
 	public function process(array $data)
 	{

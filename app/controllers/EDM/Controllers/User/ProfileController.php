@@ -126,7 +126,7 @@ class ProfileController extends UserBaseController
 		Notification::success(trans('common.data_update_successful'));
 
 		if ($this->user->email !== ($email = Request::get('email'))) {
-			with(new Process\StartEmailChange($this->user))
+			with(new Process\StartEmailConfirmation($this->user))
 				->process(['new_email' => Request::get('email')]);
 			Notification::info(trans('user.profile.confirm_new_email'));
 		}

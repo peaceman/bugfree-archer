@@ -44,7 +44,13 @@ class UserEmailConfirmation extends Eloquent
 		);
 		$expiredAt = $this->created_at->copy()->addMinutes($expiryInterval);
 
-		return $expiredAt->isPast();
+		$result = $expiredAt->isPast();
+		if ($result && $this->state !== static::STATE_EXPIRED) {
+			$this->state = static::STATE_EXPIRED;
+			$this->save();
+		}
+
+		return $result;
 	}
 
 	public function stateContext()

@@ -1,4 +1,6 @@
 <?php
+use EDM\User\Process;
+
 class UserController extends BaseController
 {
 	public function showSignUpForm()
@@ -34,78 +36,37 @@ class UserController extends BaseController
 		}
 	}
 
-	/**
-	 * @param string $confirmationHash
-	 */
 	public function performEmailConfirmation($confirmationHash)
 	{
-		/** @var UserEmailConfirmation $emailConfirmation */
-		$emailConfirmation = UserEmailConfirmation::where('hash', $confirmationHash)->orderBy(
-			'created_at',
-			'desc'
-		)->first();
+		$process = new \EDM\User\Process\FinishEmailConfirmation();
 
-		if ($emailConfirmation === null) {
-			Log::info(
-				'tried to confirm an email with a non existing confirmation hash',
-				['hash' => $confirmationHash, 'ip' => Request::server('REMOTE_ADDR')]
-			);
+		try {
+			$process->process($confirmationHash);
+			Notification::success(trans('flash.user.email_confirmation_successful'));
+
+			return Redirect::route('frontpage');
+		} catch (Process\Exception\EmailConfirmation\NonExistingConfirmationHash $e) {
 			App::abort(404);
-		}
-
-		if ($emailConfirmation->state !== UserEmailConfirmation::STATE_UNUSED) {
-			$data = [
+		} catch (Process\Exception\EmailConfirmation\AbstractException $e) {
+			$viewData = [
 				'header' => trans('common.email_confirmation'),
 				'header_small' => trans(
 					'user.email_confirmation.error.small_header',
-					['email' => $emailConfirmation->email]
+					['email' => $e->getConfirmation()->email]
 				),
-				'text' => trans('user.email_confirmation.error.' . $emailConfirmation->state),
+				'text' => trans('user.email_confirmation.error.' . $e->getConfirmation()->state),
 			];
+
 			return Redirect::route('full-page-error')
-				->with(['full-page-error' => $data]);
+				->with(['full-page-error' => $viewData]);
+		} catch (Exception $e) {
+			Log::error(
+				'uncaught exception in the finish email confirmation process',
+				['exception' => $e]
+			);
+
+			throw $e;
 		}
-
-		if ($emailConfirmation->isExpired()) {
-			$emailConfirmation->state = UserEmailConfirmation::STATE_EXPIRED;
-			$emailConfirmation->save();
-
-			$data = [
-				'header' => trans('common.email_confirmation'),
-				'header_small' => trans(
-					'user.email_confirmation.error.small_header',
-					['email' => $emailConfirmation->email]
-				),
-				'text' => trans('user.email_confirmation.error.expired'),
-			];
-			return Redirect::route('full-page-error')
-				->with(['full-page-error' => $data]);
-		}
-
-		$user = $emailConfirmation->user;
-		$user->email = $emailConfirmation->email;
-
-		// only change user state to active, if it was in the unconfirmed state
-		// to prevent unintentional user state changes
-		if ($user->state === User::STATE_UNCONFIRMED_EMAIL) {
-			$user->state = User::STATE_ACTIVE;
-		}
-
-		$user->save();
-
-		// deactivate unused email confirmations for the same address
-		UserEmailConfirmation::where('state', '=', UserEmailConfirmation::STATE_UNUSED)
-			->where('email', '=', $emailConfirmation->email)
-			->update(['state' => UserEmailConfirmation::STATE_DEACTIVATED]);
-
-		$emailConfirmation->state = UserEmailConfirmation::STATE_USED;
-		$emailConfirmation->save();
-
-		Event::fire(User::EVENT_EMAIL_CONFIRMATION, $user);
-		Auth::login($user);
-
-		Notification::success(trans('flash.user.email_confirmation_successful'));
-		return Redirect::route('frontpage');
 	}
 
 	public function showResendConfirmationEmail()
