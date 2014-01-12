@@ -42,7 +42,7 @@ class ProfileController extends UserBaseController
 			return $profileRedirect->withErrors($validator);
 		}
 
-		$userProfile = $this->user->profile ? : new UserProfile();
+		$userProfile = $this->user->getProfile();
 		$userProfile->fill(Input::only(['website', 'about']));
 
 		if (Input::has('avatar-delete')) {
@@ -60,22 +60,21 @@ class ProfileController extends UserBaseController
 		} elseif (Input::hasFile('avatar')) {
 			/** @var UploadedFile $avatar */
 			$avatar = Input::file('avatar');
-			/** @var \ResourceFile $avatarResourceFile */
-			$avatarResourceFile = ResourceFile::create([
-				'protected' => false,
-				'original_name' => $avatar->getClientOriginalName(),
-				'mime_type' => $avatar->getMimeType(),
-				'size' => $avatar->getSize(),
-			]);
 
-			/** @var StorageDirector $storageDirector */
-			$storageDirector = App::make('storage-director');
-			$storageDirector->initialStorageTransport($avatarResourceFile, $avatar->getRealPath());
+			try {
+				$process = App::make(Process\CreateAvatar::class, ['user' => $this->user]);
+				$process->process(['avatar_file' => $avatar]);
+			} catch (Exception $e) {
+				Log::error(
+					'uncaught exception in the create avatar process',
+					['exception' => $e]
+				);
 
-			$userProfile->picture_file_id = $avatarResourceFile->id;
+				throw $e;
+			}
 		}
 
-		$this->user->profile()->save($userProfile);
+		$userProfile->save();
 		Notification::success(trans('user.profile.updated_basic_profile'));
 
 		return $profileRedirect;

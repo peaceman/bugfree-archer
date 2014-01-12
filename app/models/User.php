@@ -163,4 +163,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	{
 		return Hash::check($clearTextPassword, $this->password);
 	}
+
+	public function getProfile()
+	{
+		if (!$this->profile) {
+			$profile = new UserProfile();
+			$profile->user_id = $this->id;
+
+			return $profile;
+		}
+
+		return $this->profile;
+	}
 }
