@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
 use Validator;
 use View;
+use Request;
 
 class ProfileController extends UserBaseController
 {
@@ -53,7 +54,7 @@ class ProfileController extends UserBaseController
 		$userAddress->save();
 		Notification::success(trans('user.profile.updated_address_information'));
 
-		return $profileRedirect;
+		return Redirect::intended($profileRedirect);
 	}
 
 	public function postBasic()

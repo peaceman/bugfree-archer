@@ -31,6 +31,7 @@ Route::get(
 );
 
 Route::get('error', ['as' => 'full-page-error', 'uses' => 'HomeController@showFullPageError']);
+Route::get('start-selling', ['as' => 'start-selling', 'uses' => 'HomeController@startSelling']);
 
 Route::get('auth/log-in', ['as' => 'auth.log-in', 'uses' => 'AuthController@showLogInForm']);
 Route::post('auth/log-in', ['as' => 'auth.perform.log-in', 'uses' => 'AuthController@performLogin']);

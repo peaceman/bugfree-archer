@@ -18,7 +18,8 @@ class AuthController extends BaseController
 
 		if (Auth::attempt($credentials, $remember) && Auth::user()->isAllowedToLogin()) {
 			Notification::success(trans('flash.auth.login_successful'));
-			return Redirect::route('frontpage');
+
+			return Redirect::intended(URL::route('frontpage'));
 		} else {
 			Auth::logout();
 			return Redirect::route('auth.log-in')

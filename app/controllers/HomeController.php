@@ -33,4 +33,19 @@ class HomeController extends BaseController
 			->with($data);
 	}
 
+	public function startSelling()
+	{
+		if (!Auth::check()) {
+			return Redirect::guest(URL::route('auth.log-in'));
+		}
+
+		$user = Auth::user();
+		if (!$user->address) {
+			Notification::info(trans('user.profile.missing_address_for_selling'));
+			return Redirect::guest(URL::route('user.profile', ['username' => $user->username]) . '#!address');
+		}
+
+		return Redirect::route('user.items.create', ['username' => $user->username]);
+	}
+
 }

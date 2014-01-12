@@ -21,8 +21,7 @@
 				<a href="{{ route('user.profile', ['username' => $user->username]) }}">{{ trans('dashboard.nav.profile') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('user.private-messages', ['username' => $user->username]) }}">{{ trans('dashboard.nav.private_messages')
-					}}</a>
+				<a href="{{ route('user.private-messages', ['username' => $user->username]) }}">{{ trans('dashboard.nav.private_messages') }}</a>
 			</li>
 
 			<li class="nav-header disabled">
@@ -32,8 +31,7 @@
 				<a href="{{ route('user.orders', ['username' => $user->username]) }}">{{ trans('dashboard.nav.orders.history') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('user.order-conflicts', ['username' => $user->username]) }}">{{ trans('dashboard.nav.orders.conflicts')
-					}}</a>
+				<a href="{{ route('user.order-conflicts', ['username' => $user->username]) }}">{{ trans('dashboard.nav.orders.conflicts') }}</a>
 			</li>
 
 			<li class="nav-header disabled">
@@ -46,8 +44,7 @@
 				<a href="{{ route('user.items', ['username' => $user->username]) }}">{{ trans('dashboard.nav.items.list') }}</a>
 			</li>
 			<li>
-				<a href="{{ route('user.customer-questions', ['username' => $user->username]) }}">{{
-					trans('dashboard.nav.items.customer_questions') }}</a>
+				<a href="{{ route('user.customer-questions', ['username' => $user->username]) }}">{{ trans('dashboard.nav.items.customer_questions') }}</a>
 			</li>
 		</ul>
 	</div>

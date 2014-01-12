@@ -24,7 +24,7 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="/sell">{{ trans('navbar.start_selling') }}</a>
+					<a href="{{ route('start-selling') }}">{{ trans('navbar.start_selling') }}</a>
 				</li>
 				@if (Auth::check())
 				<li class="dropdown">

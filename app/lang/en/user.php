@@ -20,6 +20,7 @@ return [
 			'account' => 'Account',
 			'address' => 'Address'
 		],
+		'missing_address_for_selling' => 'You need to enter a valid address to start selling',
 		'leave_password_empty' => "leave empty if you don't want to change your password",
 		'change_password' => 'Change password',
 		'password_change_successful' => 'We updated your password',
@@ -33,5 +34,18 @@ return [
 		'address' => 'Address information',
 		'updated_address_information' => 'Updated address information',
 		'avatar_upload_failed' => 'Avatar upload failed',
+	],
+	'items' => [
+		'create' => [
+			'dashboard_header' => 'Create a new project file',
+			'form' => [
+				'panel_title' => 'Details of your project file',
+				'metadata' => 'Metadata',
+				'compatibility' => 'Compatibility',
+			],
+			'info' => [
+				'panel_title' => 'Pay attention'
+			],
+		],
 	],
 ];
