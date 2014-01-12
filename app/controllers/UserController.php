@@ -41,10 +41,10 @@ class UserController extends BaseController
 		$process = new \EDM\User\Process\FinishEmailConfirmation();
 
 		try {
-			$process->process($confirmationHash);
+			$process->process(['confirmation_hash' => $confirmationHash]);
 			Notification::success(trans('flash.user.email_confirmation_successful'));
 
-			return Redirect::route('frontpage');
+			return Redirect::route('auth.log-in');
 		} catch (Process\Exception\EmailConfirmation\NonExistingConfirmationHash $e) {
 			App::abort(404);
 		} catch (Process\Exception\EmailConfirmation\AbstractException $e) {

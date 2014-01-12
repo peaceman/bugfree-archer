@@ -31,6 +31,9 @@ class FinishEmailConfirmation implements ProcessInterface
 		$user->email = $emailConfirmation->email;
 		$user->save();
 
+		$emailConfirmation->state = \UserEmailConfirmation::STATE_USED;
+		$emailConfirmation->save();
+
 		$this->deactivateUnusedEmailConfirmationsForTheSameAddress($emailConfirmation->email);
 
 		Event::fire(\User::EVENT_EMAIL_CONFIRMATION, $user);
@@ -59,7 +62,7 @@ class FinishEmailConfirmation implements ProcessInterface
 				['user_email_confirmation' => $confirmation->toArray()]
 			);
 
-			throw new Exception\EmailConfirmation\AlreadyUsedConfirmationHash();
+			throw new Exception\EmailConfirmation\AlreadyUsedConfirmationHash($confirmation);
 		}
 
 		if ($confirmation->isExpired()) {
@@ -68,7 +71,7 @@ class FinishEmailConfirmation implements ProcessInterface
 				['user_email_confirmation' => $confirmation->toArray()]
 			);
 
-			throw new Exception\EmailConfirmation\ExpiredConfirmationHash();
+			throw new Exception\EmailConfirmation\ExpiredConfirmationHash($confirmation);
 		}
 	}
 
