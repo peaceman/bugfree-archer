@@ -114,6 +114,7 @@ return array(
 		'Slushie\Middleware\MiddlewareServiceProvider',
 		'Krucas\Notification\NotificationServiceProvider',
 		'Aws\Laravel\AwsServiceProvider',
+		'Baum\BaumServiceProvider',
 
 		// app
 		'EDM\Resource\Storage\StorageServiceProvider',

@@ -15,9 +15,9 @@ class CreateMusicGenresTable extends Migration {
 		Schema::create('music_genres', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('name', 64);
 			$table->unsignedInteger('review_id')->nullable();
 			$table->unsignedInteger('user_tracking_session_id')->nullable();
+			$table->string('name', 64);
 			$table->timestamps();
 		});
 	}

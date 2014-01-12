@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
 		$this->call('CountriesSeeder');
 		$this->call('ResourceLocationSeeder');
 		$this->call('UserSeeder');
+		$this->call('ShopCategorySeeder');
 	}
 
 }

@@ -8,7 +8,9 @@
 		"webpatser/laravel-countries": "dev-master",
 		"slushie/laravel-middleware": "dev-master",
 		"edvinaskrucas/notification": "1.*",
-		"aws/aws-sdk-php-laravel": "1.*"
+		"aws/aws-sdk-php-laravel": "1.*",
+        "supremenewmedia/finance": "dev-master",
+        "baum/baum": "dev-develop"
 	},
 	"autoload": {
 		"classmap": [
