@@ -11,6 +11,8 @@
 |
 */
 
+Route::filter('qualifies-as-vendor', EDM\User\Filters\QualifiesAsVendorFilter::class);
+
 Route::get(
 	'/',
 	['as' => 'frontpage', function () {
@@ -31,7 +33,7 @@ Route::get(
 );
 
 Route::get('error', ['as' => 'full-page-error', 'uses' => 'HomeController@showFullPageError']);
-Route::get('start-selling', ['as' => 'start-selling', 'uses' => 'HomeController@startSelling']);
+Route::get('start-selling', ['as' => 'start-selling', 'before' => 'qualifies-as-vendor', 'uses' => 'HomeController@startSelling']);
 
 Route::get('auth/log-in', ['as' => 'auth.log-in', 'uses' => 'AuthController@showLogInForm']);
 Route::post('auth/log-in', ['as' => 'auth.perform.log-in', 'uses' => 'AuthController@performLogin']);
@@ -66,15 +68,17 @@ Route::group(
 		Route::post('users/{username}/profile/basic', ['as' => 'user.profile.perform.basic', 'uses' => 'ProfileController@postBasic']);
 		Route::post('users/{username}/profile/address', ['as' => 'user.profile.perform.address', 'uses' => 'ProfileController@postAddress']);
 
-		Route::get('users/{username}/orders', ['as' => 'user.orders', 'uses' => 'OrderController@getIndex']);
-		Route::get('users/{username}/order-conflicts', ['as' => 'user.order-conflicts', 'uses' => 'OrderConflictController@getIndex']);
+		Route::group(['before' => 'qualifies-as-vendor'], function () {
+			Route::get('users/{username}/orders', ['as' => 'user.orders', 'uses' => 'OrderController@getIndex']);
+			Route::get('users/{username}/order-conflicts', ['as' => 'user.order-conflicts', 'uses' => 'OrderConflictController@getIndex']);
 
-		Route::get('users/{username}/items', ['as' => 'user.items', 'uses' => 'ItemController@getIndex']);
-		Route::get('users/{username}/items/create', ['as' => 'user.items.create', 'uses' => 'ItemController@getCreate']);
-		Route::get(
-			'users/{username}/customer-questions',
-			['as' => 'user.customer-questions', 'uses' => 'CustomerQuestionController@getIndex']
-		);
+			Route::get('users/{username}/items', ['as' => 'user.items', 'uses' => 'ItemController@getIndex']);
+			Route::get('users/{username}/items/create', ['as' => 'user.items.create', 'uses' => 'ItemController@getCreate']);
+			Route::get(
+				'users/{username}/customer-questions',
+				['as' => 'user.customer-questions', 'uses' => 'CustomerQuestionController@getIndex']
+			);
+		});
 	}
 );
 
