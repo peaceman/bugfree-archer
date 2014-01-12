@@ -10,7 +10,7 @@ class BasicInformation implements ValidationRulesInterface
 		return [
 			'website' => ['url'],
 			'about' => ['max:5000'],
-			'avatar' => ['image'],
+			'avatar' => ['image', 'max:4096'],
 		];
 	}
 }

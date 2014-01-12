@@ -84,6 +84,7 @@ App::down(
 
 require app_path() . '/filters.php';
 require app_path() . '/test-routes.php';
+require app_path() . '/macros.php';
 
 Event::subscribe(new EDM\User\UserEventHandler);
 

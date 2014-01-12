@@ -5,6 +5,7 @@ use EDM\Resource\Storage\StorageDirector;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use User;
 
+
 class CreateAvatar extends AbstractUserProcess
 {
 	/**
@@ -25,6 +26,8 @@ class CreateAvatar extends AbstractUserProcess
 		$avatarFile = $data['avatar_file'];
 		$userProfile = $this->user->profile;
 
+		$this->ensureFileValidity($avatarFile);
+
 		$resourceFile = \ResourceFile::create([
 			'protected' => false,
 			'original_name' => $avatarFile->getClientOriginalName(),
@@ -34,7 +37,23 @@ class CreateAvatar extends AbstractUserProcess
 
 		$this->storageDirector->initialStorageTransport($resourceFile, $avatarFile->getRealPath());
 
+		if ($userProfile->picture_file_id !== null) {
+			$this->deleteOldAvatar();
+		}
 		$userProfile->picture_file_id = $resourceFile->id;
 		$userProfile->save();
+	}
+
+	protected function deleteOldAvatar()
+	{
+		$userProfile = $this->user->profile;
+		$this->storageDirector->queueWipingOfResourceFile($userProfile->avatar);
+	}
+
+	protected function ensureFileValidity(UploadedFile $file)
+	{
+		if (!$file->isValid()) {
+			throw new Exception\InvalidAvatarFile($file);
+		}
 	}
 }

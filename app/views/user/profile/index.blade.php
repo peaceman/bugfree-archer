@@ -27,7 +27,7 @@
 		@include('user.profile.tab.basic')
 	</div>
 	<div class="tab-pane" id="address">
-		address
+		@include('user.profile.tab.address')
 	</div>
 </div>
 @stop

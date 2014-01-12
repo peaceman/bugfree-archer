@@ -30,5 +30,8 @@ return [
 		'basic_information' => 'Basic information',
 		'pictures' => 'Pictures',
 		'updated_basic_profile' => 'Updated basic profile information',
+		'address' => 'Address information',
+		'updated_address_information' => 'Updated address information',
+		'avatar_upload_failed' => 'Avatar upload failed',
 	],
 ];

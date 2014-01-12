@@ -63,6 +63,7 @@ Route::group(
 		Route::post('users/{username}/profile/password', ['as' => 'user.profile.perform.password', 'uses' => 'ProfileController@postChangePassword']);
 		Route::post('users/{username}/profile/account', ['as' => 'user.profile.perform.account', 'uses' => 'ProfileController@postAccount']);
 		Route::post('users/{username}/profile/basic', ['as' => 'user.profile.perform.basic', 'uses' => 'ProfileController@postBasic']);
+		Route::post('users/{username}/profile/address', ['as' => 'user.profile.perform.address', 'uses' => 'ProfileController@postAddress']);
 
 		Route::get('users/{username}/orders', ['as' => 'user.orders', 'uses' => 'OrderController@getIndex']);
 		Route::get('users/{username}/order-conflicts', ['as' => 'user.order-conflicts', 'uses' => 'OrderConflictController@getIndex']);

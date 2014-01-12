@@ -3,7 +3,7 @@ namespace EDM\User\Process;
 
 class StartEmailConfirmation extends AbstractUserProcess
 {
-	public function process(array $data)
+	public function process(array $data = null)
 	{
 		$email = $data['new_email'];
 

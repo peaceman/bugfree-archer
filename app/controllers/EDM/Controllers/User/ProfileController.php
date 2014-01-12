@@ -4,27 +4,29 @@ namespace EDM\Controllers\User;
 use App;
 use EDM\User\Process;
 use EDM\User\ValidationRules;
+use Exception;
 use Hash;
 use Input;
+use Log;
 use Notification;
 use Redirect;
-use ResourceFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
-use UserProfile;
 use Validator;
 use View;
-use Exception;
-use Log;
 
 class ProfileController extends UserBaseController
 {
 	public function getIndex()
 	{
-		$userProfile = $this->user->profile;
+		$userProfile = $this->user->getProfile();
 		$userAvatar = $userProfile ? $userProfile->avatar : null;
+		$userAddress = $this->user->getAddress();
+		$countries = array_map(function ($country) {
+			return $country['name'];
+		}, \Countries::getList());
 
-		return View::make('user.profile.index', compact('userProfile', 'userAvatar'));
+		return View::make('user.profile.index', compact('userProfile', 'userAvatar', 'userAddress', 'countries'));
 	}
 
 	protected function getRedirectForTab($tabName)
@@ -32,6 +34,26 @@ class ProfileController extends UserBaseController
 		return Redirect::to(
 			URL::route('user.profile', ['username' => $this->user->username]) . '#!' . $tabName
 		);
+	}
+
+	public function postAddress()
+	{
+		$profileRedirect = $this->getRedirectForTab('address');
+		$validator = Validator::make(Input::all(), (new ValidationRules\AddressInformation())->getValidationRules());
+
+		if ($validator->fails()) {
+			return $profileRedirect
+				->withInput()
+				->withErrors($validator);
+		}
+
+		$userAddress = $this->user->getAddress();
+		$userAddress->fill(Input::all());
+
+		$userAddress->save();
+		Notification::success(trans('user.profile.updated_address_information'));
+
+		return $profileRedirect;
 	}
 
 	public function postBasic()
@@ -42,18 +64,22 @@ class ProfileController extends UserBaseController
 			(new ValidationRules\BasicInformation())->getValidationRules()
 		);
 
+		if (Input::has('avatar-delete')) {
+			$this->handleAvatarDeletion();
+		}
+
+		$validator->passes();
+		if (!$validator->messages()->has('avatar') && Input::hasFile('avatar')) {
+			$this->handleAvatarCreation();
+		}
+
 		if ($validator->fails()) {
-			return $profileRedirect->withErrors($validator);
+			return $profileRedirect->withInput()
+				->withErrors($validator);
 		}
 
 		$userProfile = $this->user->getProfile();
 		$userProfile->fill(Input::only(['website', 'about']));
-
-		if (Input::has('avatar-delete')) {
-			$this->handleAvatarDeletion();
-		} elseif (Input::hasFile('avatar')) {
-			$this->handleAvatarCreation();
-		}
 
 		$userProfile->save();
 		Notification::success(trans('user.profile.updated_basic_profile'));
@@ -99,7 +125,8 @@ class ProfileController extends UserBaseController
 		);
 
 		if ($validator->fails()) {
-			return $this->getRedirectForTab('account')->withErrors($validator);
+			return $this->getRedirectForTab('account')->withInput()
+				->withErrors($validator);
 		}
 
 		$this->user->real_name = Request::get('real_name');
@@ -144,6 +171,13 @@ class ProfileController extends UserBaseController
 		try {
 			$process = App::make(Process\CreateAvatar::class, [0 => $this->user]);
 			$process->process(['avatar_file' => $avatar]);
+		} catch (Process\Exception\InvalidAvatarFile $e) {
+			Log::notice(
+				'invalid avatar file in the create avatar process',
+				['error' => $e->avatarFile->getError(), 'error_message' => $e->avatarFile->getErrorMessage()]
+			);
+
+			Notification::warning(trans('user.profile.avatar_upload_failed'));
 		} catch (Exception $e) {
 			Log::error(
 				'uncaught exception in the create avatar process',

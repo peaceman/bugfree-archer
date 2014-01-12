@@ -14,7 +14,7 @@ class FinishEmailConfirmation implements ProcessInterface
 	 * @throws \EDM\User\Process\Exception\EmailConfirmation\ExpiredConfirmationHash
 	 * @throws \EDM\User\Process\Exception\EmailConfirmation\AlreadyUsedConfirmationHash
 	 */
-	public function process(array $data)
+	public function process(array $data = null)
 	{
 		$confirmationHash = $data['confirmation_hash'];
 

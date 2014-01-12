@@ -18,4 +18,8 @@ return [
 	'about' => 'About',
 	'avatar' => 'Avatar',
 	'delete' => 'Delete',
+	'locality' => 'Locality',
+	'address' => 'Address',
+	'postcode' => 'Postcode',
+	'country' => 'Country',
 ];

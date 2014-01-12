@@ -16,6 +16,7 @@ use Illuminate\Auth\UserInterface;
  * @property Carbon\Carbon $updated_at
  *
  * @property UserProfile $profile
+ * @property UserAddress $address
  */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
@@ -146,6 +147,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->hasOne('UserProfile');
 	}
 
+	public function address()
+	{
+		return $this->hasOne('UserAddress');
+	}
+
 	public function createTrackingSession()
 	{
 		$userAgent = UserAgent::firstOrCreate(['value' => Request::server('HTTP_USER_AGENT')]);
@@ -174,5 +180,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		}
 
 		return $this->profile;
+	}
+
+	public function getAddress()
+	{
+		if (!$this->address) {
+			$address = new UserAddress();
+			$address->user_id = $this->id;
+
+			return $address;
+		}
+
+		return $this->address;
 	}
 }
