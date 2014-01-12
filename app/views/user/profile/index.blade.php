@@ -29,5 +29,8 @@
 	<div class="tab-pane" id="address">
 		@include('user.profile.tab.address')
 	</div>
+	<div class="tab-pane" id="payment">
+		@include('user.profile.tab.payment')
+	</div>
 </div>
 @stop
