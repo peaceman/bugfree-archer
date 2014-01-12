@@ -15,6 +15,7 @@ use URL;
 use UserProfile;
 use Validator;
 use View;
+use Exception;
 
 class ProfileController extends UserBaseController
 {
@@ -46,32 +47,9 @@ class ProfileController extends UserBaseController
 		$userProfile->fill(Input::only(['website', 'about']));
 
 		if (Input::has('avatar-delete')) {
-			try {
-				$process = App::make(Process\DeleteAvatar::class, ['user' => $this->user]);
-				$process->process();
-			} catch (Exception $e) {
-				Log::error(
-					'uncaught exception in the delete avatar process',
-					['exception' => $e]
-				);
-
-				throw $e;
-			}
+			$this->handleAvatarDeletion();
 		} elseif (Input::hasFile('avatar')) {
-			/** @var UploadedFile $avatar */
-			$avatar = Input::file('avatar');
-
-			try {
-				$process = App::make(Process\CreateAvatar::class, ['user' => $this->user]);
-				$process->process(['avatar_file' => $avatar]);
-			} catch (Exception $e) {
-				Log::error(
-					'uncaught exception in the create avatar process',
-					['exception' => $e]
-				);
-
-				throw $e;
-			}
+			$this->handleAvatarCreation();
 		}
 
 		$userProfile->save();
@@ -138,5 +116,38 @@ class ProfileController extends UserBaseController
 		}
 
 		return $this->getRedirectForTab('account');
+	}
+
+	protected function handleAvatarDeletion()
+	{
+		try {
+			$process = App::make(Process\DeleteAvatar::class, ['user' => $this->user]);
+			$process->process();
+		} catch (Exception $e) {
+			Log::error(
+				'uncaught exception in the delete avatar process',
+				['exception' => $e]
+			);
+
+			throw $e;
+		}
+	}
+
+	protected function handleAvatarCreation()
+	{
+		/** @var UploadedFile $avatar */
+		$avatar = Input::file('avatar');
+
+		try {
+			$process = App::make(Process\CreateAvatar::class, ['user' => $this->user]);
+			$process->process(['avatar_file' => $avatar]);
+		} catch (Exception $e) {
+			Log::error(
+				'uncaught exception in the create avatar process',
+				['exception' => $e]
+			);
+
+			throw $e;
+		}
 	}
 }
