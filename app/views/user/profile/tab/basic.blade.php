@@ -37,8 +37,10 @@
 			@if ($userAvatar)
 			<img class="img-rounded" src="{{ $userAvatar->getUrl() }}" style="height: 75px"/>
 			<div class="checkbox">
-				{{ Form::checkbox('avatar-delete', true) }}
-				{{ trans('common.delete') }}
+				<label>
+					{{ Form::checkbox('avatar-delete', true) }}
+					{{ trans('common.delete') }}
+				</label>
 			</div>
 			@endif
 		</div>

@@ -40,7 +40,7 @@ class StorageServiceProvider extends ServiceProvider
 	public function registerStorageDirector()
 	{
 		$this->app->bind(
-			'storage-director',
+			StorageDirector::class,
 			function ($app) {
 				$location = $app['ResourceLocation'];
 				$locations = $location->query()

@@ -45,7 +45,7 @@ class FillResourceLocation extends Command {
 		}
 
 		/** @var \EDM\Resource\Storage\StorageDirector $storageDirector */
-		$storageDirector = App::make('storage-director');
+		$storageDirector = App::make(\EDM\Resource\Storage\StorageDirector::class);
 		$storageDirector->queueFillingOfResourceLocation($resourceLocation);
 	}
 

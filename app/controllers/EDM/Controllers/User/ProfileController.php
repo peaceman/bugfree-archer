@@ -2,7 +2,6 @@
 namespace EDM\Controllers\User;
 
 use App;
-use EDM\Resource\Storage\StorageDirector;
 use EDM\User\Process;
 use EDM\User\ValidationRules;
 use Hash;
@@ -16,6 +15,7 @@ use UserProfile;
 use Validator;
 use View;
 use Exception;
+use Log;
 
 class ProfileController extends UserBaseController
 {
@@ -37,7 +37,10 @@ class ProfileController extends UserBaseController
 	public function postBasic()
 	{
 		$profileRedirect = $this->getRedirectForTab('basic');
-		$validator = Validator::make(Input::all(), new ValidationRules\BasicInformation());
+		$validator = Validator::make(
+			Input::all(),
+			(new ValidationRules\BasicInformation())->getValidationRules()
+		);
 
 		if ($validator->fails()) {
 			return $profileRedirect->withErrors($validator);
@@ -121,7 +124,7 @@ class ProfileController extends UserBaseController
 	protected function handleAvatarDeletion()
 	{
 		try {
-			$process = App::make(Process\DeleteAvatar::class, ['user' => $this->user]);
+			$process = App::make(Process\DeleteAvatar::class, [0 => $this->user]);
 			$process->process();
 		} catch (Exception $e) {
 			Log::error(
@@ -139,7 +142,7 @@ class ProfileController extends UserBaseController
 		$avatar = Input::file('avatar');
 
 		try {
-			$process = App::make(Process\CreateAvatar::class, ['user' => $this->user]);
+			$process = App::make(Process\CreateAvatar::class, [0 => $this->user]);
 			$process->process(['avatar_file' => $avatar]);
 		} catch (Exception $e) {
 			Log::error(

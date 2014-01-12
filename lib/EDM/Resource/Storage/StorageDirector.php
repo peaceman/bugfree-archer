@@ -111,7 +111,7 @@ class StorageDirector
 	public function queueWipingOfResourceFile(ResourceFile $resourceFile, array $resourceLocationIds = null)
 	{
 		/** @var ResourceFileLocation[] $resourceFileLocations */
-		$resourceFileLocations = $resourceFile->resourceFileLocations()->all();
+		$resourceFileLocations = $resourceFile->resourceFileLocations()->get();
 		foreach ($resourceFileLocations as $resourceFileLocation) {
 			$skip = $resourceLocationIds !== null
 				&& !in_array($resourceFileLocation->resource_location_id, $resourceLocationIds);
@@ -132,7 +132,7 @@ class StorageDirector
 	{
 		Queue::push(
 			QueueJobHandler::class . '@' . 'deleteFromStorage',
-			['resource_file_location' => $resourceFileLocation->id]
+			['resource_file_location_id' => $resourceFileLocation->id]
 		);
 	}
 

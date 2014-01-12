@@ -26,7 +26,7 @@ class DeleteAvatar extends AbstractUserProcess
 		}
 
 		$this->storageDirector->queueWipingOfResourceFile($userProfile->avatar);
-		$userProfile->avatar = null;
+		$userProfile->picture_file_id = null;
 		$userProfile->save();
 	}
 }

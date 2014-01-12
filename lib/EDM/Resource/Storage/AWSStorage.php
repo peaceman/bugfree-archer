@@ -2,9 +2,11 @@
 namespace EDM\Resource\Storage;
 
 use Aws\Common\Aws;
+use Aws\S3\Enum\CannedAcl;
 use Aws\S3\S3Client;
 use Config;
 use Log;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AWSStorage implements StorageInterface
 {
@@ -29,6 +31,7 @@ class AWSStorage implements StorageInterface
 		/** @var S3Client $s3 */
 		$s3 = $this->aws->get('s3');
 		$originalResourceFileLocationState = $resourceFileLocation->state;
+		$fileObject = new UploadedFile($filePath, $resourceFileLocation->resourceFile->original_name);
 
 		try {
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADING);
@@ -36,7 +39,12 @@ class AWSStorage implements StorageInterface
 				$this->config['bucket'],
 				$resourceFileLocation->identifier,
 				fopen($filePath, 'r'),
-				$resourceFileLocation->resourceFile->protected ? 'private' : 'public-read'
+				$resourceFileLocation->resourceFile->protected ? CannedAcl::PRIVATE_ACCESS : CannedAcl::PUBLIC_READ,
+				[
+					'params' => [
+						'ContentType' => $fileObject->getMimeType(),
+					],
+				]
 			);
 
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADED);
