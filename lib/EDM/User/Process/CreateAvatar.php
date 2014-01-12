@@ -24,7 +24,7 @@ class CreateAvatar extends AbstractUserProcess
 	{
 		/** @var UploadedFile $avatarFile */
 		$avatarFile = $data['avatar_file'];
-		$userProfile = $this->user->profile;
+		$userProfile = $this->user->getProfile();
 
 		$this->ensureFileValidity($avatarFile);
 

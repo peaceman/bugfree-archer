@@ -172,10 +172,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getProfile()
 	{
-		if (!$this->profile) {
-			$profile = new UserProfile();
-			$profile->user_id = $this->id;
-
+		if (!$this->profile()->first()) {
+			$profile = UserProfile::createForUser($this);
 			return $profile;
 		}
 
