@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
 
 		$this->call('CountriesSeeder');
 		$this->call('ResourceLocationSeeder');
-		// $this->call('UserTableSeeder');
+		$this->call('UserSeeder');
 	}
 
 }
