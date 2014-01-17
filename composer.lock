@@ -132,22 +132,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/etrepat/baum.git",
-                "reference": "cc65d4308d6e668567955ff8ead55b51eb8ed1ed"
+                "reference": "4bddc73e5373b873ca5c0e7dd4dfbfd4f8f0c05b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/etrepat/baum/zipball/cc65d4308d6e668567955ff8ead55b51eb8ed1ed",
-                "reference": "cc65d4308d6e668567955ff8ead55b51eb8ed1ed",
+                "url": "https://api.github.com/repos/etrepat/baum/zipball/4bddc73e5373b873ca5c0e7dd4dfbfd4f8f0c05b",
+                "reference": "4bddc73e5373b873ca5c0e7dd4dfbfd4f8f0c05b",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "~4",
-                "illuminate/database": "~4",
-                "illuminate/filesystem": "~4",
-                "illuminate/support": "~4",
+                "illuminate/console": "4.*",
+                "illuminate/database": "4.*",
+                "illuminate/filesystem": "4.*",
+                "illuminate/support": "4.*",
                 "php": ">=5.3.0"
             },
             "require-dev": {
+                "d11wtq/boris": "dev-master",
                 "mockery/mockery": "0.7.2",
                 "phpunit/phpunit": "3.7.*"
             },
@@ -176,7 +177,7 @@
                 "laravel",
                 "nested set"
             ],
-            "time": "2013-10-30 12:08:52"
+            "time": "2014-01-16 12:35:19"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -365,12 +366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "6ef45a4097c4c99faa0c815e059dffa8e4c3b0bd"
+                "reference": "cd97afb9dd564869d607eb18abf8ec84be647e87"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/6ef45a4097c4c99faa0c815e059dffa8e4c3b0bd",
-                "reference": "6ef45a4097c4c99faa0c815e059dffa8e4c3b0bd",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/cd97afb9dd564869d607eb18abf8ec84be647e87",
+                "reference": "cd97afb9dd564869d607eb18abf8ec84be647e87",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +450,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-01-10 18:51:00"
+            "time": "2014-01-15 23:31:19"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -544,12 +545,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "5cf4035d775007eab068406767928a1428360454"
+                "reference": "3e7339bbf295b361d8c56101e478e0e95647f500"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/5cf4035d775007eab068406767928a1428360454",
-                "reference": "5cf4035d775007eab068406767928a1428360454",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3e7339bbf295b361d8c56101e478e0e95647f500",
+                "reference": "3e7339bbf295b361d8c56101e478e0e95647f500",
                 "shasum": ""
             },
             "require": {
@@ -653,7 +654,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2014-01-12 20:10:56"
+            "time": "2014-01-17 03:59:34"
         },
         {
             "name": "monolog/monolog",
@@ -661,12 +662,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d81ca5a8d2d97bf9d77605359a12399c0ca28653"
+                "reference": "01a01a4841ea749426834d127c897f4dc9d62611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d81ca5a8d2d97bf9d77605359a12399c0ca28653",
-                "reference": "d81ca5a8d2d97bf9d77605359a12399c0ca28653",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/01a01a4841ea749426834d127c897f4dc9d62611",
+                "reference": "01a01a4841ea749426834d127c897f4dc9d62611",
                 "shasum": ""
             },
             "require": {
@@ -720,7 +721,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-01-10 08:22:47"
+            "time": "2014-01-15 09:37:32"
         },
         {
             "name": "nesbot/carbon",
@@ -964,12 +965,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nrk/predis.git",
-                "reference": "0f01b89d44368633e05da72db434df3cb078f08c"
+                "reference": "5f2eea628eb465d866ad2771927d83769c8f956c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/0f01b89d44368633e05da72db434df3cb078f08c",
-                "reference": "0f01b89d44368633e05da72db434df3cb078f08c",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/5f2eea628eb465d866ad2771927d83769c8f956c",
+                "reference": "5f2eea628eb465d866ad2771927d83769c8f956c",
                 "shasum": ""
             },
             "require": {
@@ -1003,7 +1004,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2014-01-10 16:46:58"
+            "time": "2014-01-16 14:10:29"
         },
         {
             "name": "psr/log",
