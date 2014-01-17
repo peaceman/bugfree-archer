@@ -6,43 +6,49 @@
 @section('content.dashboard')
 <div class="row">
 	<div class="col-md-6">
-		<form class="form-horizontal" method="POST" action="">
+		<form method="POST" action="">
 
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h2 class="panel-title">{{ trans('user.items.create.form.panel_title') }}</h2>
 				</div>
 				<div class="panel-body">
-					{% for error in form.non_field_errors %}
-					<div class="alert alert-danger"></div>
-					{% endfor %}
+					<div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+						{{ Form::label('title', trans('user.items.create.form.title')) }}
+						{{ Form::text('title', null, ['class' => 'form-control']) }}
+						{{ $errors->first('title') }}
+					</div>
 
+					<div class="form-group {{ $errors->has('description') ? 'has-error': '' }}">
+						{{ Form::label('description', trans('user.items.create.form.description')) }}
+						{{ Form::textarea('description', null, ['rows' => 10, 'class' => 'form-control']) }}
+						{{ $errors->first('description') }}
+					</div>
 
-					{% form_input form.title %}
-					{% form_custom form.description %}
-					<textarea class="form-control" name="" id="" rows="10"></textarea>
-					{% endform_custom %}
-
-
-					<fieldset>
+					<fieldset class="form-horizontal">
 						<legend>{{ trans('user.items.create.form.metadata') }}</legend>
-						{% form_select form.category %}
-						{% form_select form.genre %}
-						{% form_input form.bpm %}
-						{% form_custom form.price %}
-						<div class="input-group">
-							<span class="input-group-addon">€</span>
-							<input class="form-control" type="number" step="0.1" id="" name="" value=""/>
-						</div>
-						{% endform_custom %}
-					</fieldset>
-					<fieldset>
-						<legend>{{ trans('user.items.create.form.compatibility') }}</legend>
+						{{ Form::selectField('shop_category_id', trans('user.items.create.form.shop_category'), $shopCategories) }}
+						{{ Form::selectField('music_genre_id', trans('user.items.create.form.music_genre'), $musicGenres) }}
+						{{ Form::textField('bpm', trans('user.items.create.form.bpm')) }}
 
-						{% form_select form.compatible_programs %}
-						{% form_select form.compatible_plugins %}
-						{% form_select form.compatible_banks %}
+						<div class="form-group">
+							<label class="control-label col-md-3" for="price">{{ trans('user.items.create.form.price') }}</label>
+							<div class="col-md-9">
+								<div class="input-group">
+									<span class="input-group-addon">€</span>
+									<input class="form-control" type="number" step="0.1" id="price" name="price" />
+								</div>
+							</div>
+						</div>
+
 					</fieldset>
+<!--					<fieldset>-->
+<!--						<legend>{{ trans('user.items.create.form.compatibility') }}</legend>-->
+<!---->
+<!--						{% form_select form.compatible_programs %}-->
+<!--						{% form_select form.compatible_plugins %}-->
+<!--						{% form_select form.compatible_banks %}-->
+<!--					</fieldset>-->
 
 
 

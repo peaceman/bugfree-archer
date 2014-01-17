@@ -42,6 +42,12 @@ return [
 				'panel_title' => 'Details of your project file',
 				'metadata' => 'Metadata',
 				'compatibility' => 'Compatibility',
+				'title' => 'Project file title',
+				'description' => 'Description',
+				'shop_category' => 'Category',
+				'music_genre' => 'Music genre',
+				'bpm' => 'BPM',
+				'price' => 'Price'
 			],
 			'info' => [
 				'panel_title' => 'Pay attention'

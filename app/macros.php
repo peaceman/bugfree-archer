@@ -47,7 +47,7 @@ function fieldWrapper($name, $label, $element)
 	$out = '<div class="form-group';
 	$out .= fieldErrorClass($name) . '">';
 	$out .= fieldLabel($name, $label);
-	$out .= '<div class="col-md-6">';
+	$out .= '<div class="col-md-9">';
 	$out .= $element;
 	$out .= fieldErrorMessage($name);
 	$out .= '</div>';
@@ -86,7 +86,7 @@ function fieldLabel($name, $label)
 
 	$name = str_replace('[]', '', $name);
 
-	$out = '<label for="id-field-' . $name . '" class="control-label col-md-2">';
+	$out = '<label for="id-field-' . $name . '" class="control-label col-md-3">';
 	$out .= $label . '</label>';
 
 	return $out;

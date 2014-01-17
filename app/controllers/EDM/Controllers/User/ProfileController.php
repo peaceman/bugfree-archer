@@ -54,7 +54,7 @@ class ProfileController extends UserBaseController
 		$userAddress->save();
 		Notification::success(trans('user.profile.updated_address_information'));
 
-		return Redirect::intended($profileRedirect);
+		return Redirect::intended($profileRedirect->getTargetUrl());
 	}
 
 	public function postBasic()
