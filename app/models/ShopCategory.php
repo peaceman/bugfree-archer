@@ -11,6 +11,7 @@ use Baum\Node, Carbon\Carbon;
  * @property int $depth
  * @property string $name
  * @property string $slug
+ * @property boolean $can_contain_items
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
