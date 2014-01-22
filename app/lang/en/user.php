@@ -37,9 +37,9 @@ return [
 	],
 	'items' => [
 		'create' => [
-			'dashboard_header' => 'Create a new project file',
+			'dashboard_header' => 'Submit a new shop item',
 			'form' => [
-				'panel_title' => 'Details of your project file',
+				'panel_title' => 'Details of your shop item',
 				'metadata' => 'Metadata',
 				'compatibility' => 'Compatibility',
 				'title' => 'Project file title',

@@ -10,10 +10,10 @@ return [
 			'history' => 'Order history',
 			'conflicts' => 'Order conflicts',
 		],
-		'items_header' => 'Items',
+		'items_header' => 'Shop Items',
 		'items' => [
-			'upload' => 'Upload item',
-			'list' => 'List items',
+			'upload' => 'New shop item',
+			'list' => 'List of shop items',
 			'customer_questions' => 'Customer questions',
 		],
 	],
