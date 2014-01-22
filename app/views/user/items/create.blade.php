@@ -6,6 +6,7 @@
 @section('scripts.footer')
 <script src="{{ asset('/assets/angular.min.js') }}"></script>
 <script src="{{ asset('/assets/angular-ui-router.min.js') }}"></script>
+<script src="{{ asset('/assets/restangular.min.js') }}"></script>
 <script src="{{ asset('/assets/shop-items.js') }}"></script>
 @stop
 
