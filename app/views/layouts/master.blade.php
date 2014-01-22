@@ -14,6 +14,7 @@
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 	<![endif]-->
+	@yield('scripts.header', '')
 </head>
 <body>
 <div id="wrap">
@@ -30,5 +31,6 @@
 <script src="{{ asset('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/assets/selectize/js/standalone/selectize.js') }}"></script>
 <script src="{{ asset('/assets/scripts.js') }}"></script>
+@yield('scripts.footer', '')
 </body>
 </html>

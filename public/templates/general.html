@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">General shop item information</h2>
+    </div>
+    <form name="generalForm">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="inputTitle">Title</label>
+                <input class="form-control" id="inputTitle" type="text"/>
+            </div>
+
+            <div class="form-group">
+                <label for="inputPrice">Price</label>
+                <div class="input-group">
+                    <span class="input-group-addon">EUR</span>
+                    <input class="form-control" id="inputPrice" type="number" min="0" step="1"/>
+                    <span class="input-group-addon">.00</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputCategory">Category</label>
+                <select class="form-control" id="inputCategory">
+                    <option value="test">test</option>
+                </select>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-default">Next</button>
+        </div>
+    </form>
+</div>
