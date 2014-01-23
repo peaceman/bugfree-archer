@@ -1,4 +1,14 @@
 <?php
+
+Route::get(
+	'test-hier',
+	function () {
+		return ShopCategory::roots()->get()->map(function ($rootNode) {
+			return $rootNode->getDescendantsAndSelf()->toHierarchy();
+		});
+	}
+);
+
 Route::get(
 	'test',
 	function () {

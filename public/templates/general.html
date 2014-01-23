@@ -4,29 +4,41 @@
     </div>
     <form name="generalForm">
         <div class="panel-body">
-            <div class="form-group">
-                <label for="inputTitle">Title</label>
-                <input class="form-control" id="inputTitle" type="text"/>
-            </div>
+            <field-group for="title">
+                <label for="inputTitle" class="control-label">Title</label>
+                <input class="form-control" id="inputTitle" type="text" name="title" ng-model="inputData.title" ng-minlength="4" ng-maxlength="128" required />
+                <validation-message for="title" />
+            </field-group>
 
-            <div class="form-group">
-                <label for="inputPrice">Price</label>
+            <field-group for="price">
+                <label for="inputPrice" class="control-label">Price</label>
+
                 <div class="input-group">
                     <span class="input-group-addon">EUR</span>
-                    <input class="form-control" id="inputPrice" type="number" min="0" step="1"/>
+                    <input class="form-control" id="inputPrice" type="number" name="price" min="0" step="1" ng-model="inputData.price" required/>
                     <span class="input-group-addon">.00</span>
                 </div>
-            </div>
+                <validation-message for="price" />
+            </field-group>
 
-            <div class="form-group">
-                <label for="inputCategory">Category</label>
-                <select class="form-control" id="inputCategory">
-                    <option value="test">test</option>
+            <field-group for="shop_category_id">
+                <label for="inputCategory" class="control-label">Category</label>
+                <select class="form-control"
+                        id="inputCategory"
+                        name="shop_category_id"
+                        ng-model="inputData.shop_category_id"
+                        required
+                        selectize
+                        list-options="staticData.shopCategories">
                 </select>
-            </div>
+                <validation-message for="shop_category_id" />
+            </field-group>
         </div>
         <div class="panel-footer">
-            <button class="btn btn-default">Next</button>
+            <a ng-disabled="!canSave()" class="btn btn-default">Next</a>
+            <hr/>
+            <pre>{{ inputData | json }}</pre>
         </div>
+
     </form>
 </div>

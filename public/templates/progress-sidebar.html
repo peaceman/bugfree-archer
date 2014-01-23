@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Progress</h3>
+    </div>
+    <div class="list-group">
+        <a ng-repeat="step in steps" class="list-group-item" ng-class="{active: step.isActive}" ui-sref="step.route">
+            <h4 class="list-group-item-heading">{{ step.heading }}</h4>
+            <p class="list-group-item-text">{{ step.text }}</p>
+        </a>
+    </div>
+</div>

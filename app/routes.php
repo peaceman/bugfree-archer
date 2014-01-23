@@ -82,4 +82,11 @@ Route::group(
 	}
 );
 
+Route::group(
+	['namespace' => 'EDM\Controllers\Api', 'prefix' => 'api'],
+	function () {
+		Route::resource('shop-categories', 'ShopCategoryController');
+	}
+);
+
 Route::get('me/password', ['as' => 'user.password', 'uses' => 'UserController@showPasswordForm']);
