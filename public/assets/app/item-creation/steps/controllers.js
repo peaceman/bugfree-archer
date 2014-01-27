@@ -3,8 +3,11 @@ angular.module('edmShopItems')
         $scope.service = ItemCreationService;
     }])
     .controller('GeneralCtrl', [
-        'ShopCategoriesSelectList', 'ItemCreationService', '$scope', 
-        function (ShopCategoriesSelectList, ItemCreationService, $scope) {
+        'ShopCategoriesSelectList', 'ItemCreationService', '$scope', '$state',
+        function (ShopCategoriesSelectList, ItemCreationService, $scope, $state) {
+            ItemCreationService.activateStepWithRoute($state.current.name);
+            var currentStep = ItemCreationService.getCurrentStep();
+
             $scope.staticData = {
                 shopCategories: ShopCategoriesSelectList
             };
@@ -19,11 +22,37 @@ angular.module('edmShopItems')
                 return $scope.generalForm.$dirty && $scope.generalForm.$valid;
             };
 
+            $scope.save = function save() {
+                currentStep.inputData = $scope.inputData;
+                ItemCreationService.gotoNextStep();
+            };
+
             $scope.$watch('inputData.shop_category_id', function (newShopCategoryId) {
                 if (_.isUndefined(newShopCategoryId)) return;
-                
+
                 var newShopCategory = _.find(ShopCategoriesSelectList, {id: newShopCategoryId});
                 ItemCreationService.targetItemType = newShopCategory.targetItemType;
             });
+        }
+    ])
+    .controller('ProjectFileCtrl', [
+        '$scope', '$state', 'ItemCreationService', 'MusicGenreSelectList',
+        function ($scope, $state, ItemCreationService, MusicGenreSelectList) {
+            ItemCreationService.activateStepWithRoute($state.current.name);
+            var currentStep = ItemCreationService.getCurrentStep();
+
+            $scope.staticData = {
+                musicGenres: MusicGenreSelectList
+            };
+
+            $scope.inputData = {
+                music_genre_id: undefined,
+                bpm: undefined,
+                description: undefined
+            };
+
+            $scope.canSave = function canSave() {
+                return $scope.projectFileForm.$dirty && $scope.projectFileForm.$value;
+            };
         }
     ]);

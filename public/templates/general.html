@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <h2 class="panel-title">General shop item information</h2>
     </div>
-    <form name="generalForm">
+    <form name="generalForm" ng-submit="save()">
         <div class="panel-body">
             <field-group for="title">
                 <label for="inputTitle" class="control-label">Title</label>
@@ -23,19 +23,13 @@
 
             <field-group for="shop_category_id">
                 <label for="inputCategory" class="control-label">Category</label>
-                <select class="form-control"
-                        id="inputCategory"
-                        name="shop_category_id"
-                        ng-model="inputData.shop_category_id"
-                        required
-                        selectize
-                        list-options="staticData.shopCategories">
+                <select class="form-control" id="inputCategory" name="shop_category_id" ng-model="inputData.shop_category_id" required selectize list-options="staticData.shopCategories">
                 </select>
                 <validation-message for="shop_category_id" />
             </field-group>
         </div>
         <div class="panel-footer">
-            <a ng-disabled="!canSave()" class="btn btn-default">Next</a>
+            <button type="submit" ng-disabled="!canSave()" class="btn btn-default">Next</button>
             <hr/>
             <pre>{{ inputData | json }}</pre>
         </div>

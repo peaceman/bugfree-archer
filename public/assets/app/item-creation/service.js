@@ -1,7 +1,7 @@
 angular.module('edmShopItems')
     .factory('ItemCreationServiceFunctions', [
-        '$rootScope',
-        function ($rootScope) {
+        '$rootScope', '$state',
+        function ($rootScope, $state) {
             return {
                 filterNotDisplayableSteps: function (step) {
                     if (step.requiredTargetItemTypes.length === 0) return true;
@@ -19,6 +19,38 @@ angular.module('edmShopItems')
                 refreshStepsToDisplay: function () {
                     this.stepsToDisplay = this.fetchStepsToDisplay();
                     console.log('refreshed steps to display', this.stepsToDisplay);
+                },
+                activateStepWithRoute: function (route) {
+                    var stepIndex = _.findIndex(this.stepsToDisplay, {route: route});
+                    if (stepIndex === -1) return;
+
+                    this.activateStepWithIndex(stepIndex);
+                },
+                activateStepWithIndex: function (stepIndex) {
+                    if (this.currentStepIndex == stepIndex) return;
+                    this.deactivateCurrentStep();
+
+                    var step = this.stepsToDisplay[stepIndex];
+                    step.isActive = true;
+                    this.currentStepIndex = stepIndex;
+                },
+                deactivateCurrentStep: function () {
+                    if (_.isUndefined(this.currentStepIndex)) return;
+
+                    var step = this.stepsToDisplay[this.currentStepIndex];
+                    step.isActive = false;
+                },
+                getCurrentStep: function () {
+                    if (_.isUndefined(this.currentStepIndex)) return;
+
+                    return this.stepsToDisplay[this.currentStepIndex];
+                },
+                gotoNextStep: function () {
+                    if (_.isUndefined(this.currentStepIndex) || this.stepsToDisplay.length === 0)
+                        return;
+
+                    this.activateStepWithIndex(this.currentStepIndex + 1);
+                    $state.go(this.getCurrentStep().route);
                 }
             };
         }
@@ -36,6 +68,7 @@ angular.module('edmShopItems')
                 var service = _.defaults(defaultProperties, ItemCreationServiceFunctions, BaseService);
                 _.bindAll(service);
 
+                service.resolverFunctions.push(service.refreshStepsToDisplay);
                 service.watchFunctions.push(service.refreshStepsToDisplayAfterTargetItemTypeChange);
                 service.initialize();
 

@@ -35,6 +35,19 @@ angular.module('edmShopItems')
                         templateUrl: '/templates/progress-sidebar.html'
                     }
                 }
+            })
+            .state('project-file', {
+                url: '/project-file',
+                views: {
+                    '@': {
+                        controller: 'ProjectFileCtrl',
+                        templateUrl: '/templates/project-file.html'
+                    },
+                    'progress-sidebar': {
+                        controller: 'ProgressCtrl',
+                        templateUrl: '/templates/progress-sidebar.html'
+                    }
+                }
             });
     }])
     .config([
@@ -42,7 +55,6 @@ angular.module('edmShopItems')
         function (ItemCreationStepsProvider) {
             ItemCreationStepsProvider.setSteps([
                 {
-                    isActive: true,
                     heading: 'General information',
                     text: 'moar dafuq information',
                     route: 'general',

@@ -6,7 +6,9 @@ angular.module('edmShopItems')
                 heading: undefined,
                 text: undefined,
                 route: undefined,
-                requiredTargetItemTypes: []
+                requiredTargetItemTypes: [],
+                state: 'open',
+                inputData: {}
             };
         }
     ])
