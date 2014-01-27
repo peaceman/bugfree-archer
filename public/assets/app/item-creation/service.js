@@ -18,6 +18,7 @@ angular.module('edmShopItems')
                 },
                 refreshStepsToDisplay: function () {
                     this.stepsToDisplay = this.fetchStepsToDisplay();
+                    console.log('refreshed steps to display', this.stepsToDisplay);
                 }
             };
         }

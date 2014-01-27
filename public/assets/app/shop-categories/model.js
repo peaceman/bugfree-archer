@@ -9,19 +9,20 @@ angular.module('edmShopItems')
                 var rootNodes = _.filter(categories, {parent_id: null});
                 var result = [];
 
-                var processBranch = function processBranch(names, node) {
-                    var localNames = _.clone(names);
-                    localNames.push(node.name);
+                var processBranch = function processBranch(ancestorNodes, node) {
+                    var localAncestors = _.clone(ancestorNodes);
+                    localAncestors.push(node);
 
                     if (_.parseInt(node.can_contain_items)) {
                         result.push({
-                            names: localNames,
+                            names: _.pluck(localAncestors, 'name'),
+                            slugs: _.pluck(localAncestors, 'slug'),
                             node: node
                         })
                     }
 
                     var childNodes = _.filter(categories, {parent_id: node.id});
-                    _.forEach(childNodes, _.wrap(localNames, processBranch));
+                    _.forEach(childNodes, _.wrap(localAncestors, processBranch));
                 };
 
                 _.forEach(rootNodes, _.wrap([], processBranch));

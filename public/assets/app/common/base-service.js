@@ -1,6 +1,7 @@
 angular.module('edmShopItems')
     .factory('BaseService', [
-        function () {
+        '$timeout',
+        function ($timeout) {
             return {
                 // properties
                 resolverFunctions: [],
@@ -14,14 +15,12 @@ angular.module('edmShopItems')
                 },
                 callListOfFunctions: function (listOfFunctions) {
                     _.each(listOfFunctions, function (func) {
-                        // var boundFunc = _.bind(func, this);
-                        // boundFunc();
                         func();
                     });
                 },
                 initialize: function () {
                     this.callResolverFunctions();
-                    this.callWatchFunctions();
+                    $timeout(this.callWatchFunctions);
                 }
             };
         }

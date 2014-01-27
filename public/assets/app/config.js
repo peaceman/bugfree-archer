@@ -20,7 +20,8 @@ angular.module('edmShopItems')
                                     deferred.resolve(_.map(shopCategories, function (shopCategory) {
                                         return {
                                             id: shopCategory.node.id,
-                                            name: shopCategory.names.join(' -> ')
+                                            name: shopCategory.names.join(' -> '),
+                                            targetItemType: shopCategory.slugs.join('.')
                                         };
                                     }));
                                 });
@@ -50,7 +51,7 @@ angular.module('edmShopItems')
                     heading: 'Project file information',
                     text: 'moar dafuq project file information',
                     route: 'project-file',
-                    requiredTargetItemTypes: ['project-file.template', 'project-file.preset']
+                    requiredTargetItemTypes: ['project-files.templates', 'project-files.presets']
                 },
                 {
                     heading: 'File upload area',
