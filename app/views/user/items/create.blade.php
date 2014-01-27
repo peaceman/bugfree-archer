@@ -8,7 +8,20 @@
 <script src="{{ asset('/assets/angular.min.js') }}"></script>
 <script src="{{ asset('/assets/angular-ui-router.min.js') }}"></script>
 <script src="{{ asset('/assets/restangular.min.js') }}"></script>
-<script src="{{ asset('/assets/shop-items.js') }}"></script>
+<script>
+angular.module('edmShopItems', ['ui.router', 'restangular']);
+</script>
+<script src="{{ asset('/assets/app/common/utils.js') }}"></script>
+<script src="{{ asset('/assets/app/common/base-service.js') }}"></script>
+<script src="{{ asset('/assets/app/common/directives/field-group.js') }}"></script>
+<script src="{{ asset('/assets/app/common/directives/selectize.js') }}"></script>
+<script src="{{ asset('/assets/app/common/directives/server-side-validation.js') }}"></script>
+<script src="{{ asset('/assets/app/common/directives/validation-message.js') }}"></script>
+<script src="{{ asset('/assets/app/item-creation/service.js') }}"></script>
+<script src="{{ asset('/assets/app/item-creation/steps/model.js') }}"></script>
+<script src="{{ asset('/assets/app/item-creation/steps/controllers.js') }}"></script>
+<script src="{{ asset('/assets/app/shop-categories/model.js') }}"></script>
+<script src="{{ asset('/assets/app/config.js') }}"></script>
 @stop
 
 @section('content.dashboard')
