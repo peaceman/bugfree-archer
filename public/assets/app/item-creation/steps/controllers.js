@@ -1,6 +1,6 @@
 angular.module('edmShopItems')
     .controller('ProgressCtrl', ['$scope', 'ItemCreationService', function ($scope, ItemCreationService) {
-        $scope.steps = ItemCreationService.steps;
+        $scope.steps = ItemCreationService.stepsToDisplay;
     }])
     .controller('GeneralCtrl', ['ShopCategoriesSelectList', '$scope', function (ShopCategoriesSelectList, $scope) {
         $scope.staticData = {

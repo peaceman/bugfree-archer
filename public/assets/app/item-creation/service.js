@@ -3,11 +3,12 @@ angular.module('edmShopItems')
         '$rootScope',
         function ($rootScope) {
             return {
+                filterNotDisplayableSteps: function (step) {
+                    if (step.requiredTargetItemTypes.length === 0) return true;
+                    return _.contains(step.requiredTargetItemTypes, this.targetItemType);
+                },
                 fetchStepsToDisplay: function () {
-                    return _.filter(this.steps, function (step) {
-                        if (step.requiredTargetItemTypes.length === 0) return true;
-                        return _.contains(step.requiredTargetItemTypes, this.targetItemType);
-                    });
+                    return _.filter(this.steps, this.filterNotDisplayableSteps);
                 },
                 targetItemTypeWatchClosure: function () {
                     return this.targetItemType;
