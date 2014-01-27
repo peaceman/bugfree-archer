@@ -1,41 +1,4 @@
 angular.module('edmShopItems', ['ui.router', 'restangular'])
-    .config(['RestangularProvider', function (RestangularProvider) {
-        RestangularProvider.setBaseUrl('/api');
-    }])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/general');
-
-        $stateProvider
-            .state('general', {
-                url: '/general',
-                views: {
-                    '@': {
-                        controller: 'GeneralCtrl',
-                        templateUrl: '/templates/general.html',
-                        resolve: {
-                            'ShopCategoriesSelectList': ['$q', 'ShopCategories', function ($q, ShopCategories) {
-                                var deferred = $q.defer();
-
-                                ShopCategories.hierarchicalItemCategories.then(function (shopCategories) {
-                                    deferred.resolve(_.map(shopCategories, function (shopCategory) {
-                                        return {
-                                            id: shopCategory.node.id,
-                                            name: shopCategory.names.join(' -> ')
-                                        };
-                                    }));
-                                });
-
-                                return deferred.promise;
-                            }]
-                        }
-                    },
-                    'progress-sidebar': {
-                        controller: 'ProgressCtrl',
-                        templateUrl: '/templates/progress-sidebar.html'
-                    }
-                }
-            });
-    }])
     .factory('Utils', ['Restangular', function (Restangular) {
         var buildFieldValidationExpression = function buildFieldValidationExpression(formName, fieldName) {
             var fieldExpression = formName + '.' + fieldName;
@@ -167,57 +130,105 @@ angular.module('edmShopItems', ['ui.router', 'restangular'])
             };
         }
     ])
-    .factory('ItemCreationService', [
-        '$rootScope',
-        function ($rootScope) {
-            var targetItemType = undefined;
-            var steps = [
-                {
-                    isActive: true,
-                    heading: 'General information',
-                    text: 'moar dafuq information',
-                    route: 'general',
-                    requiredTargetItemTypes: []
-                },
-                {
-                    isActive: false,
-                    heading: 'Project file information',
-                    text: 'moar dafuq project file information',
-                    route: 'project-file',
-                    requiredTargetItemTypes: ['project-file.template', 'project-file.preset']
-                },
-                {
-                    isActive: false,
-                    heading: 'File upload area',
-                    text: 'upload your files',
-                    route: 'upload-file',
-                    requiredTargetItemTypes: []
-                },
-                {
-                    isActive: false,
-                    heading: 'Overview and submit',
-                    text: 'moar dafuq overview with ultimate information',
-                    route: 'overview',
-                    requiredTargetItemTypes: []
+    .factory('DefaultStep', [
+        function () {
+            return {
+                isActive: false,
+                heading: undefined,
+                text: undefined,
+                route: undefined,
+                requiredTargetItemTypes: []
+            };
+        }
+    ])
+    .provider(
+        'ItemCreationSteps',
+        function () {
+            var steps = [];
+
+            this.$get = [
+                'DefaultStep',
+                function (DefaultStep) {
+                    return _.map(steps, function (step) {
+                        return _.defaults(step, DefaultStep);
+                    });
                 }
             ];
-            var stepsToDisplay = [];
 
-            var calculateStepsToDisplay = function calculateStepsToDisplay() {
-                stepsToDisplay = _.filter(steps, function (step) {
-                    if (step.requiredTargetItemTypes.length === 0) return true;
-                    return _.contains(step.requiredTargetItemTypes, targetItemType);
-                });
+            this.setSteps = function setSteps(newSteps) {
+                steps = newSteps;
             };
-
-            $rootScope.$watch(function () { return targetItemType; }, function () {
-                calculateStepsToDisplay();
-            });
-
-            calculateStepsToDisplay();
+        }
+    )
+    .factory('BaseService', [
+        function () {
             return {
-                steps: stepsToDisplay
+                // properties
+                resolverFunctions: [],
+                watchFunctions: [],
+                // functions
+                callResolverFunctions: function () {
+                    this.callListOfFunctions(this.resolverFunctions);
+                },
+                callWatchFunctions: function () {
+                    this.callListOfFunctions(this.watchFunctions);
+                },
+                callListOfFunctions: function (listOfFunctions) {
+                    _.each(listOfFunctions, function (func) {
+                        // var boundFunc = _.bind(func, this);
+                        // boundFunc();
+                        func();
+                    });
+                },
+                initialize: function () {
+                    this.callResolverFunctions();
+                    this.callWatchFunctions();
+                }
             };
+        }
+    ])
+    .factory('ItemCreationServiceFunctions', [
+        '$rootScope',
+        function ($rootScope) {
+            return {
+                fetchStepsToDisplay: function () {
+                    return _.filter(this.steps, function (step) {
+                        if (step.requiredTargetItemTypes.length === 0) return true;
+                        return _.contains(step.requiredTargetItemTypes, this.targetItemType);
+                    });
+                },
+                targetItemTypeWatchClosure: function () {
+                    return this.targetItemType;
+                },
+                refreshStepsToDisplayAfterTargetItemTypeChange: function () {
+                    $rootScope.$watch(this.targetItemTypeWatchClosure, this.refreshStepsToDisplay);
+                },
+                refreshStepsToDisplay: function () {
+                    this.stepsToDisplay = this.fetchStepsToDisplay();
+                }
+            };
+        }
+    ])
+    .factory('ItemCreationService', [
+        'BaseService', 'ItemCreationServiceFunctions', 'ItemCreationSteps',
+        function (BaseService, ItemCreationServiceFunctions, ItemCreationSteps) {
+            var defaultProperties = {
+                steps: ItemCreationSteps,
+                stepsToDisplay: [],
+                targetItemType: undefined
+            };
+
+            var buildService = function () {
+                var service = _.defaults(defaultProperties, ItemCreationServiceFunctions, BaseService);
+                _.bindAll(service);
+
+                service.watchFunctions.push(service.refreshStepsToDisplayAfterTargetItemTypeChange);
+                service.initialize();
+
+                return service;
+            };
+            
+            return buildService();
         }
     ])
     .directive('fieldGroup', ['Utils', function (Utils) {
@@ -368,6 +379,75 @@ angular.module('edmShopItems', ['ui.router', 'restangular'])
             }
         }
     }])
+    .config(['RestangularProvider', function (RestangularProvider) {
+        RestangularProvider.setBaseUrl('/api');
+    }])
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/general');
+
+        $stateProvider
+            .state('general', {
+                url: '/general',
+                views: {
+                    '@': {
+                        controller: 'GeneralCtrl',
+                        templateUrl: '/templates/general.html',
+                        resolve: {
+                            'ShopCategoriesSelectList': ['$q', 'ShopCategories', function ($q, ShopCategories) {
+                                var deferred = $q.defer();
+
+                                ShopCategories.hierarchicalItemCategories.then(function (shopCategories) {
+                                    deferred.resolve(_.map(shopCategories, function (shopCategory) {
+                                        return {
+                                            id: shopCategory.node.id,
+                                            name: shopCategory.names.join(' -> ')
+                                        };
+                                    }));
+                                });
+
+                                return deferred.promise;
+                            }]
+                        }
+                    },
+                    'progress-sidebar': {
+                        controller: 'ProgressCtrl',
+                        templateUrl: '/templates/progress-sidebar.html'
+                    }
+                }
+            });
+    }])
+    .config([
+        'ItemCreationStepsProvider',
+        function (ItemCreationStepsProvider) {
+            ItemCreationStepsProvider.setSteps([
+                {
+                    isActive: true,
+                    heading: 'General information',
+                    text: 'moar dafuq information',
+                    route: 'general',
+                },
+                {
+                    isActive: false,
+                    heading: 'Project file information',
+                    text: 'moar dafuq project file information',
+                    route: 'project-file',
+                    requiredTargetItemTypes: ['project-file.template', 'project-file.preset']
+                },
+                {
+                    isActive: false,
+                    heading: 'File upload area',
+                    text: 'upload your files',
+                    route: 'upload-file',
+                },
+                {
+                    isActive: false,
+                    heading: 'Overview and submit',
+                    text: 'moar dafuq overview with ultimate information',
+                    route: 'overview',
+                }                
+            ]);
+        }
+    ])
     .controller('ProgressCtrl', ['$scope', 'ItemCreationService', function ($scope, ItemCreationService) {
         $scope.steps = ItemCreationService.steps;
     }])
