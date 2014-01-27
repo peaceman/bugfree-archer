@@ -13,21 +13,7 @@ angular.module('edmShopItems')
                         controller: 'GeneralCtrl',
                         templateUrl: '/templates/general.html',
                         resolve: {
-                            'ShopCategoriesSelectList': ['$q', 'ShopCategories', function ($q, ShopCategories) {
-                                var deferred = $q.defer();
-
-                                ShopCategories.hierarchicalItemCategories.then(function (shopCategories) {
-                                    deferred.resolve(_.map(shopCategories, function (shopCategory) {
-                                        return {
-                                            id: shopCategory.node.id,
-                                            name: shopCategory.names.join(' -> '),
-                                            targetItemType: shopCategory.slugs.join('.')
-                                        };
-                                    }));
-                                });
-
-                                return deferred.promise;
-                            }]
+                            'ShopCategoriesSelectList': 'ShopCategoriesSelectList'
                         }
                     },
                     'progress-sidebar': {
@@ -41,7 +27,10 @@ angular.module('edmShopItems')
                 views: {
                     '@': {
                         controller: 'ProjectFileCtrl',
-                        templateUrl: '/templates/project-file.html'
+                        templateUrl: '/templates/project-file.html',
+                        resolve: {
+                            'MusicGenreSelectList': 'MusicGenreSelectList'
+                        }
                     },
                     'progress-sidebar': {
                         controller: 'ProgressCtrl',

@@ -34,4 +34,22 @@ angular.module('edmShopItems')
                 hierarchicalItemCategories: deferredHierarchicalItemCategories.promise
             };
         }
+    ])
+    .factory('ShopCategoriesSelectList', [
+        '$q', 'ShopCategories',
+        function ($q, ShopCategories) {
+            var deferred = $q.defer();
+
+            ShopCategories.hierarchicalItemCategories.then(function (shopCategories) {
+                deferred.resolve(_.map(shopCategories, function (shopCategory) {
+                    return {
+                        id: shopCategory.node.id,
+                        name: shopCategory.names.join(' -> '),
+                        targetItemType: shopCategory.slugs.join('.')
+                    };
+                }));
+            });
+
+            return deferred.promise;
+        }
     ]);
