@@ -47,20 +47,17 @@ angular.module('edmShopItems')
                     route: 'general',
                 },
                 {
-                    isActive: false,
                     heading: 'Project file information',
                     text: 'moar dafuq project file information',
                     route: 'project-file',
                     requiredTargetItemTypes: ['project-file.template', 'project-file.preset']
                 },
                 {
-                    isActive: false,
                     heading: 'File upload area',
                     text: 'upload your files',
                     route: 'upload-file',
                 },
                 {
-                    isActive: false,
                     heading: 'Overview and submit',
                     text: 'moar dafuq overview with ultimate information',
                     route: 'overview',
