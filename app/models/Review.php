@@ -22,6 +22,7 @@ class Review extends Eloquent
 
 	const REVIEWEE_MUSIC_GENRE = 'MusicGenre';
 	const REVIEWEE_MUSIC_PROGRAM = 'MusicProgram';
+	const REVIEWEE_MUSIC_PLUGIN = 'MusicPlugin';
 
 	protected $table = 'reviews';
 
