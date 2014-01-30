@@ -87,6 +87,7 @@ Route::group(
 	function () {
 		Route::resource('shop-categories', 'ShopCategoryController');
 		Route::resource('music-genres', 'MusicGenreController');
+		Route::resource('music-programs', 'MusicProgramController');
 	}
 );
 

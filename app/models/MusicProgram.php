@@ -15,4 +15,11 @@ class MusicProgram extends Eloquent
 	use EDM\ModelTraits\UserTrackingSessionAware;
 
 	protected $table = 'music_programs';
+	protected $fillable = ['name'];
+	protected $visible = ['id', 'name'];
+	public static $validationRules = [
+		'name' => ['required', 'min:3', 'max:64', 'unique:music_programs'],
+		'review_id' => ['required', 'exists:reviews,id,reviewee_type,MusicProgram'],
+		'user_tracking_session_id' => ['required', 'exists:user_tracking_sessions'],
+	];
 }
