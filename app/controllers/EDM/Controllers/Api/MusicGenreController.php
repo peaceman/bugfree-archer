@@ -8,7 +8,13 @@ class MusicGenreController extends BaseController
 {
 	public function index()
 	{
-		$musicGenres = MusicGenre::accepted()->asUser($this->user)->get();
+		$query = MusicGenre::accepted()->asUser($this->user);
+
+		if ($this->request->has('q')) {
+			$query->where('name', 'like', $this->request->get('q'));
+		}
+
+		$musicGenres = $query->get();
 		return $this->response->json($musicGenres);
 	}
 
