@@ -165,6 +165,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $trackingSession;
 	}
 
+	public function fetchLastTrackingSession()
+	{
+		return $this->trackingSessions()
+			->orderBy('created_at', 'desc')
+			->first();
+	}
+
 	public function checkPassword($clearTextPassword)
 	{
 		return Hash::check($clearTextPassword, $this->password);

@@ -24,6 +24,11 @@ class Review extends Eloquent
 
 	protected $table = 'reviews';
 
+	public function __construct()
+	{
+		$this->state = static::STATE_WAITING;
+	}
+
 	public function reviewer()
 	{
 		return $this->belongsTo('User');

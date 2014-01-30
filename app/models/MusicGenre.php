@@ -15,4 +15,12 @@ class MusicGenre extends Eloquent
 	use EDM\ModelTraits\UserTrackingSessionAware;
 
 	protected $table = 'music_genres';
+	protected $fillable = ['name'];
+	protected $visible = ['id', 'name'];
+
+	public static $validationRules = [
+		'name' => ['required', 'min:3', 'max:64', 'unique:music_genres'],
+		'review_id' => ['required', 'exists:reviews,id,reviewee_type,MusicGenre'],
+		'user_tracking_session_id' => ['required', 'exists:user_tracking_sessions'],
+	];
 }
