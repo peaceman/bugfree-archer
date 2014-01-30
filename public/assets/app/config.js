@@ -6,7 +6,17 @@ angular.module('edmShopItems')
         $urlRouterProvider.otherwise('/general');
 
         $stateProvider
+            .state('root', {
+                abstract: true,
+                views: {
+                    'progress-sidebar': {
+                        controller: 'ProgressCtrl',
+                        templateUrl: '/templates/progress-sidebar.html',
+                    }
+                }
+            })
             .state('general', {
+                parent: 'root',
                 url: '/general',
                 views: {
                     '@': {
@@ -15,26 +25,19 @@ angular.module('edmShopItems')
                         resolve: {
                             'ShopCategoriesSelectList': 'ShopCategoriesSelectList'
                         }
-                    },
-                    'progress-sidebar': {
-                        controller: 'ProgressCtrl',
-                        templateUrl: '/templates/progress-sidebar.html'
                     }
                 }
             })
             .state('project-file', {
+                parent: 'root',
                 url: '/project-file',
                 views: {
                     '@': {
                         controller: 'ProjectFileCtrl',
                         templateUrl: '/templates/project-file.html',
                         resolve: {
-                            'MusicGenreSelectList': 'MusicGenreSelectList'
+                            'MusicGenresSelectList': 'MusicGenresSelectList'
                         }
-                    },
-                    'progress-sidebar': {
-                        controller: 'ProgressCtrl',
-                        templateUrl: '/templates/progress-sidebar.html'
                     }
                 }
             });

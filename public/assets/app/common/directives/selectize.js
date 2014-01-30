@@ -33,4 +33,33 @@ angular.module('edmShopItems')
                 var selectize = element[0].selectize;
             }
         };
+    }])
+    .directive('selectizeTags', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            require: '?ngModel',
+            scope: {
+                listOptions: '='
+            },
+            link: function (scope, element, attrs, ngModel) {
+                scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
+                    if (_.isUndefined(value)) return;
+
+                    $timeout(function () {
+                        selectize.setValue(value);
+                    });
+                });
+
+                element
+                    .selectize({
+                        valueField: 'id',
+                        labelField: 'name',
+                        searchField: 'name',
+                        create: true,
+                        options: scope.listOptions,
+                    });
+
+                var selectize = element[0].selectize;
+            }
+        }
     }]);

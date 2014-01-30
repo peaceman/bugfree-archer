@@ -2,6 +2,8 @@ angular.module('edmShopItems')
     .factory('ItemCreationServiceFunctions', [
         '$rootScope', '$state',
         function ($rootScope, $state) {
+            $rootScope.$on('$stateChangeError', 
+function(event, toState, toParams, fromState, fromParams, error){ console.log(arguments); });
             return {
                 filterNotDisplayableSteps: function (step) {
                     if (step.requiredTargetItemTypes.length === 0) return true;
@@ -50,7 +52,13 @@ angular.module('edmShopItems')
                         return;
 
                     this.activateStepWithIndex(this.currentStepIndex + 1);
-                    $state.go(this.getCurrentStep().route);
+                    var newRoute = this.getCurrentStep().route;
+
+                    console.log('gotoNextStep transitions to', newRoute);
+                    var statePromise = $state.transitionTo(newRoute);
+                    statePromise.then(function () {
+                        console.log('state promise', arguments);
+                    })
                 }
             };
         }

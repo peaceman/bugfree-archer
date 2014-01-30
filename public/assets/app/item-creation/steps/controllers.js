@@ -36,13 +36,13 @@ angular.module('edmShopItems')
         }
     ])
     .controller('ProjectFileCtrl', [
-        '$scope', '$state', 'ItemCreationService', 'MusicGenreSelectList',
-        function ($scope, $state, ItemCreationService, MusicGenreSelectList) {
+        '$scope', '$state', 'ItemCreationService', 'MusicGenresSelectList',
+        function ($scope, $state, ItemCreationService, MusicGenresSelectList) {
             ItemCreationService.activateStepWithRoute($state.current.name);
             var currentStep = ItemCreationService.getCurrentStep();
 
             $scope.staticData = {
-                musicGenres: MusicGenreSelectList
+                musicGenres: MusicGenresSelectList
             };
 
             $scope.inputData = {
@@ -52,7 +52,12 @@ angular.module('edmShopItems')
             };
 
             $scope.canSave = function canSave() {
-                return $scope.projectFileForm.$dirty && $scope.projectFileForm.$value;
+                return $scope.projectFileForm.$dirty && $scope.projectFileForm.$valid;
+            };
+
+            $scope.save = function save() {
+                currentStep.inputData = $scope.inputData;
+                ItemCreationService.gotoNextStep();
             };
         }
     ]);

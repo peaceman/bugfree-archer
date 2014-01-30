@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2 class="panel-title">Project file information</h2>
+    </div>
+    <form name="projectFileForm" ng-submit="save()">
+        <div class="panel-body">
+            <field-group for="music_genre_id">
+                <label for="inputMusicGenre" class="control-label">Music genre</label>
+
+                <select class="form-control" id="inputMusicGenre" name="music_genre_id" ng-model="inputData.music_genre_id" required selectize-tags list-options="staticData.musicGenres">
+                </select>
+                <validation-message for="music_genre_id" />
+            </field-group>
+
+            <field-group for="bpm">
+                <label for="inputBpm" class="control-label">BPM</label>
+
+                <input class="form-control" id="inputBpm" name="bpm" type="number" min="1" step="1" ng-model="inputData.bpm" required />
+                <validation-message for="bpm" />
+            </field-group>
+
+            <field-group for="description">
+                <label for="inputDescription" class="control-label">Description</label>
+
+                <textarea class="form-control" id="inputDescription" name="description" ng-model="inputData.description" required rows="10" />
+                <validation-message for="description" />
+            </field-group>
+        </div>
+        <div class="panel-footer">
+            <button type="submit" ng-disabled="!canSave()" class="btn btn-default">Next</button>
+            <hr />
+            <pre>{{ inputData | json }}</pre>
+        </div>
+    </form>
+</div>
