@@ -1,12 +1,16 @@
 <?php
 namespace EDM\Controllers\Api;
 
+use EDM\ControllerTraits;
+
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\Environment as ViewFactory;
 
 class BaseController extends \BaseController
 {
+	use ControllerTraits\RequireAuthenticatedUser;
+
 	/**
 	 * @var \Illuminate\Support\Facades\Response
 	 */
@@ -27,5 +31,7 @@ class BaseController extends \BaseController
 		$this->response = $response;
 		$this->request = $request;
 		$this->views = $view;
+
+		$this->beforeFilter('@fetchAuthenticatedUser');
 	}
 }

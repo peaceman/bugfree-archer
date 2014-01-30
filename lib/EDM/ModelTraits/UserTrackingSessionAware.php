@@ -14,4 +14,12 @@ trait UserTrackingSessionAware
 	{
 		return $this->belongsTo('UserTrackingSession');
 	}
+
+	public function scopeAsUser($query, \User $user)
+	{
+		return $query
+			->orWhereHas('userTrackingSession', function ($q) use ($user) {
+				$q->where('user_id', '=', $user->id);
+			});
+	}
 }
