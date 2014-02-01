@@ -69,4 +69,30 @@ angular.module('edmShopItems')
                 ItemCreationService.gotoNextStep();
             };
         }
+    ])
+    .controller('UploadFileCtrl', [
+        '$scope', '$state', 'ItemCreationService',
+        function ($scope, $state, ItemCreationService) {
+            ItemCreationService.activateStepWithRoute($state.current.name);
+            var currentStep = ItemCreationService.getCurrentStep();
+            console.debug('UploadFileCtlr currentStep:', currentStep);
+
+            _.defaults(currentStep.inputData, {
+                files: []
+            });
+
+            $scope.inputData = currentStep.inputData;
+            $scope.canSave = function () {
+                return false;
+            };
+            $scope.save = function () {
+                return false;
+            };
+        }
+    ])
+    .controller('OverviewCtrl', [
+        '$scope', '$state', 'ItemCreationService',
+        function ($scope, $state, ItemCreationService) {
+
+        }
     ]);

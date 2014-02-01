@@ -42,6 +42,26 @@ angular.module('edmShopItems')
                         }
                     }
                 }
+            })
+            .state('upload-file', {
+                parent: 'root',
+                url: '/upload-file',
+                views: {
+                    '@': {
+                        controller: 'UploadFileCtrl',
+                        templateUrl: '/templates/upload-file.html'
+                    }
+                }
+            })
+            .state('overview', {
+                parent: 'root',
+                url: '/overview',
+                views: {
+                    '@': {
+                        controller: 'OverviewCtrl',
+                        templateUrl: '/templates/overview.html'
+                    }
+                }
             });
     }])
     .config([
