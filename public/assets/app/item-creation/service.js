@@ -75,20 +75,24 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
                     console.log('refreshed steps to display', this.stepsToDisplay);
                 },
                 activateStepWithRoute: function (route) {
-                    var step = this.fetchStepByRoute(route);
-                    if (step == this.getCurrentStep()) return;
+                    var routeStep = this.fetchStepByRoute(route);
+                    if (routeStep == this.getCurrentStep()) return;
 
-                    if (!this.canActivateStep(step)) {
-                        console.log("can't activate step", step);
+                    var stepToActivate = undefined;
+                    if (!this.canActivateStep(routeStep)) {
+                        console.log("can't activate step", routeStep);
                         var nextActivatableStep = this.fetchNextActivatableStep();
                         if (_.isUndefined(nextActivatableStep)) {
                             return;
                         } else {
-                            step = nextActivatableStep;
+                            stepToActivate = nextActivatableStep;
                         }
+                    } else {
+                        stepToActivate = routeStep;
                     }
 
-                    this.activateStep(step);
+                    this.activateStep(stepToActivate);
+                    return stepToActivate == routeStep;
                 },
                 activateStep: function (step) {
                     var stepIndex = _.findIndex(this.stepsToDisplay, step);

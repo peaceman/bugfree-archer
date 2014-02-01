@@ -73,7 +73,10 @@ angular.module('edmShopItems')
     .controller('UploadFileCtrl', [
         '$scope', '$state', 'ItemCreationService',
         function ($scope, $state, ItemCreationService) {
-            ItemCreationService.activateStepWithRoute($state.current.name);
+            if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
+                return;
+            }
+            
             var currentStep = ItemCreationService.getCurrentStep();
             console.debug('UploadFileCtlr currentStep:', currentStep);
 
