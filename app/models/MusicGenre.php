@@ -20,7 +20,6 @@ class MusicGenre extends Eloquent
 
 	public static $validationRules = [
 		'name' => ['required', 'min:3', 'max:64', 'unique:music_genres'],
-		'review_id' => ['required', 'exists:reviews,id,reviewee_type,MusicGenre'],
 		'user_tracking_session_id' => ['required', 'exists:user_tracking_sessions'],
 	];
 }

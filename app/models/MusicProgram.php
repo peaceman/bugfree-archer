@@ -19,7 +19,6 @@ class MusicProgram extends Eloquent
 	protected $visible = ['id', 'name'];
 	public static $validationRules = [
 		'name' => ['required', 'min:3', 'max:64', 'unique:music_programs'],
-		'review_id' => ['required', 'exists:reviews,id,reviewee_type,MusicProgram'],
 		'user_tracking_session_id' => ['required', 'exists:user_tracking_sessions'],
 	];
 }

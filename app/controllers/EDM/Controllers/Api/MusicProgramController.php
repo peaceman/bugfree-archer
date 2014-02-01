@@ -29,19 +29,15 @@ class MusicProgramController extends BaseController
 			return $this->response->json(['errors' => $validator->errors()->toArray()], 400);
 		}
 
-		$review = new Review();
-		$review->reviewee_type = Review::REVIEWEE_MUSIC_PROGRAM;
-		$review->save();
-
 		$program = new MusicProgram($inputData);
 		$program->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
-		$program->review()->associate($review);
 
 		if (!$program->save()) {
 			Log::error('failed to store a user supplied music program', ['music_program' => $program->getAttributes()]);
 			return $this->response->json(['errors' => ['unexpected system failure']], 500);
 		}
 
+		$program->review()->save(new Review());
 		return $this->response->json($program, 201);
 	}
 }

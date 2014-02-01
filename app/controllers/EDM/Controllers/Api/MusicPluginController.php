@@ -32,13 +32,8 @@ class MusicPluginController extends BaseController
 			);
 		}
 
-		$review = new Review();
-		$review->reviewee_type = Review::REVIEWEE_MUSIC_PLUGIN;
-		$review->save();
-
 		$plugin = new MusicPlugin($inputData);
 		$plugin->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
-		$plugin->review()->associate($review);
 
 		if (!$plugin->save()) {
 			Log::error(
@@ -51,6 +46,7 @@ class MusicPluginController extends BaseController
 			);
 		}
 
+		$plugin->review()->save(new Review());
 		return $this->response->json($plugin, 201);
 	}
 }

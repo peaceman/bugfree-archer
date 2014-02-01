@@ -8,6 +8,7 @@ use Carbon\Carbon;
  * @property int $reviewer_id
  * @property User $reviewer
  * @property string $state
+ * @property int $reviewee_id
  * @property string $reviewee_type
  * @property string $result
  * @property string $result_reasoning
@@ -34,5 +35,10 @@ class Review extends Eloquent
 	public function reviewer()
 	{
 		return $this->belongsTo('User');
+	}
+
+	public function reviewee()
+	{
+		return $this->morphTo();
 	}
 }

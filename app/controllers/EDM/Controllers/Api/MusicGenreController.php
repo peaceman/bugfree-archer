@@ -29,19 +29,15 @@ class MusicGenreController extends BaseController
 			return $this->response->json(['errors' => $validator->errors()->toArray()], 400);
 		}
 
-		$review = new Review();
-		$review->reviewee_type = Review::REVIEWEE_MUSIC_GENRE;
-		$review->save();
-
 		$genre = new MusicGenre($inputData);
 		$genre->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
-		$genre->review()->associate($review);
 
 		if (!$genre->save()) {
 			Log::error('failed to store a user supplied music genre', ['music_genre' => $genre->getAttibutes()]);
 			return $this->response->json(['errors' => ['unexpected system failure']], 500);
 		}
 
+		$genre->review()->save(new Review());
 		return $this->response->json($genre, 201);
 	}
 }
