@@ -16,7 +16,7 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
 
                     var stepIndex = _.findIndex(this.stepsToDisplay, step);
                     if (_.isUndefined(this.currentStepIndex) && stepIndex === 0) return true;
-                    if (this.currentStepIndex === stepIndex) return false;
+                    if (this.currentStepIndex === stepIndex) return true;
 
                     var length = this.stepsToDisplay.length;
                     for (var i = 0; i < length; i++) {
@@ -32,7 +32,7 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
 
                     return true;
                 },
-                fetchNextActivatableStep: function () {
+                fetchNextActivatableStep: function (currentStep) {
                     console.debug('fetchNextActivatableStep');
                     if (_.isUndefined(this.currentStepIndex)) {
                         console.log('current step index is undefined, start with first step');
@@ -42,6 +42,10 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
                     var amountOfDisplayableSteps = this.stepsToDisplay.length;
                     for (var i = this.currentStepIndex; i < amountOfDisplayableSteps; i++) {
                         var nextStep = this.stepsToDisplay[i];
+                        if (_.isObject(currentStep) && nextStep == currentStep) {
+                            continue;
+                        }
+
                         if (this.canActivateStep(nextStep)) {
                             return nextStep;
                         }
@@ -96,17 +100,25 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
 
                     this.activateStepWithIndex(stepIndex);
                 },
+                ensureRouteOfCurrentStepIsActive: function () {
+                    console.debug('ensureRouteOfCurrentStepIsActive', $state.current.name, this.getCurrentStep().route);
+
+                    if ($state.current.name !== this.getCurrentStep().route) {
+                        $state.transitionTo(this.getCurrentStep().route);
+                    }
+                },
                 activateStepWithIndex: function (stepIndex) {
-                    if (this.currentStepIndex == stepIndex) return;
+                    if (this.currentStepIndex == stepIndex) {
+                        console.info('activateStepWithIndex: nothing to do');
+                        this.ensureRouteOfCurrentStepIsActive();
+                        return;
+                    }
                     this.deactivateCurrentStep();
 
                     var step = this.stepsToDisplay[stepIndex];
                     step.isActive = true;
                     this.currentStepIndex = stepIndex;
-
-                    if ($state.current.route !== step.route) {
-                        $state.transitionTo(step.route);
-                    }
+                    this.ensureRouteOfCurrentStepIsActive();
                 },
                 deactivateCurrentStep: function () {
                     if (_.isUndefined(this.currentStepIndex)) return;
@@ -125,7 +137,7 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
                         return;
                     }
 
-                    var nextStep = this.fetchNextActivatableStep();
+                    var nextStep = this.fetchNextActivatableStep(this.getCurrentStep());
                     if (_.isUndefined(nextStep)) {
                         return;
                     }

@@ -21,7 +21,7 @@ angular.module('edmShopItems')
                 'DefaultStep',
                 function (DefaultStep) {
                     return _.map(steps, function (step) {
-                        return _.defaults(step, DefaultStep);
+                        return _.defaults(step, _.cloneDeep(DefaultStep));
                     });
                 }
             ];

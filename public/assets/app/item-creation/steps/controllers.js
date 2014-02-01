@@ -7,16 +7,18 @@ angular.module('edmShopItems')
         function (ShopCategoriesSelectList, ItemCreationService, $scope, $state) {
             ItemCreationService.activateStepWithRoute($state.current.name);
             var currentStep = ItemCreationService.getCurrentStep();
+            console.debug('GeneralCtrl currentStep:', currentStep);
+            _.defaults(currentStep.inputData, {
+                title: undefined,
+                price: undefined,
+                shop_category_id: undefined
+            });
 
             $scope.staticData = {
                 shopCategories: ShopCategoriesSelectList
             };
 
-            $scope.inputData = {
-                shop_category_id: undefined,
-                title: undefined,
-                price: undefined
-            };
+            $scope.inputData = currentStep.inputData;
 
             $scope.canSave = function canSave() {
                 return $scope.generalForm.$dirty && $scope.generalForm.$valid;
@@ -41,19 +43,20 @@ angular.module('edmShopItems')
         function ($scope, $state, ItemCreationService, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList) {
             ItemCreationService.activateStepWithRoute($state.current.name);
             var currentStep = ItemCreationService.getCurrentStep();
-
-            $scope.staticData = {
-                musicGenres: MusicGenresSelectList,
-                musicPlugins: MusicPluginsSelectList,
-                musicPrograms: MusicProgramsSelectList,
-            };
-
-            $scope.inputData = {
+            console.debug('ProjectFileCtrl currentStep:', currentStep);
+            _.defaults(currentStep.inputData, {
                 music_genre_id: undefined,
                 music_program_ids: undefined,
                 music_plugin_ids: undefined,
                 bpm: undefined,
                 description: undefined
+            })
+
+            $scope.inputData = currentStep.inputData;
+            $scope.staticData = {
+                musicGenres: MusicGenresSelectList,
+                musicPlugins: MusicPluginsSelectList,
+                musicPrograms: MusicProgramsSelectList,
             };
 
             $scope.canSave = function canSave() {
@@ -62,6 +65,7 @@ angular.module('edmShopItems')
 
             $scope.save = function save() {
                 currentStep.inputData = $scope.inputData;
+                currentStep.state = 'done';
                 ItemCreationService.gotoNextStep();
             };
         }
