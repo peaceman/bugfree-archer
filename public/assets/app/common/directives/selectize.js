@@ -42,19 +42,25 @@ angular.module('edmShopItems')
                 listOptions: '='
             },
             link: function (scope, element, attrs, ngModel) {
+                var numericFilter = function numericFilter(value) {
+                    var possibleIntValue = _.parseInt(value);
+                    var valueIsNumeric = !_.isNaN(possibleIntValue) && _.isNumber(possibleIntValue);
+
+                    return valueIsNumeric ? possibleIntValue : value;
+                };
+
                 var canHoldMultipleValues = _.has(attrs, 'multiple') && attrs.multiple;
                 var valueSplitter = function valueSplitter(value) {
                     return _.map(value.split(','), function (singleValue) {
                         var trimmedValue = singleValue.trim();
-                        var possibleIntValue = _.parseInt(trimmedValue);
-                        var valueIsNumeric = !_.isNaN(possibleIntValue) && _.isNumber(possibleIntValue);
-
-                        return valueIsNumeric ? possibleIntValue : trimmedValue;
+                        return numericFilter(trimmedValue);
                     });
                 };
 
                 if (canHoldMultipleValues) {
                     ngModel.$parsers.push(valueSplitter);
+                } else {
+                    ngModel.$parsers.push(numericFilter);
                 }
 
                 scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
@@ -62,6 +68,7 @@ angular.module('edmShopItems')
 
                     $timeout(function () {
                         console.log('set value', value);
+                        value = _.isArray(value) ? value : [value];
                         // todo: add as extension to selectize
                         _.each(value, function (option) {
                             if (_.isNumber(option)) {
