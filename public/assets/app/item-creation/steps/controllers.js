@@ -24,6 +24,7 @@ angular.module('edmShopItems')
 
             $scope.save = function save() {
                 currentStep.inputData = $scope.inputData;
+                currentStep.state = 'done';
                 ItemCreationService.gotoNextStep();
             };
 
@@ -36,17 +37,21 @@ angular.module('edmShopItems')
         }
     ])
     .controller('ProjectFileCtrl', [
-        '$scope', '$state', 'ItemCreationService', 'MusicGenresSelectList',
-        function ($scope, $state, ItemCreationService, MusicGenresSelectList) {
+        '$scope', '$state', 'ItemCreationService', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList',
+        function ($scope, $state, ItemCreationService, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList) {
             ItemCreationService.activateStepWithRoute($state.current.name);
             var currentStep = ItemCreationService.getCurrentStep();
 
             $scope.staticData = {
-                musicGenres: MusicGenresSelectList
+                musicGenres: MusicGenresSelectList,
+                musicPlugins: MusicPluginsSelectList,
+                musicPrograms: MusicProgramsSelectList,
             };
 
             $scope.inputData = {
                 music_genre_id: undefined,
+                music_program_ids: undefined,
+                music_plugin_ids: undefined,
                 bpm: undefined,
                 description: undefined
             };

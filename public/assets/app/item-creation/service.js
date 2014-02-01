@@ -4,7 +4,55 @@ angular.module('edmShopItems')
         function ($rootScope, $state) {
             $rootScope.$on('$stateChangeError', 
 function(event, toState, toParams, fromState, fromParams, error){ console.log(arguments); });
+
             return {
+                fetchStepByRoute: function (route) {
+                    return _.find(this.steps, {route: route});
+                },
+                canActivateStep: function (step) {
+                    console.debug('canActivateStep', step);
+                    console.log(this.currentStepIndex);
+                    if (!this.stepRequirementsAreMet(step)) return false;
+
+                    var stepIndex = _.findIndex(this.stepsToDisplay, step);
+                    if (_.isUndefined(this.currentStepIndex) && stepIndex === 0) return true;
+                    if (this.currentStepIndex === stepIndex) return false;
+
+                    var length = this.stepsToDisplay.length;
+                    for (var i = 0; i < length; i++) {
+                        if (i >= stepIndex) {
+                            break;
+                        }
+
+                        var currentStep = this.stepsToDisplay[i];
+                        if (currentStep.state !== 'done') {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                },
+                fetchNextActivatableStep: function () {
+                    console.debug('fetchNextActivatableStep');
+                    if (_.isUndefined(this.currentStepIndex)) {
+                        console.log('current step index is undefined, start with first step');
+                        return this.stepsToDisplay[0];
+                    }
+
+                    var amountOfDisplayableSteps = this.stepsToDisplay.length;
+                    for (var i = this.currentStepIndex; i < amountOfDisplayableSteps; i++) {
+                        var nextStep = this.stepsToDisplay[i];
+                        if (this.canActivateStep(nextStep)) {
+                            return nextStep;
+                        }
+                    }
+
+                    console.log('no more steps available');
+                    return undefined;
+                },
+                stepRequirementsAreMet: function (step) {
+                    return this.filterNotDisplayableSteps(step);
+                },
                 filterNotDisplayableSteps: function (step) {
                     if (step.requiredTargetItemTypes.length === 0) return true;
                     return _.contains(step.requiredTargetItemTypes, this.targetItemType);
@@ -23,8 +71,28 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
                     console.log('refreshed steps to display', this.stepsToDisplay);
                 },
                 activateStepWithRoute: function (route) {
-                    var stepIndex = _.findIndex(this.stepsToDisplay, {route: route});
-                    if (stepIndex === -1) return;
+                    var step = this.fetchStepByRoute(route);
+                    if (step == this.getCurrentStep()) return;
+
+                    if (!this.canActivateStep(step)) {
+                        console.log("can't activate step", step);
+                        var nextActivatableStep = this.fetchNextActivatableStep();
+                        if (_.isUndefined(nextActivatableStep)) {
+                            return;
+                        } else {
+                            step = nextActivatableStep;
+                        }
+                    }
+
+                    this.activateStep(step);
+                },
+                activateStep: function (step) {
+                    var stepIndex = _.findIndex(this.stepsToDisplay, step);
+
+                    console.log('activate step', step, 'found at index', stepIndex);
+                    if (stepIndex === -1) {
+                        return;
+                    }
 
                     this.activateStepWithIndex(stepIndex);
                 },
@@ -35,6 +103,10 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
                     var step = this.stepsToDisplay[stepIndex];
                     step.isActive = true;
                     this.currentStepIndex = stepIndex;
+
+                    if ($state.current.route !== step.route) {
+                        $state.transitionTo(step.route);
+                    }
                 },
                 deactivateCurrentStep: function () {
                     if (_.isUndefined(this.currentStepIndex)) return;
@@ -48,17 +120,17 @@ function(event, toState, toParams, fromState, fromParams, error){ console.log(ar
                     return this.stepsToDisplay[this.currentStepIndex];
                 },
                 gotoNextStep: function () {
-                    if (_.isUndefined(this.currentStepIndex) || this.stepsToDisplay.length === 0)
+                    if (this.stepsToDisplay.length === 0) {
+                        console.log('gotoNextStep: stepsToDisplay is empty');
                         return;
+                    }
 
-                    this.activateStepWithIndex(this.currentStepIndex + 1);
-                    var newRoute = this.getCurrentStep().route;
+                    var nextStep = this.fetchNextActivatableStep();
+                    if (_.isUndefined(nextStep)) {
+                        return;
+                    }
 
-                    console.log('gotoNextStep transitions to', newRoute);
-                    var statePromise = $state.transitionTo(newRoute);
-                    statePromise.then(function () {
-                        console.log('state promise', arguments);
-                    })
+                    this.activateStep(nextStep);
                 }
             };
         }

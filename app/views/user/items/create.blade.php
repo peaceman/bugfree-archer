@@ -22,6 +22,8 @@ angular.module('edmShopItems', ['ui.router', 'restangular']);
 <script src="{{ asset('/assets/app/item-creation/steps/controllers.js') }}"></script>
 <script src="{{ asset('/assets/app/shop-categories/model.js') }}"></script>
 <script src="{{ asset('/assets/app/music-genres/model.js') }}"></script>
+<script src="{{ asset('/assets/app/music-plugins/model.js') }}"></script>
+<script src="{{ asset('/assets/app/music-programs/model.js') }}"></script>
 <script src="{{ asset('/assets/app/config.js') }}"></script>
 @stop
 

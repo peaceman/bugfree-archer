@@ -36,7 +36,9 @@ angular.module('edmShopItems')
                         controller: 'ProjectFileCtrl',
                         templateUrl: '/templates/project-file.html',
                         resolve: {
-                            'MusicGenresSelectList': 'MusicGenresSelectList'
+                            'MusicGenresSelectList': 'MusicGenresSelectList',
+                            'MusicPluginsSelectList': 'MusicPluginsSelectList',
+                            'MusicProgramsSelectList': 'MusicProgramsSelectList'
                         }
                     }
                 }
