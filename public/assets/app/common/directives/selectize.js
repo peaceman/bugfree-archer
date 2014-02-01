@@ -62,6 +62,17 @@ angular.module('edmShopItems')
 
                     $timeout(function () {
                         console.log('set value', value);
+                        // todo: add as extension to selectize
+                        _.each(value, function (option) {
+                            if (_.isNumber(option)) {
+                                return;
+                            }
+
+                            selectize.addOption({
+                                id: option,
+                                name: option
+                            });
+                        });
                         selectize.setValue(value);
                     });
                 });
