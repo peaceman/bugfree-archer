@@ -22,16 +22,19 @@ class StorageDirector
 		$this->resourceLocations = $resourceLocations;
 	}
 
-	public function initialStorageTransport(ResourceFile $resourceFile, $filePath)
+	public function initialStorageTransport(ResourceFile $resourceFile, $filePath, $onlyInstantTransportLocations = false)
 	{
 		$locationsForInstantTransport = $this->getLocationsForInstantTransport();
-		$locationsForQueuedTransport = $this->getLocationsForQueuedTransport();
-
 		/** @var ResourceLocation[] $locationsForInstantTransport */
 		foreach ($locationsForInstantTransport as $resourceLocation) {
 			$this->executeStorageTransport($resourceLocation, $resourceFile, $filePath);
 		}
 
+		if ($onlyInstantTransportLocations) {
+			return;
+		}
+
+		$locationsForQueuedTransport = $this->getLocationsForQueuedTransport();
 		/** @var ResourceLocation[] $locationsForQueuedTransport */
 		foreach ($locationsForQueuedTransport as $resourceLocation) {
 			$this->queueStorageTransport($resourceLocation, $resourceFile);
@@ -63,14 +66,22 @@ class StorageDirector
 			}
 		);
 
-		$locationsForQueuedStore = $locationsForQueuedStore->sort(
-			function ($a, $b) {
-				if ($a->upload_order === $b->upload_order) return 0;
-				return $a->upload_order < $b->upload_order ? -1 : 1;
-			}
-		);
+		return $this->sortLocationsByUploadOrder($this->resourceLocations);
+	}
 
-		return $locationsForQueuedStore;
+	/**
+	 * sorts the given resource locations by upload_order ascending
+	 * 
+	 * @param  Collection $resourceLocations unsorted collection of resource locations
+	 * @return Collection sorted collection of resource locations
+	 */
+	protected function sortLocationsByUploadOrder(Collection $resourceLocations) {
+		return $resourceLocations->sort(function ($a, $b) {
+			if ($a->upload_order === $b->upload_order)
+				return 0;
+			else
+				return $a->upload_order < $b->upload_order ? -1 : 1;
+		});
 	}
 
 	public function executeStorageTransport(ResourceLocation $resourceLocation, ResourceFile $resourceFile, $filePath)
@@ -108,13 +119,36 @@ class StorageDirector
 		);
 	}
 
-	public function queueWipingOfResourceFile(ResourceFile $resourceFile, array $resourceLocationIds = null)
+	public function queueDistributionOfResourceFile(ResourceFile $resourceFile, array $resourceLocationIdsToSkip = null) {
+		$locations = is_null($resourceLocationIdsToSkip) 
+			? $this->resourceLocations 
+			: $this->filterResourceLocationsWithIds($this->resourceLocations, $resourceLocationIdsToSkip);
+		$locations = $this->sortLocationsByUploadOrder($locations);
+
+		$locations->each(function ($location) use ($resourceFile) {
+			$this->queueStorageTransport($location, $resourceFile);
+		});
+	}
+
+	/** 
+	 * @param Collection $locations
+	 * @param array $locationIdsToFilter
+	 *
+	 * @return Collection
+	 */
+	protected function filterResourceLocationsWithIds(Collection $locations, array $locationIdsToFilter) {
+		return $locations->filter(function ($location) use ($locationIdsToFilter) {
+			return !in_array($location->id, $locationIdsToFilter);
+		});
+	}
+
+	public function queueWipingOfResourceFile(ResourceFile $resourceFile, array $resourceLocationIdsToSkip = null)
 	{
 		/** @var ResourceFileLocation[] $resourceFileLocations */
 		$resourceFileLocations = $resourceFile->resourceFileLocations()->get();
 		foreach ($resourceFileLocations as $resourceFileLocation) {
-			$skip = $resourceLocationIds !== null
-				&& !in_array($resourceFileLocation->resource_location_id, $resourceLocationIds);
+			$skip = $resourceLocationIdsToSkip !== null
+				&& !in_array($resourceFileLocation->resource_location_id, $resourceLocationIdsToSkip);
 			if ($skip)
 				continue;
 
