@@ -6,12 +6,14 @@ use Carbon\Carbon;
  *
  * @property int $id
  * @property int $music_genre_id
- * @property int $resource_file_id;
+ * @property int $archive_resource_file_id
+ * @property int $sample_resource_file_id
  * @property int $bpm
  * @property string $description
  *
  * @property MusicGenre $musicGenre
- * @property ResourceFile $resourceFile
+ * @property ResourceFile $archiveFile
+ * @property ResourceFile $sampleFile
  */
 class ProjectFileRevision extends Eloquent
 {
@@ -22,9 +24,14 @@ class ProjectFileRevision extends Eloquent
 		return $this->belongsTo('MusicGenre');
 	}
 
-	public function resourceFile()
+	public function archiveFile()
 	{
-		return $this->belongsTo('ResourceFile');
+		return $this->belongsTo('ResourceFile', 'archive_file_id');
+	}
+
+	public function sampleFile()
+	{
+		return $this->belongsTo('ResourceFile', 'sample_file_id');
 	}
 
 	public function compatiblePrograms()

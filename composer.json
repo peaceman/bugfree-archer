@@ -10,7 +10,8 @@
 		"edvinaskrucas/notification": "1.*",
 		"aws/aws-sdk-php-laravel": "1.*",
         "supremenewmedia/finance": "dev-master",
-        "baum/baum": "dev-develop"
+        "baum/baum": "dev-develop",
+        "doctrine/dbal": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
