@@ -11,7 +11,8 @@
 		"aws/aws-sdk-php-laravel": "1.*",
         "supremenewmedia/finance": "dev-master",
         "baum/baum": "dev-develop",
-        "doctrine/dbal": "dev-master"
+        "doctrine/dbal": "dev-master",
+        "flowjs/flow-php-server": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

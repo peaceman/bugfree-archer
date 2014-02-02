@@ -92,3 +92,8 @@ angular.module('edmShopItems')
             ]);
         }
     ])
+    .config(['flowFactoryProvider', function (flowFactoryProvider) {
+        flowFactoryProvider.defaults = {
+            target: '/api/uploads'
+        };
+    }])

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ab7cdd601e8e71ffafac9e441eb3efd9",
+    "hash": "cf6d8ebf0d9fc05955786c703f61567b",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -845,6 +845,53 @@
                 "zf2"
             ],
             "time": "2013-12-04 14:19:30"
+        },
+        {
+            "name": "flowjs/flow-php-server",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flowjs/flow-php-server.git",
+                "reference": "d6d9d4b61d125b470485f3c33b6cf90efd2f7a78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flowjs/flow-php-server/zipball/d6d9d4b61d125b470485f3c33b6cf90efd2f7a78",
+                "reference": "d6d9d4b61d125b470485f3c33b6cf90efd2f7a78",
+                "shasum": ""
+            },
+            "require-dev": {
+                "league/phpunit-coverage-listener": "~1.1",
+                "mikey179/vfsstream": "v1.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Flow": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aidas Klimas",
+                    "email": "aidaskk@gmail.com"
+                }
+            ],
+            "description": "PHP library for handling chunk uploads. Works with flow.js html5 file uploads.",
+            "keywords": [
+                "chunks",
+                "file upload",
+                "flow",
+                "flow.js",
+                "html5 file upload",
+                "resumable",
+                "resumable.js",
+                "upload"
+            ],
+            "time": "2013-11-14 09:22:52"
         },
         {
             "name": "guzzle/guzzle",
@@ -2481,7 +2528,8 @@
         "slushie/laravel-middleware": 20,
         "supremenewmedia/finance": 20,
         "baum/baum": 20,
-        "doctrine/dbal": 20
+        "doctrine/dbal": 20,
+        "flowjs/flow-php-server": 20
     },
     "platform": [
 

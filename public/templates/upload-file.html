@@ -3,7 +3,9 @@
 		<h3 class="panel-title">Upload files</h3>
 	</div>
 	<form ng-submit="save()">
-		<div class="panel-body"></div>
+		<div class="panel-body" flow-init>
+			<input type="file" flow-btn>
+		</div>
 		<div class="panel-footer">
 			<a type="submit" class="btn btn-default" ng-disable="!canSave()" href="" ng-click="save()">Next</a>
 			<hr />

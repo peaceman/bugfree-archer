@@ -89,6 +89,9 @@ Route::group(
 		Route::resource('music-genres', 'MusicGenreController');
 		Route::resource('music-programs', 'MusicProgramController');
 		Route::resource('music-plugins', 'MusicPluginController');
+		
+		Route::get('uploads', 'UploadController@checkChunk');
+		Route::post('uploads', 'UploadController@saveChunk');
 	}
 );
 
