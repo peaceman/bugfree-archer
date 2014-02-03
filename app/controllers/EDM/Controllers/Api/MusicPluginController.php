@@ -8,7 +8,7 @@ class MusicPluginController extends BaseController
 {
 	public function index()
 	{
-		$query = MusicPlugin::accepted()->asUser($this->user);
+		$query = MusicPlugin::accepted()->asUser($this->user)->with('banks');
 
 		if ($this->request->has('q')) {
 			$query->where('name', 'like', $this->request->get('q'));

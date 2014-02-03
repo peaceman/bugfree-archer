@@ -50,14 +50,39 @@ angular.module('edmShopItems')
                 music_plugin_ids: undefined,
                 bpm: undefined,
                 description: undefined
-            })
+            });
 
             $scope.inputData = currentStep.inputData;
             $scope.staticData = {
                 musicGenres: MusicGenresSelectList,
                 musicPlugins: MusicPluginsSelectList,
                 musicPrograms: MusicProgramsSelectList,
+                musicPluginBanks: [],
+                listConfigs: {
+                    banks: {
+                        create: false
+                    }
+                }
             };
+
+            // fill the bank selection field with banks in dependency of the currently selected plugins
+            $scope.$watch('inputData.music_plugin_ids', function (newPluginIds, oldPluginIds) {
+                console.log('watch music_plugin_ids', arguments);
+
+                var selectedPlugins = [];
+                _.each(newPluginIds, function (potentialPluginId) {
+                    if (!_.isNumber(potentialPluginId) || _.isNaN(potentialPluginId)) return;
+                    var plugin = _.find(MusicPluginsSelectList, {id: potentialPluginId});
+
+                    if (!_.isUndefined(plugin)) {
+                        selectedPlugins.push(plugin);
+                    }
+                });
+
+                var banks = _.flatten(selectedPlugins, 'banks');
+                console.log('set available banks', banks);
+                $scope.staticData.musicPluginBanks = banks;
+            });
 
             $scope.canSave = function canSave() {
                 return $scope.projectFileForm.$dirty && $scope.projectFileForm.$valid;

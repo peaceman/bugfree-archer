@@ -36,8 +36,15 @@
             <field-group for="music_plugin_ids">
                 <label for="inputMusicPlugins" class="control-label">Music plugin</label>
 
-                <input class="form-control" id="inputMusicPlugins" name="music_plugin_ids" ng-model="inputData.music_plugin_ids" required selectize-tags list-options="staticData.musicPlugins" multiple="multiple" />
+                <input class="form-control" id="inputMusicPlugins" name="music_plugin_ids" ng-model="inputData.music_plugin_ids" required selectize-tags list-config="staticData.listConfigs.plugins" list-options="staticData.musicPlugins" multiple />
                 <validation-message for="music_plugin_ids" />
+            </field-group>
+
+            <field-group for="music_plugin_bank_ids">
+                <label for="inputMusicPluginBanks" class="control-label">Music plugin banks</label>
+
+                <input class="form-control" id="inputMusicPluginBanks" name="music_plugin_bank_ids" ng-model="inputData.music_plugin_bank_ids" required selectize-tags list-config="staticData.listConfigs.banks" list-options="staticData.musicPluginBanks" multiple />
+                <validation-message for="music_plugin_bank_ids" />
             </field-group>                        
         </div>
         <div class="panel-footer">

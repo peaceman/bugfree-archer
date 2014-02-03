@@ -16,9 +16,14 @@ class MusicPlugin extends Eloquent
 
 	protected $table = 'music_plugins';
 	protected $fillable = ['name'];
-	protected $visible = ['id', 'name'];
+	protected $visible = ['id', 'name', 'banks'];
 	public static $validationRules = [
 		'name' => ['required', 'min:3', 'max:64', 'unique:music_plugins'],
 		'user_tracking_session_id' => ['required', 'exists:user_tracking_sessions'],
 	];
+
+	public function banks()
+	{
+		return $this->hasMany('MusicPluginBank');
+	}
 }

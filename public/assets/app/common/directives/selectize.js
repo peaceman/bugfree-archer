@@ -39,9 +39,14 @@ angular.module('edmShopItems')
             restrict: 'A',
             require: '?ngModel',
             scope: {
-                listOptions: '='
+                listOptions: '=',
+                listConfig: '=?'
             },
             link: function (scope, element, attrs, ngModel) {
+                if (_.isUndefined(scope.listConfig)) {
+                    scope.listConfig = {};
+                }
+
                 var numericFilter = function numericFilter(value) {
                     var possibleIntValue = _.parseInt(value);
                     var valueIsNumeric = !_.isNaN(possibleIntValue) && _.isNumber(possibleIntValue);
@@ -51,6 +56,7 @@ angular.module('edmShopItems')
 
                 var canHoldMultipleValues = _.has(attrs, 'multiple') && attrs.multiple;
                 var valueSplitter = function valueSplitter(value) {
+                    if (_.isUndefined(value)) return;
                     return _.map(value.split(','), function (singleValue) {
                         var trimmedValue = singleValue.trim();
                         return numericFilter(trimmedValue);
@@ -65,9 +71,8 @@ angular.module('edmShopItems')
 
                 scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
                     if (_.isUndefined(value)) return;
-
-                    $timeout(function () {
-                        console.log('set value', value);
+                    
+                        console.log('selectize set value', value);
                         value = _.isArray(value) ? value : [value];
                         // todo: add as extension to selectize
                         _.each(value, function (option) {
@@ -81,17 +86,25 @@ angular.module('edmShopItems')
                             });
                         });
                         selectize.setValue(value);
-                    });
+                });
+
+                // removes or adds options to the selectize object
+                scope.$watch('listOptions', function (newListOptions, oldListOptions) {
+                    var optionsToRemove = _.difference(oldListOptions, newListOptions);
+                    _.each(_.pluck(optionsToRemove, 'id'), selectize.removeOption, selectize);
+
+                    var optionsToAdd = _.difference(newListOptions, oldListOptions);
+                    _.each(optionsToAdd, selectize.addOption, selectize);
                 });
 
                 element
-                    .selectize({
+                    .selectize(_.defaults(scope.listConfig, {
                         valueField: 'id',
                         labelField: 'name',
                         searchField: 'name',
                         create: true,
                         options: scope.listOptions,
-                    });
+                    }));
 
                 var selectize = element[0].selectize;
             }
