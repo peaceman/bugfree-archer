@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\Environment as ViewFactory;
 use Flow;
+use EDM\Resource\Storage\StorageDirector;
+use Config;
+use ResourceFile;
 
 class UploadController extends BaseController
 {
@@ -13,7 +16,7 @@ class UploadController extends BaseController
 	protected $storageDirector;
 
 	public function __construct(Response $response, Request $request, ViewFactory $view, 
-		Flow\File $flowFile, Flow\RequestInterface $flowRequest, )
+		Flow\File $flowFile, Flow\RequestInterface $flowRequest, StorageDirector $storageDirector)
 	{
 		parent::__construct($response, $request, $view);
 		$this->flowFile = $flowFile;
@@ -38,7 +41,7 @@ class UploadController extends BaseController
 			return $this->response->make('', 400);
 		}
 
-		$storageFilename = Config::get('uploads.flow_config.temp_dir')
+		$storageFilename = Config::get('uploads.flow_config.tempDir')
 			. DIRECTORY_SEPARATOR
 			. uniqid();
 
@@ -54,7 +57,7 @@ class UploadController extends BaseController
 			if ($resourceFile->save()) {
 				$this->storageDirector->initialStorageTransport($resourceFile, $infoFile->getRealPath());
 				unlink($infoFile->getRealPath());
-				return $this->response->json($resourceFile->toArray(), 201);
+				return $this->response->json($resourceFile->toArray());
 			} else {
 				return $this->response->json(['errors' => $resourceFile->errors()->toArray()], 500);
 			}

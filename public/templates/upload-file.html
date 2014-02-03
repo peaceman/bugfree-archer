@@ -3,8 +3,11 @@
 		<h3 class="panel-title">Upload files</h3>
 	</div>
 	<form ng-submit="save()">
-		<div class="panel-body" flow-init>
-			<input type="file" flow-btn>
+		<div class="panel-body" flow-init flow-files-submitted="$flow.upload()" flow-file-success="uploadFinished($file, $message)" flow-progress="updateProgress($flow)">
+			<div class="alert" style="text-align: center; line-height: 34px;" flow-drop flow-drag-enter="dragEnter=true" flow-drag-leave="dragEnter=false" ng-class="{'alert-info': !dragEnter, 'alert-success': dragEnter}">
+				<span class="btn btn-default" flow-btn>Select files</span> <strong>OR</strong> Drag And Drop your files here
+			</div>
+			<progressbar value="uploadProgress" class="progress-striped" ng-class="{active: $flow.isUploading()}" ng-show="$flow.isUploading() || $flow.progress() == 1" />
 		</div>
 		<div class="panel-footer">
 			<a type="submit" class="btn btn-default" ng-disable="!canSave()" href="" ng-click="save()">Next</a>

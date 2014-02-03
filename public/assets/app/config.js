@@ -77,7 +77,8 @@ angular.module('edmShopItems')
                 {
                     heading: 'Project file information',
                     text: 'moar dafuq project file information',
-                    route: 'project-file'
+                    route: 'project-file',
+                    state: 'done'
                     // requiredTargetItemTypes: ['project-files.templates', 'project-files.presets']
                 },
                 {

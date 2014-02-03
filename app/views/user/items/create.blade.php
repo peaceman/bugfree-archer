@@ -8,12 +8,12 @@
 <script src="{{ asset('/assets/angular.min.js') }}"></script>
 <script src="{{ asset('/assets/angular-ui-router.min.js') }}"></script>
 <script src="{{ asset('/assets/restangular.min.js') }}"></script>
-<!-- <script src="{{ asset('/assets/ui-bootstrap-tpls-0.10.0.min.js') }}"></script> -->
+<script src="{{ asset('/assets/ui-bootstrap-tpls-0.10.0.min.js') }}"></script>
 <script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.min.js"></script>
 <script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.tpl.min.js"></script>
 <script src="{{ asset('/assets/ng-flow.js') }}"></script>
 <script>
-angular.module('edmShopItems', ['ui.router', 'mgcrea.ngStrap', 'restangular', 'flow']);
+angular.module('edmShopItems', ['ui.router', 'ui.bootstrap', 'mgcrea.ngStrap', 'restangular', 'flow']);
 </script>
 <script src="{{ asset('/assets/app/common/utils.js') }}"></script>
 <script src="{{ asset('/assets/app/common/base-service.js') }}"></script>

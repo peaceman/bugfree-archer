@@ -148,9 +148,18 @@ angular.module('edmShopItems')
             var currentStep = ItemCreationService.getCurrentStep();
             console.debug('UploadFileCtlr currentStep:', currentStep);
 
-            _.defaults(currentStep.inputData, {
+            $scope.inputData = _.defaults(currentStep.inputData, {
                 files: []
             });
+
+            $scope.uploadProgress = 0;
+            $scope.uploadFinished = function uploadFinished(flowFile, fileData) {
+                var uploadedFile = JSON.parse(fileData);
+                $scope.inputData.files.push(uploadedFile);
+            };
+            $scope.updateProgress = function updateProgress(flow) {
+                $scope.uploadProgress = flow.progress() * 100;
+            };
 
             $scope.inputData = currentStep.inputData;
             $scope.canSave = function () {
