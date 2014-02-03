@@ -2,8 +2,6 @@ angular.module('edmShopItems')
     .factory('ItemCreationServiceFunctions', [
         '$rootScope', '$state',
         function ($rootScope, $state) {
-            $rootScope.$on('$stateChangeError', 
-function(event, toState, toParams, fromState, fromParams, error){ console.log(arguments); });
 
             return {
                 fetchStepByRoute: function (route) {

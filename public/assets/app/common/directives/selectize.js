@@ -13,10 +13,10 @@ angular.module('edmShopItems')
 
                 ngModel.$parsers.push(intFilter);
 
-                scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
-                    if (_.isUndefined(value)) return;
-                    selectize.setValue(value);
-                });
+                // scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
+                //     if (_.isUndefined(value)) return;
+                //     selectize.setValue(value);
+                // });
 
                 element
                     .selectize({
@@ -66,24 +66,26 @@ angular.module('edmShopItems')
                     ngModel.$parsers.push(numericFilter);
                 }
 
-                scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
-                    if (_.isUndefined(value)) return;
+                if (_.first(element).nodeName !== 'SELECT') {
+                    scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
+                        if (_.isUndefined(value)) return;
 
-                        console.log('selectize set value', value);
-                        value = _.isArray(value) ? value : [value];
-                        // todo: add as extension to selectize
-                        _.each(value, function (option) {
-                            if (_.isNumber(option)) {
-                                return;
-                            }
+                            console.log('selectize set value', value);
+                            value = _.isArray(value) ? value : [value];
+                            // todo: add as extension to selectize
+                            _.each(value, function (option) {
+                                if (_.isNumber(option)) {
+                                    return;
+                                }
 
-                            selectize.addOption({
-                                id: option,
-                                name: option
+                                selectize.addOption({
+                                    id: option,
+                                    name: option
+                                });
                             });
-                        });
-                        selectize.setValue(value);
-                }, true);
+                            selectize.setValue(value);
+                    }, true);                    
+                }
 
                 // removes or adds options to the selectize object
                 scope.$watch('listOptions', function (newListOptions, oldListOptions) {
