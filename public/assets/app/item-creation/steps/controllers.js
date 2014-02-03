@@ -47,7 +47,9 @@ angular.module('edmShopItems')
             _.defaults(currentStep.inputData, {
                 music_genre_id: undefined,
                 music_program_ids: undefined,
-                music_plugin_ids: undefined,
+                music_plugin_ids: [],
+                music_plugin_bank_ids: [],
+                new_plugin_bank_dependencies: [],
                 bpm: undefined,
                 description: undefined
             });
@@ -60,29 +62,66 @@ angular.module('edmShopItems')
                 musicPluginBanks: [],
                 listConfigs: {
                     banks: {
-                        create: false
+                        create: false,
+                        persist: false
+                    },
+                    newPluginBank: {
+                        maxItems: 1
                     }
                 }
             };
 
-            // fill the bank selection field with banks in dependency of the currently selected plugins
-            $scope.$watch('inputData.music_plugin_ids', function (newPluginIds, oldPluginIds) {
-                console.log('watch music_plugin_ids', arguments);
+            $scope.saveNewPluginBank = function () {
+                console.log('saving new plugin bank data', this.inputData.newBank);
+                var pluginId = this.inputData.newBank.music_plugin_id;
+                var plugin = _.find(this.staticData.musicPlugins, {id: pluginId});
+                if (_.isUndefined(plugin)) {
+                    plugin = {id: pluginId, name: pluginId, banks: []};
+                    this.staticData.musicPlugins.push(plugin);
+                }
 
-                var selectedPlugins = [];
-                _.each(newPluginIds, function (potentialPluginId) {
-                    if (!_.isNumber(potentialPluginId) || _.isNaN(potentialPluginId)) return;
-                    var plugin = _.find(MusicPluginsSelectList, {id: potentialPluginId});
+                var bankName = this.inputData.newBank.name;
+                var bank = _.find(plugin.banks, {id: bankName});
+                if (_.isUndefined(bank)) {
+                    bank = {id: bankName, name: bankName};
+                    plugin.banks.push(bank);
+                }
 
-                    if (!_.isUndefined(plugin)) {
-                        selectedPlugins.push(plugin);
-                    }
+                if (!_.contains(this.inputData.music_plugin_ids, plugin.id)) {
+                    if (!_.isArray(this.inputData.music_plugin_ids)) this.inputData.music_plugin_ids = [];
+                    this.inputData.music_plugin_ids.push(plugin.id);
+                }
+
+                if (!_.contains(this.inputData.music_plugin_bank_ids, bank.id)) {
+                    if (!_.isArray(this.inputData.music_plugin_bank_ids)) this.inputData.music_plugin_bank_ids = [];
+                    this.inputData.music_plugin_bank_ids.push(bank.id);
+                }
+
+                this.resetNewPluginBankForm();
+            };
+
+            $scope.resetNewPluginBankForm = function () {
+                this.inputData.newBank = {};
+                this.$hide();
+            };
+
+            var determineAvailablePluginBanks = function () {
+                console.log('determineAvailablePluginBanks', arguments);
+
+                var selectedPlugins = _.map($scope.inputData.music_plugin_ids, function (musicPluginId) {
+                    var plugin = _.find($scope.staticData.musicPlugins, {id: musicPluginId});
+                    return plugin;
                 });
 
                 var banks = _.flatten(selectedPlugins, 'banks');
+
                 console.log('set available banks', banks);
                 $scope.staticData.musicPluginBanks = banks;
-            });
+            };
+
+            // fill the bank selection field with banks in dependency of the currently selected plugins
+            $scope.$watch('inputData.music_plugin_ids', determineAvailablePluginBanks, true);
+            $scope.$watch('inputData.music_plugin_bank_ids', determineAvailablePluginBanks, true);
 
             $scope.canSave = function canSave() {
                 return $scope.projectFileForm.$dirty && $scope.projectFileForm.$valid;

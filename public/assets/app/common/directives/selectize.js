@@ -15,10 +15,7 @@ angular.module('edmShopItems')
 
                 scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
                     if (_.isUndefined(value)) return;
-
-                    $timeout(function () {
-                        selectize.setValue(value);
-                    });
+                    selectize.setValue(value);
                 });
 
                 element
@@ -39,7 +36,7 @@ angular.module('edmShopItems')
             restrict: 'A',
             require: '?ngModel',
             scope: {
-                listOptions: '=',
+                listOptions: '=?',
                 listConfig: '=?'
             },
             link: function (scope, element, attrs, ngModel) {
@@ -71,7 +68,7 @@ angular.module('edmShopItems')
 
                 scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
                     if (_.isUndefined(value)) return;
-                    
+
                         console.log('selectize set value', value);
                         value = _.isArray(value) ? value : [value];
                         // todo: add as extension to selectize
@@ -86,7 +83,7 @@ angular.module('edmShopItems')
                             });
                         });
                         selectize.setValue(value);
-                });
+                }, true);
 
                 // removes or adds options to the selectize object
                 scope.$watch('listOptions', function (newListOptions, oldListOptions) {

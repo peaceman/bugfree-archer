@@ -43,14 +43,55 @@
             <field-group for="music_plugin_bank_ids">
                 <label for="inputMusicPluginBanks" class="control-label">Music plugin banks</label>
 
-                <input class="form-control" id="inputMusicPluginBanks" name="music_plugin_bank_ids" ng-model="inputData.music_plugin_bank_ids" required selectize-tags list-config="staticData.listConfigs.banks" list-options="staticData.musicPluginBanks" multiple />
+                <div class="input-group">
+                    <input class="form-control" id="inputMusicPluginBanks" name="music_plugin_bank_ids" ng-model="inputData.music_plugin_bank_ids" required selectize-tags list-config="staticData.listConfigs.banks" list-options="staticData.musicPluginBanks" multiple /><span class="input-group-btn">
+                        <a href="" class="btn btn-default" style="margin-top: -4px;" data-template="pop-test.html" data-container="body" data-placement="top" bs-popover>New Bank</a>
+                    </span>
+                </div>
+                
                 <validation-message for="music_plugin_bank_ids" />
-            </field-group>                        
+            </field-group>             
+            <script type="text/ng-template" id="pop-test.html">
+            <div class="popover">
+                <div class="arrow"></div>
+                <h3 class="popover-title">New plugin bank</h3>
+                <div class="popover-content">
+                    <form name="pluginBankForm" ng-submit="saveNewPluginBank()">
+                        <field-group for="music_plugin_id">
+                            <label for="inputMusicPlugin" class="control-label">Plugin</label>
+
+                            <input class="form-control" id="inputMusicPlugin" name="music_plugin_id" ng-model="inputData.newBank.music_plugin_id" required selectize-tags list-config="staticData.listConfigs.newPluginBank" list-options="staticData.musicPlugins" />
+                            <validation-message for="music_plugin_id" />
+                        </field-group>      
+                        <field-group for="music_bank[name]">
+                            <label for="music_bank[name]" class="control-label">Bank name</label>
+                            <input class="form-control" id="music_bank[name]" type="text" name="music_bank[name]" ng-model="inputData.newBank.name" required />
+                            <validation-message for="music_bank[name]" />
+                        </field-group>
+
+                        <div class="form-group">
+                            <div class="btn-group btn-group-justified">
+                                <div class="btn-group">
+                                    <a ng-click="resetNewPluginBankForm()" class="btn btn-default">Cancel</a>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </script>
+            
         </div>
         <div class="panel-footer">
             <button type="submit" ng-disabled="!canSave()" class="btn btn-default">Next</button>
             <hr />
+            inputData
             <pre>{{ inputData | json }}</pre>
+            staticData
+            <pre>{{ staticData | json }}</pre>
         </div>
     </form>
 </div>
