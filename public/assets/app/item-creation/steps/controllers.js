@@ -88,12 +88,16 @@ angular.module('edmShopItems')
                 }
 
                 if (!_.contains(this.inputData.music_plugin_ids, plugin.id)) {
-                    if (!_.isArray(this.inputData.music_plugin_ids)) this.inputData.music_plugin_ids = [];
+                    if (!_.isArray(this.inputData.music_plugin_ids)) 
+                        this.inputData.music_plugin_ids = [];
+
                     this.inputData.music_plugin_ids.push(plugin.id);
                 }
 
                 if (!_.contains(this.inputData.music_plugin_bank_ids, bank.id)) {
-                    if (!_.isArray(this.inputData.music_plugin_bank_ids)) this.inputData.music_plugin_bank_ids = [];
+                    if (!_.isArray(this.inputData.music_plugin_bank_ids)) 
+                        this.inputData.music_plugin_bank_ids = [];
+
                     this.inputData.music_plugin_bank_ids.push(bank.id);
                 }
 
@@ -105,7 +109,7 @@ angular.module('edmShopItems')
                 this.$hide();
             };
 
-            var determineAvailablePluginBanks = function () {
+            var determineAvailablePluginBanks = function determineAvailablePluginBanks() {
                 console.log('determineAvailablePluginBanks', arguments);
 
                 var selectedPlugins = _.map($scope.inputData.music_plugin_ids, function (musicPluginId) {
