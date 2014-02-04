@@ -53,6 +53,7 @@ class UploadController extends BaseController
 			$resourceFile->size = $this->flowRequest->getTotalSize();
 			$resourceFile->mime_type = $infoFile->getMimeType();
 			$resourceFile->protected = (bool)$this->request->get('protect_file', false);
+			$resourceFile->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
 
 			if ($resourceFile->save()) {
 				$this->storageDirector->initialStorageTransport($resourceFile, $infoFile->getRealPath());

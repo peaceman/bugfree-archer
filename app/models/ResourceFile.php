@@ -1,6 +1,7 @@
 <?php
 use Carbon\Carbon;
 use EDM\Resource\Storage\FilesystemStorage;
+use EDM\ModelTraits;
 
 /**
  * Class ResourceFile
@@ -15,8 +16,10 @@ use EDM\Resource\Storage\FilesystemStorage;
  */
 class ResourceFile extends Eloquent
 {
+	use ModelTraits\UserTrackingSessionAware;
 	protected $table = 'resource_files';
 	protected $fillable = ['protected', 'original_name', 'mime_type', 'size'];
+	protected $hidden = ['userTrackingSession', 'user_tracking_session_id'];
 
 	/**
 	 * @return string|null
