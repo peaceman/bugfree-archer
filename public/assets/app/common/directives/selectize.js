@@ -1,22 +1,72 @@
 angular.module('edmShopItems')
-    .directive('selectize', ['$timeout', function ($timeout) {
+    .factory('SelectizeUtils', [
+        '$timeout',
+        function ($timeout) {
+            var numberParser = function numberParser(value) {
+                return _.parseInt(value);
+            };
+
+            var ensureNumberTypeFilter = function ensureNumberTypeFilter(value) {
+                var possibleNumber = _.parseInt(value);
+                var valueIsNumber = !_.isNaN(possibleNumber) && _.isNumber(possibleNumber);
+
+                return valueIsNumber ? possibleNumber : value;
+            };
+
+            var addNewValuesAsOptionsToSelectize = function addNewValuesAsOptionsToSelectize(selectize, newValues) {
+                console.log('addNewValuesAsOptionsToSelectize', newValues);
+                _.each(newValues, function (newValue) {
+                    selectize.addOption({
+                        id: newValue,
+                        name: newValue
+                    });
+                });
+            };
+
+            var selectizeValueDiffers = function selectizeValueDiffers(selectize, newValue) {
+                var oldValue = ensureArray(selectize.lastSettedValue);
+                newValue = ensureArray(newValue);
+                var result = _.difference(oldValue, newValue).length !== 0;
+                return result;
+            };
+
+            var ensureArray = function (value) {
+                return _.isArray(value) ? value : [value];
+            };
+
+            var setValueOnSelectize = function setValueOnSelectize(selectize, value) {
+                if (_.isUndefined(value)) return;
+                if (!selectizeValueDiffers(selectize, value)) return;
+
+                var valueArray = _.isArray(value) ? value : [value];
+                var newValues = _.filter(valueArray, function (possibleNewValue) {
+                    return !_.isNumber(possibleNewValue);
+                });
+
+                if (!_.isEmpty(newValues))
+                    addNewValuesAsOptionsToSelectize(selectize, newValues);
+
+                $timeout(function () {
+                    selectize.setValue(value);    
+                });
+            };
+
+            return {
+                numberParser: numberParser,
+                ensureNumberTypeFilter: ensureNumberTypeFilter,
+                setValueOnSelectize: setValueOnSelectize
+            };
+        }
+    ])
+    .directive('selectize', ['$timeout', 'SelectizeUtils', function ($timeout, SelectizeUtils) {
         return {
             restrict: 'A',
-            require: '?ngModel',
+            require: 'ngModel',
             scope: {
                 listOptions: '='
             },
             link: function (scope, element, attrs, ngModel) {
-                var intFilter = function intFilter(inputValue) {
-                    return _.parseInt(inputValue);
-                };
-
-                ngModel.$parsers.push(intFilter);
-
-                // scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
-                //     if (_.isUndefined(value)) return;
-                //     selectize.setValue(value);
-                // });
+                ngModel.$parsers.push(SelectizeUtils.numberParser);
 
                 element
                     .selectize({
@@ -28,64 +78,44 @@ angular.module('edmShopItems')
                     });
 
                 var selectize = element[0].selectize;
+                $timeout(function () {
+                    SelectizeUtils.setValueOnSelectize(selectize, ngModel.$modelValue);
+                });
             }
         };
     }])
-    .directive('selectizeTags', ['$timeout', function ($timeout) {
+    .directive('selectizeTags', ['$rootScope', '$timeout', 'SelectizeUtils', function ($rootScope, $timeout, SelectizeUtils) {
         return {
             restrict: 'A',
             require: '?ngModel',
             scope: {
-                listOptions: '=?',
+                listOptions: '=',
                 listConfig: '=?'
             },
+            priority: 10,
             link: function (scope, element, attrs, ngModel) {
                 if (_.isUndefined(scope.listConfig)) {
                     scope.listConfig = {};
                 }
-
-                var numericFilter = function numericFilter(value) {
-                    var possibleIntValue = _.parseInt(value);
-                    var valueIsNumeric = !_.isNaN(possibleIntValue) && _.isNumber(possibleIntValue);
-
-                    return valueIsNumeric ? possibleIntValue : value;
-                };
 
                 var canHoldMultipleValues = _.has(attrs, 'multiple') && attrs.multiple;
                 var valueSplitter = function valueSplitter(value) {
                     if (_.isUndefined(value)) return;
                     return _.map(value.split(','), function (singleValue) {
                         var trimmedValue = singleValue.trim();
-                        return numericFilter(trimmedValue);
+                        return SelectizeUtils.ensureNumberTypeFilter(trimmedValue);
                     });
                 };
 
                 if (canHoldMultipleValues) {
                     ngModel.$parsers.push(valueSplitter);
                 } else {
-                    ngModel.$parsers.push(numericFilter);
+                    ngModel.$parsers.push(SelectizeUtils.ensureNumberTypeFilter);
                 }
 
-                if (_.first(element).nodeName !== 'SELECT') {
-                    scope.$watch(function () { return ngModel.$modelValue; }, function (value) {
-                        if (_.isUndefined(value)) return;
-
-                            console.log('selectize set value', value);
-                            value = _.isArray(value) ? value : [value];
-                            // todo: add as extension to selectize
-                            _.each(value, function (option) {
-                                if (_.isNumber(option)) {
-                                    return;
-                                }
-
-                                selectize.addOption({
-                                    id: option,
-                                    name: option
-                                });
-                            });
-                            selectize.setValue(value);
-                    }, true);                    
-                }
+                ngModel.$render = function () {
+                    SelectizeUtils.setValueOnSelectize(selectize, ngModel.$viewValue);
+                };
 
                 // removes or adds options to the selectize object
                 scope.$watch('listOptions', function (newListOptions, oldListOptions) {
@@ -98,6 +128,7 @@ angular.module('edmShopItems')
 
                 element
                     .selectize(_.defaults(scope.listConfig, {
+                        plugins: ['drag_drop'],
                         valueField: 'id',
                         labelField: 'name',
                         searchField: 'name',
@@ -106,6 +137,9 @@ angular.module('edmShopItems')
                     }));
 
                 var selectize = element[0].selectize;
+                $timeout(function () {
+                    SelectizeUtils.setValueOnSelectize(selectize, ngModel.$modelValue);
+                });
             }
         }
     }]);

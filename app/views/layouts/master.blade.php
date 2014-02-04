@@ -27,6 +27,7 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="//code.jquery.com/jquery.js"></script>
+<script src="{{ asset('/assets/jquery-ui.js') }}"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ asset('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/assets/selectize/js/standalone/selectize.js') }}"></script>

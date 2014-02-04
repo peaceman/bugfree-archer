@@ -51,7 +51,8 @@ angular.module('edmShopItems')
                 music_plugin_bank_ids: [],
                 new_plugin_bank_dependencies: [],
                 bpm: undefined,
-                description: undefined
+                description: undefined,
+                musicPluginBanks: [],
             });
 
             $scope.inputData = currentStep.inputData;
@@ -59,7 +60,6 @@ angular.module('edmShopItems')
                 musicGenres: MusicGenresSelectList,
                 musicPlugins: MusicPluginsSelectList,
                 musicPrograms: MusicProgramsSelectList,
-                musicPluginBanks: [],
                 listConfigs: {
                     banks: {
                         create: false,
@@ -91,14 +91,18 @@ angular.module('edmShopItems')
                     if (!_.isArray(this.inputData.music_plugin_ids)) 
                         this.inputData.music_plugin_ids = [];
 
-                    this.inputData.music_plugin_ids.push(plugin.id);
+                    var newData = _.clone(this.inputData.music_plugin_ids);
+                    newData.push(plugin.id);
+                    this.inputData.music_plugin_ids = newData;
                 }
 
                 if (!_.contains(this.inputData.music_plugin_bank_ids, bank.id)) {
                     if (!_.isArray(this.inputData.music_plugin_bank_ids)) 
                         this.inputData.music_plugin_bank_ids = [];
 
-                    this.inputData.music_plugin_bank_ids.push(bank.id);
+                    var newData = _.clone(this.inputData.music_plugin_bank_ids);
+                    newData.push(bank.id);
+                    this.inputData.music_plugin_bank_ids = newData;
                 }
 
                 this.resetNewPluginBankForm();
@@ -109,8 +113,11 @@ angular.module('edmShopItems')
                 this.$hide();
             };
 
-            var determineAvailablePluginBanks = function determineAvailablePluginBanks() {
-                console.log('determineAvailablePluginBanks', arguments);
+            var determineAvailablePluginBanks = function determineAvailablePluginBanks(newData, oldData) {
+                if (newData === oldData) {
+                    console.debug('ignore call to determineAvailablePluginBanks; data is identical');
+                    return;
+                }
 
                 var selectedPlugins = _.map($scope.inputData.music_plugin_ids, function (musicPluginId) {
                     var plugin = _.find($scope.staticData.musicPlugins, {id: musicPluginId});
@@ -120,7 +127,7 @@ angular.module('edmShopItems')
                 var banks = _.flatten(selectedPlugins, 'banks');
 
                 console.log('set available banks', banks);
-                $scope.staticData.musicPluginBanks = banks;
+                $scope.inputData.musicPluginBanks = banks;
             };
 
             // fill the bank selection field with banks in dependency of the currently selected plugins
