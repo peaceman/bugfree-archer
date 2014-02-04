@@ -21,6 +21,19 @@ class ResourceFile extends Eloquent
 	protected $fillable = ['protected', 'original_name', 'mime_type', 'size'];
 	protected $hidden = ['userTrackingSession', 'user_tracking_session_id'];
 
+	public function inUseByShopItems()
+	{
+		$query = DB::table('project_file_revisions')
+			->join('shop_item_revisions', 'shop_item_revisions.product_revision_id', '=', 'project_file_revisions.id')
+			->join('shop_items', 'shop_items.id', '=', 'shop_item_revisions.shop_item_id')
+			->where('sample_file_id', '=', $this->id)
+			->orWhere('archive_file_id', '=', $this->id)
+			->groupBy('shop_items.id');
+
+		$result = $query->get();
+		return $result;
+	}
+
 	/**
 	 * @return string|null
 	 */

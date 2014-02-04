@@ -48,4 +48,9 @@ class ProjectFileRevision extends Eloquent
 	{
 		return $this->belongsToMany('MusicBank', 'project_file_revision_compatible_banks');
 	}
+
+	public function shopItemRevision()
+	{
+		return $this->morphOne('ShopItemRevision', 'productRevision');
+	}
 }

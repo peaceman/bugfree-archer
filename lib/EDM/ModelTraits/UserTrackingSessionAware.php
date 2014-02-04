@@ -22,4 +22,11 @@ trait UserTrackingSessionAware
 				$q->where('user_id', '=', $user->id);
 			});
 	}
+
+	public function scopeOnlyFromUser($query, \User $user)
+	{
+		return $query->whereHas('userTrackingSession', function ($q) use ($user) {
+			$q->where('user_id', '=', $user->id);
+		});
+	}
 }
