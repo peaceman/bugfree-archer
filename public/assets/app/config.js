@@ -49,7 +49,10 @@ angular.module('edmShopItems')
                 views: {
                     '@': {
                         controller: 'UploadFileCtrl',
-                        templateUrl: '/templates/upload-file.html'
+                        templateUrl: '/templates/upload-file.html',
+                        resolve: {
+                            'ResourceFiles': 'ResourceFiles'
+                        }
                     }
                 }
             })

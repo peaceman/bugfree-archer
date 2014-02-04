@@ -146,8 +146,8 @@ angular.module('edmShopItems')
         }
     ])
     .controller('UploadFileCtrl', [
-        '$scope', '$state', 'ItemCreationService',
-        function ($scope, $state, ItemCreationService) {
+        '$scope', '$state', 'ItemCreationService', 'ResourceFiles',
+        function ($scope, $state, ItemCreationService, ResourceFiles) {
             if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
                 return;
             }
@@ -156,13 +156,20 @@ angular.module('edmShopItems')
             console.debug('UploadFileCtlr currentStep:', currentStep);
 
             $scope.inputData = _.defaults(currentStep.inputData, {
-                files: []
+                newlyUploadedFiles: [],
+                selectedFiles: []
+            });
+
+            ResourceFiles.all.getList().then(function (data) {
+                $scope.resourceFiles = data;
+                console.debug(data);
             });
 
             $scope.uploadProgress = 0;
             $scope.uploadFinished = function uploadFinished(flowFile, fileData) {
                 var uploadedFile = JSON.parse(fileData);
-                $scope.inputData.files.push(uploadedFile);
+                $scope.inputData.newlyUploadedFiles.push(uploadedFile);
+                $scope.resourceFiles.push(uploadedFile);
             };
             $scope.updateProgress = function updateProgress(flow) {
                 $scope.uploadProgress = flow.progress() * 100;
@@ -174,6 +181,28 @@ angular.module('edmShopItems')
             };
             $scope.save = function () {
                 return false;
+            };
+
+            var addToSelectedFiles = function addToSelectedFiles(file) {
+                $scope.inputData.selectedFiles.push(file);
+                file.isSelected = true;
+            };
+
+            var removeFromSelectedFiles = function removeFromSelectedFiles(file) {
+                _.remove($scope.inputData.selectedFiles, file);
+                file.isSelected = false;
+            };
+
+            $scope.removeFromSelectedFiles = removeFromSelectedFiles;
+            $scope.toggleFileSelection = function toggleFileSelection(file) {
+                console.debug(file);
+                file.isSelected = !file.isSelected;
+
+                if (file.isSelected) {
+                    addToSelectedFiles(file);
+                } else {
+                    removeFromSelectedFiles(file);
+                }
             };
         }
     ])

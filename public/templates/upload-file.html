@@ -3,16 +3,58 @@
 		<h3 class="panel-title">Upload files</h3>
 	</div>
 	<form ng-submit="save()">
-		<div class="panel-body" flow-init flow-files-submitted="$flow.upload()" flow-file-success="uploadFinished($file, $message)" flow-progress="updateProgress($flow)">
-			<div class="alert" style="text-align: center; line-height: 34px;" flow-drop flow-drag-enter="dragEnter=true" flow-drag-leave="dragEnter=false" ng-class="{'alert-info': !dragEnter, 'alert-success': dragEnter}">
-				<span class="btn btn-default" flow-btn>Select files</span> <strong>OR</strong> Drag And Drop your files here
+		<div class="panel-body">
+			<div flow-init flow-files-submitted="$flow.upload()" flow-file-success="uploadFinished($file, $message)" flow-progress="updateProgress($flow)">
+				<div class="alert" style="text-align: center; line-height: 34px;" flow-drop flow-drag-enter="dragEnter=true" flow-drag-leave="dragEnter=false" ng-class="{'alert-info': !dragEnter, 'alert-success': dragEnter}">
+					<span class="btn btn-default" flow-btn>Select files</span> <strong>OR</strong> Drag And Drop your files here
+				</div>
+				<progressbar value="uploadProgress" class="progress-striped" ng-class="{active: $flow.isUploading()}" ng-show="$flow.isUploading() || $flow.progress() == 1" />	
 			</div>
-			<progressbar value="uploadProgress" class="progress-striped" ng-class="{active: $flow.isUploading()}" ng-show="$flow.isUploading() || $flow.progress() == 1" />
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">Selected files for this item</h4>
+				</div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>File name</th>
+							<th>Use as</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="file in inputData.selectedFiles">
+							<td>{{ file.original_name }}</td>
+							<td>
+								<div class="btn-group">
+									<button class="btn btn-default btn-xs" ng-model="file.use_as" btn-radio="'sample'">
+										Sample
+									</button>
+									<button class="btn btn-default btn-xs" ng-model="file.use_as" btn-radio="'archive'">
+										Archive
+									</button>
+								</div>
+							</td>
+							<td>
+								<a class="btn btn-danger btn-xs" ng-click="removeFromSelectedFiles(file)">Deselect</a>
+							</td>
+						</tr>
+						<tr ng-hide="inputData.selectedFiles.length">
+							<td class="text-center" colspan="3">No data available</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<files-table files="inputData.newlyUploadedFiles" panel-title="Newly uploaded files"></files-table>
+			<files-table files="resourceFiles" panel-title="Uploaded files" default-collapse="true"></files-table>
 		</div>
 		<div class="panel-footer">
 			<a type="submit" class="btn btn-default" ng-disable="!canSave()" href="" ng-click="save()">Next</a>
 			<hr />
 			<pre>{{ inputData | json }}</pre>
+			<pre>{{ resourceFiles | json }}</pre>
 		</div>
 	</form>
 </div>

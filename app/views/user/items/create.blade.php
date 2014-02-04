@@ -8,12 +8,12 @@
 <script src="{{ asset('/assets/angular.min.js') }}"></script>
 <script src="{{ asset('/assets/angular-ui-router.min.js') }}"></script>
 <script src="{{ asset('/assets/restangular.min.js') }}"></script>
-<!-- <script src="{{ asset('/assets/ui-bootstrap-tpls-0.10.0.min.js') }}"></script> -->
+<script src="{{ asset('/assets/ui-bootstrap-tpls-0.10.0.min.js') }}"></script>
 <script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.min.js"></script>
 <script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.tpl.min.js"></script>
 <script src="{{ asset('/assets/ng-flow.js') }}"></script>
 <script>
-angular.module('edmShopItems', ['ui.router', 'mgcrea.ngStrap', 'restangular', 'flow']);
+angular.module('edmShopItems', ['ui.router', 'ui.bootstrap', 'mgcrea.ngStrap', 'restangular', 'flow']);
 </script>
 <script src="{{ asset('/assets/app/common/utils.js') }}"></script>
 <script src="{{ asset('/assets/app/common/base-service.js') }}"></script>
@@ -21,6 +21,8 @@ angular.module('edmShopItems', ['ui.router', 'mgcrea.ngStrap', 'restangular', 'f
 <script src="{{ asset('/assets/app/common/directives/selectize.js') }}"></script>
 <script src="{{ asset('/assets/app/common/directives/server-side-validation.js') }}"></script>
 <script src="{{ asset('/assets/app/common/directives/validation-message.js') }}"></script>
+<script src="{{ asset('/assets/app/common/directives/files-table.js') }}"></script>
+<script src="{{ asset('/assets/app/common/filters/bytes.js') }}"></script>
 <script src="{{ asset('/assets/app/item-creation/service.js') }}"></script>
 <script src="{{ asset('/assets/app/item-creation/steps/model.js') }}"></script>
 <script src="{{ asset('/assets/app/item-creation/steps/controllers.js') }}"></script>
@@ -28,6 +30,7 @@ angular.module('edmShopItems', ['ui.router', 'mgcrea.ngStrap', 'restangular', 'f
 <script src="{{ asset('/assets/app/music-genres/model.js') }}"></script>
 <script src="{{ asset('/assets/app/music-plugins/model.js') }}"></script>
 <script src="{{ asset('/assets/app/music-programs/model.js') }}"></script>
+<script src="{{ asset('/assets/app/resource-files/model.js') }}"></script>
 <script src="{{ asset('/assets/app/config.js') }}"></script>
 @stop
 

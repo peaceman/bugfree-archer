@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+	<div class="panel-heading" ng-click="isCollapsed = !isCollapsed">
+		<h4 class="panel-title">{{ panelTitle }} <small>click here to {{ isCollapsed ? 'open' : 'close' }}</small></h4>
+	</div>
+
+	<div collapse="isCollapsed">
+		<div class="panel-body">
+			Click on a table row to toggle the selection
+		</div>
+		<table class="table table-hover" style="margin-bottom: 0">
+			<thead>
+			<tr>
+				<th>Filename</th>
+				<th>File size</th>
+				<th>In use by projects</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="file in files" ng-click="toggleFileSelection(file)" ng-class="{success: file.isSelected}">
+				<td>{{ file.original_name }}</td>
+				<td>{{ file.size | bytes }}</td>
+				<td>none</td>					
+			</tr>
+			<tr ng-show="!files.length">
+				<td class="text-center" colspan="3">No data available</td>
+			</tr>
+			</tbody>
+		</table>			
+	</div>
+</div>
