@@ -20,6 +20,7 @@ class ResourceFile extends Eloquent
 	protected $table = 'resource_files';
 	protected $fillable = ['protected', 'original_name', 'mime_type', 'size'];
 	protected $hidden = ['userTrackingSession', 'user_tracking_session_id'];
+	protected $appends = ['download_url'];
 
 	public function inUseByShopItems()
 	{
@@ -32,6 +33,11 @@ class ResourceFile extends Eloquent
 
 		$result = $query->get();
 		return $result;
+	}
+
+	public function getDownloadUrlAttribute()
+	{
+		return $this->getUrl();
 	}
 
 	/**
