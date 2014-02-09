@@ -41,7 +41,11 @@ angular.module('edmShopItems')
     .controller('ProjectFileCtrl', [
         '$scope', '$state', 'ItemCreationService', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList',
         function ($scope, $state, ItemCreationService, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList) {
-            ItemCreationService.activateStepWithRoute($state.current.name);
+            if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
+                console.log('cancel ProjectFileCtrl');
+                return;
+            }
+
             var currentStep = ItemCreationService.getCurrentStep();
             console.debug('ProjectFileCtrl currentStep:', currentStep);
             _.defaults(currentStep.inputData, {
@@ -49,7 +53,6 @@ angular.module('edmShopItems')
                 music_program_ids: undefined,
                 music_plugin_ids: [],
                 music_plugin_bank_ids: [],
-                new_plugin_bank_dependencies: [],
                 bpm: undefined,
                 description: undefined,
                 musicPluginBanks: [],
@@ -128,7 +131,7 @@ angular.module('edmShopItems')
                 var selectedPlugins = _.map($scope.inputData.music_plugin_ids, function (musicPluginId) {
                     var plugin = _.find($scope.staticData.musicPlugins, {id: musicPluginId});
                     if (_.isUndefined(plugin)) {
-                        plugin = createNewPluginWithId(plugin);
+                        plugin = createNewPluginWithId(musicPluginId);
                     }
 
                     return plugin;
