@@ -10,6 +10,7 @@
 		<table class="table table-hover" style="margin-bottom: 0">
 			<thead>
 			<tr>
+				<th class="col-sm-2">Preview</th>
 				<th>Filename</th>
 				<th>File size</th>
 				<th>In use by projects</th>
@@ -17,6 +18,9 @@
 			</thead>
 			<tbody>
 			<tr ng-repeat="file in files" ng-click="toggleFileSelection(file)" ng-class="{success: file.isSelected}">
+				<td>
+					<image-preview file="file"></image-preview>
+				</td>
 				<td>{{ file.original_name }}</td>
 				<td>{{ file.size | bytes }}</td>
 				<td>none</td>					

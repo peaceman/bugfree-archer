@@ -6,7 +6,7 @@ angular.module('edmShopItems')
 					if (_.has(object, 'isSelected')) return;
 					object.isSelected = false;
 				});
-			};			
+			};		
 
 			return {
 				restrict: 'E',
@@ -20,10 +20,26 @@ angular.module('edmShopItems')
 				link: function (scope, element, attrs) {
 					ensureIsSelectedAttributeExistsOnAllObjects(scope.files);
 					scope.toggleFileSelection = scope.$parent.toggleFileSelection;
-					console.log(scope.defaultCollapse);
 					scope.isCollapsed = _.isUndefined(scope.defaultCollapse) ? false : scope.defaultCollapse;
-					scope.search = {};
 				}
 			};
+		}
+	])
+	.directive('imagePreview', [
+		function () {
+			return {
+				restrict: 'E',
+				scope: {
+					file: '='
+				},
+				replace: true,
+				template: '<img ng-if="isImageFile(file)" src="{{ file.download_url }}" class="img-rounded" style="width: 100%;">',
+				link: function (scope, element, attrs) {
+					var imageMimeTypePattern = new RegExp('^image/');
+					scope.isImageFile = function isImageFile(file) {
+						return imageMimeTypePattern.test(file.mime_type);
+					};
+				}
+			}
 		}
 	]);

@@ -18,6 +18,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							<th class="col-sm-3">Preview</th>
 							<th>File name</th>
 							<th>Use as</th>
 							<th>Actions</th>
@@ -25,6 +26,9 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="file in inputData.selectedFiles">
+							<td>
+								<image-preview file="file"></image-preview>
+							</td>
 							<td>{{ file.original_name }}</td>
 							<td>
 								<div class="btn-group">
