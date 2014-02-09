@@ -35,6 +35,31 @@ angular.module('edmShopItems')
             };
         }
     ])
+    .factory('ShopCategoriesFileConfig', [
+        function () {
+            var projectFilesConfig = {
+                'sample': {
+                    displayText: 'Sample',
+                    required: true,
+                    amount: 1
+                },
+                'archive': {
+                    displayText: 'Archive',
+                    required: true,
+                    amount: 1
+                }
+            };
+            var samplesConfig = {
+                // todo missing config
+            };
+
+            return {
+                'project-files.templates': projectFilesConfig,
+                'project-files.presets': projectFilesConfig,
+                'samples': samplesConfig
+            };
+        }
+    ])
     .factory('ShopCategoriesSelectList', [
         '$q', 'ShopCategories',
         function ($q, ShopCategories) {

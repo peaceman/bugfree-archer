@@ -71,13 +71,19 @@ angular.module('edmShopItems')
                 }
             };
 
+            var createNewPluginWithId = function createNewPluginWithId(pluginId) {
+                var plugin = {id: pluginId, name: pluginId, banks: []};
+                $scope.staticData.musicPlugins.push(plugin);
+
+                return plugin;
+            };
+
             $scope.saveNewPluginBank = function () {
                 console.log('saving new plugin bank data', this.inputData.newBank);
                 var pluginId = this.inputData.newBank.music_plugin_id;
                 var plugin = _.find(this.staticData.musicPlugins, {id: pluginId});
                 if (_.isUndefined(plugin)) {
-                    plugin = {id: pluginId, name: pluginId, banks: []};
-                    this.staticData.musicPlugins.push(plugin);
+                    plugin = createNewPluginWithId(pluginId);
                 }
 
                 var bankName = this.inputData.newBank.name;
@@ -121,6 +127,10 @@ angular.module('edmShopItems')
 
                 var selectedPlugins = _.map($scope.inputData.music_plugin_ids, function (musicPluginId) {
                     var plugin = _.find($scope.staticData.musicPlugins, {id: musicPluginId});
+                    if (_.isUndefined(plugin)) {
+                        plugin = createNewPluginWithId(plugin);
+                    }
+
                     return plugin;
                 });
 
@@ -146,14 +156,26 @@ angular.module('edmShopItems')
         }
     ])
     .controller('UploadFileCtrl', [
-        '$scope', '$state', 'ItemCreationService', 'ResourceFiles',
-        function ($scope, $state, ItemCreationService, ResourceFiles) {
+        '$scope', '$state', 'ItemCreationService', 'ResourceFiles', 'ShopCategoriesFileConfig',
+        function ($scope, $state, ItemCreationService, ResourceFiles, ShopCategoriesFileConfig) {
             if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
+                console.log('cancel UploadFileCtrl')
                 return;
             }
+            $scope.uploadFileConfig = ShopCategoriesFileConfig[ItemCreationService.targetItemType];
+            $scope.changeFileUse = function changeFileUse(file, fileUseType, fileUse) {
+                if (fileUse.amount === 1) {
+                    var currentlyClassifiedAsType = _.find($scope.inputData.selectedFiles, {use_as: fileUseType});
+                    if (_.isEmpty(currentlyClassifiedAsType)) {
+                        return;
+                    }
+
+                    currentlyClassifiedAsType.use_as = undefined;
+                }
+            };
             
             var currentStep = ItemCreationService.getCurrentStep();
-            console.debug('UploadFileCtlr currentStep:', currentStep);
+            console.debug('UploadFileCtrl currentStep:', currentStep);
 
             $scope.inputData = _.defaults(currentStep.inputData, {
                 newlyUploadedFiles: [],
@@ -161,8 +183,12 @@ angular.module('edmShopItems')
             });
 
             ResourceFiles.all.getList().then(function (data) {
+                _.each($scope.inputData.selectedFiles, function (selectedFile) {
+                    _.remove(data, {id: selectedFile.id});
+                    data.unshift(selectedFile);
+                });
+
                 $scope.resourceFiles = data;
-                console.debug(data);
             });
 
             $scope.uploadProgress = 0;
@@ -177,10 +203,20 @@ angular.module('edmShopItems')
 
             $scope.inputData = currentStep.inputData;
             $scope.canSave = function () {
-                return false;
+                return _.every($scope.uploadFileConfig, function (fileUse, fileUseType) {
+                    if (!fileUse.required) {
+                        return true;
+                    }
+
+                    var filesToUseAsType = _.filter($scope.inputData.selectedFiles, {use_as: fileUseType});
+                    return fileUse.amount === filesToUseAsType.length;
+                });
             };
             $scope.save = function () {
-                return false;
+                $scope.inputData.selectedFiles = _.filter($scope.inputData.selectedFiles, 'use_as');
+                currentStep.inputData = $scope.inputData;
+                currentStep.state = 'done';
+                ItemCreationService.gotoNextStep();
             };
 
             var addToSelectedFiles = function addToSelectedFiles(file) {
@@ -209,6 +245,6 @@ angular.module('edmShopItems')
     .controller('OverviewCtrl', [
         '$scope', '$state', 'ItemCreationService',
         function ($scope, $state, ItemCreationService) {
-
+            $scope.allSteps = _.pluck(ItemCreationService.stepsToDisplay, 'inputData');
         }
     ]);

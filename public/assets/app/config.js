@@ -75,14 +75,14 @@ angular.module('edmShopItems')
                     heading: 'General information',
                     text: 'moar dafuq information',
                     route: 'general',
-                    state: 'done'
+                    // state: 'done'
                 },
                 {
                     heading: 'Project file information',
                     text: 'moar dafuq project file information',
                     route: 'project-file',
-                    state: 'done'
-                    // requiredTargetItemTypes: ['project-files.templates', 'project-files.presets']
+                    // state: 'done'
+                    requiredTargetItemTypes: ['project-files.templates', 'project-files.presets']
                 },
                 {
                     heading: 'File upload area',

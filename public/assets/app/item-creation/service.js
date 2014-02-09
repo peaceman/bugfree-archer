@@ -74,7 +74,7 @@ angular.module('edmShopItems')
                 },
                 activateStepWithRoute: function (route) {
                     var routeStep = this.fetchStepByRoute(route);
-                    if (routeStep == this.getCurrentStep()) return;
+                    if (routeStep == this.getCurrentStep()) return true;
 
                     var stepToActivate = undefined;
                     if (!this.canActivateStep(routeStep)) {
@@ -90,6 +90,7 @@ angular.module('edmShopItems')
                     }
 
                     this.activateStep(stepToActivate);
+                    console.log('activateStepWithRoute', stepToActivate, routeStep);
                     return stepToActivate == routeStep;
                 },
                 activateStep: function (step) {

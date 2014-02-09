@@ -32,12 +32,7 @@
 							<td>{{ file.original_name }}</td>
 							<td>
 								<div class="btn-group">
-									<button class="btn btn-default btn-xs" ng-model="file.use_as" btn-radio="'sample'">
-										Sample
-									</button>
-									<button class="btn btn-default btn-xs" ng-model="file.use_as" btn-radio="'archive'">
-										Archive
-									</button>
+									<a ng-repeat="(fileUseType, fileUse) in uploadFileConfig" ng-click="changeFileUse(file, fileUseType, fileUse)" class="btn btn-default btn-xs" ng-model="file.use_as" btn-radio="fileUseType">{{fileUse.displayText}}</a>
 								</div>
 							</td>
 							<td>
@@ -55,7 +50,7 @@
 			<files-table files="resourceFiles" panel-title="Uploaded files" default-collapse="true"></files-table>
 		</div>
 		<div class="panel-footer">
-			<a type="submit" class="btn btn-default" ng-disable="!canSave()" href="" ng-click="save()">Next</a>
+			<a type="submit" class="btn btn-default" ng-disabled="!canSave()" href="" ng-click="save()">Next</a>
 			<hr />
 			<pre>{{ inputData | json }}</pre>
 			<pre>{{ resourceFiles | json }}</pre>

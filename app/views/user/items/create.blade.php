@@ -13,7 +13,7 @@
 <script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.tpl.min.js"></script>
 <script src="{{ asset('/assets/ng-flow.js') }}"></script>
 <script>
-angular.module('edmShopItems', ['ui.router', 'ui.bootstrap', 'mgcrea.ngStrap', 'restangular', 'flow']);
+angular.module('edmShopItems', ['ui.router', 'ui.bootstrap',  'restangular', 'flow']);
 </script>
 <script src="{{ asset('/assets/app/common/utils.js') }}"></script>
 <script src="{{ asset('/assets/app/common/base-service.js') }}"></script>
