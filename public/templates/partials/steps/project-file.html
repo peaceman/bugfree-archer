@@ -1,26 +1,22 @@
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">{{ step.heading }}</h3>
-	</div>
-	<div class="panel-body">
-		<dl class="dl-horizontal">
-			<dt>Music genre</dt>
-			<dd>{{ fetchMusicGenreName(step.inputData.music_genre_id) }}</dd>
+<fieldset ng-if="true">
+	<legend>{{ step.heading }}</legend>
+	<dl class="dl-horizontal">
+		<dt>Music genre</dt>
+		<dd>{{ fetchMusicGenreName(step.inputData.music_genre_id) }}</dd>
 
-			<dt>BPM</dt>
-			<dd>{{ step.inputData.bpm }}</dd>
+		<dt>BPM</dt>
+		<dd>{{ step.inputData.bpm }}</dd>
 
-			<dt>Description</dt>
-			<dd>{{ step.inputData.description }}</dd>
+		<dt>Description</dt>
+		<dd>{{ step.inputData.description }}</dd>
 
-			<dt>Music programs</dt>
-			<dd>{{ fetchMusicProgramNames(step.inputData.music_program_ids).join(', ') }}</dd>
+		<dt>Music programs</dt>
+		<dd>{{ fetchMusicProgramNames(step.inputData.music_program_ids).join(', ') }}</dd>
 
-			<dt>Music plugins</dt>
-			<dd>{{ fetchMusicPluginNames(step.inputData.music_plugin_ids).join(', ') }}</dd>
+		<dt>Music plugins</dt>
+		<dd>{{ fetchMusicPluginNames(step.inputData.music_plugin_ids).join(', ') }}</dd>
 
-			<dt>Music plugin banks</dt>
-			<dd>{{ fetchEntityNames(step.inputData.musicPluginBanks, step.inputData.music_plugin_bank_ids).join(', ') }}</dd>
-		</dl>
-	</div>
-</div>
+		<dt>Music plugin banks</dt>
+		<dd>{{ fetchEntityNames(step.inputData.musicPluginBanks, step.inputData.music_plugin_bank_ids).join(', ') }}</dd>
+	</dl>
+</fieldset>
