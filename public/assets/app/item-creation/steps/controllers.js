@@ -21,7 +21,10 @@ angular.module('edmShopItems')
             $scope.inputData = currentStep.inputData;
 
             $scope.canSave = function canSave() {
-                return $scope.generalForm.$dirty && $scope.generalForm.$valid;
+                var result = $scope.generalForm.$dirty && $scope.generalForm.$valid;
+                currentStep.state = result ? 'done' : 'open';
+                
+                return result;
             };
 
             $scope.save = function save() {
@@ -148,7 +151,10 @@ angular.module('edmShopItems')
             $scope.$watch('inputData.music_plugin_bank_ids', determineAvailablePluginBanks, true);
 
             $scope.canSave = function canSave() {
-                return $scope.projectFileForm.$dirty && $scope.projectFileForm.$valid;
+                var result = $scope.projectFileForm.$dirty && $scope.projectFileForm.$valid;
+                currentStep.state = result ? 'done' : 'open';
+
+                return result;
             };
 
             $scope.save = function save() {
@@ -206,7 +212,7 @@ angular.module('edmShopItems')
 
             $scope.inputData = currentStep.inputData;
             $scope.canSave = function () {
-                return _.every($scope.uploadFileConfig, function (fileUse, fileUseType) {
+                var result = _.every($scope.uploadFileConfig, function (fileUse, fileUseType) {
                     if (!fileUse.required) {
                         return true;
                     }
@@ -214,6 +220,10 @@ angular.module('edmShopItems')
                     var filesToUseAsType = _.filter($scope.inputData.selectedFiles, {use_as: fileUseType});
                     return fileUse.amount === filesToUseAsType.length;
                 });
+
+                currentStep.state = result ? 'done' : 'open';
+
+                return result;
             };
             $scope.save = function () {
                 $scope.inputData.selectedFiles = _.filter($scope.inputData.selectedFiles, 'use_as');
@@ -248,6 +258,11 @@ angular.module('edmShopItems')
     .controller('OverviewCtrl', [
         '$scope', '$state', 'ItemCreationService',
         function ($scope, $state, ItemCreationService) {
+            if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
+                console.log('cancel OverviewCtrl');
+                return;
+            }
+
             $scope.allSteps = _.pluck(ItemCreationService.stepsToDisplay, 'inputData');
         }
     ]);
