@@ -15,7 +15,7 @@
 <script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.tpl.js"></script>
 <script src="{{ asset('/assets/ng-flow.js') }}"></script>
 <script>
-angular.module('edmShopItems', ['ngAnimate', 'ui.router', 'ui.bootstrap.collapse', 'ui.bootstrap.buttons', 'mgcrea.ngStrap', 'restangular', 'flow', 'ngStorage']);
+angular.module('edmShopItems', ['ngAnimate', 'ui.router', 'ui.bootstrap.tpls', 'ui.bootstrap.collapse', 'ui.bootstrap.buttons', 'ui.bootstrap.progressbar', 'mgcrea.ngStrap', 'restangular', 'flow', 'ngStorage']);
 </script>
 <script src="{{ asset('/assets/app/common/utils.js') }}"></script>
 <script src="{{ asset('/assets/app/common/base-service.js') }}"></script>

@@ -8,9 +8,9 @@
 				<div class="alert" style="text-align: center; line-height: 34px;" flow-drop flow-drag-enter="dragEnter=true" flow-drag-leave="dragEnter=false" ng-class="{'alert-info': !dragEnter, 'alert-success': dragEnter}">
 					<span class="btn btn-default" flow-btn>Select files</span> <strong>OR</strong> Drag And Drop your files here
 				</div>
-				<progressbar value="uploadProgress" class="progress-striped" ng-class="{active: $flow.isUploading()}" ng-show="$flow.isUploading() || $flow.progress() == 1" />	
+				<progressbar value="uploadProgress" class="progress-striped" ng-class="{active: $flow.isUploading()}" ng-show="$flow.isUploading() || $flow.progress() == 1"></progressbar>
 			</div>
-			
+
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">Selected files for this item</h4>
