@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 		$this->call('ResourceLocationSeeder');
 		$this->call('UserSeeder');
 		$this->call('ShopCategorySeeder');
+		$this->call('MusicDataSeeder');
 	}
 
 }
