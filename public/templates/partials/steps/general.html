@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">{{ step.heading }}</h3>
+	</div>
+	<div class="panel-body">
+		<dl class="dl-horizontal">
+			<dt>Title</dt>
+			<dd>{{ step.inputData.title }}</dd>
+
+			<dt>Category</dt>
+			<dd>{{ shopCategoriesById[step.inputData.shop_category_id].name }}</dd>
+
+			<dt>Desired price</dt>
+			<dd>{{ step.inputData.price }} EUR</dd>
+		</dl>
+	</div>
+</div>

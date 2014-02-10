@@ -62,7 +62,13 @@ angular.module('edmShopItems')
                 views: {
                     '@': {
                         controller: 'OverviewCtrl',
-                        templateUrl: '/templates/overview.html'
+                        templateUrl: '/templates/overview.html',
+                        resolve: {
+                            'ShopCategoriesSelectList': 'ShopCategoriesSelectList',
+                            'MusicGenresSelectList': 'MusicGenresSelectList',
+                            'MusicPluginsSelectList': 'MusicPluginsSelectList',
+                            'MusicProgramsSelectList': 'MusicProgramsSelectList'                            
+                        }
                     }
                 }
             });

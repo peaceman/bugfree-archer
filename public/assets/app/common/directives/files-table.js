@@ -30,10 +30,11 @@ angular.module('edmShopItems')
 			return {
 				restrict: 'E',
 				scope: {
-					file: '='
+					file: '=',
+					class: '@'
 				},
 				replace: true,
-				template: '<img ng-if="isImageFile(file)" ng-src="{{ file.download_url }}" class="img-rounded" style="width: 100%;">',
+				template: '<img ng-if="isImageFile(file)" ng-src="{{ file.download_url }}" class="img-rounded" ng-class="class" style="width: 100%;">',
 				link: function (scope, element, attrs) {
 					var imageMimeTypePattern = new RegExp('^image/');
 					scope.isImageFile = function isImageFile(file) {

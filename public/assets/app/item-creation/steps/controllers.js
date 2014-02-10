@@ -114,7 +114,7 @@ angular.module('edmShopItems')
                 }
 
                 if (!_.contains(this.inputData.music_plugin_ids, plugin.id)) {
-                    if (!_.isArray(this.inputData.music_plugin_ids)) 
+                    if (!_.isArray(this.inputData.music_plugin_ids))
                         this.inputData.music_plugin_ids = [];
 
                     var newData = _.clone(this.inputData.music_plugin_ids);
@@ -123,7 +123,7 @@ angular.module('edmShopItems')
                 }
 
                 if (!_.contains(this.inputData.music_plugin_bank_ids, bank.id)) {
-                    if (!_.isArray(this.inputData.music_plugin_bank_ids)) 
+                    if (!_.isArray(this.inputData.music_plugin_bank_ids))
                         this.inputData.music_plugin_bank_ids = [];
 
                     var newData = _.clone(this.inputData.music_plugin_bank_ids);
@@ -195,7 +195,7 @@ angular.module('edmShopItems')
                     currentlyClassifiedAsType.use_as = undefined;
                 }
             };
-            
+
             var currentStep = ItemCreationService.getCurrentStep();
             console.debug('UploadFileCtrl currentStep:', currentStep);
 
@@ -268,13 +268,42 @@ angular.module('edmShopItems')
         }
     ])
     .controller('OverviewCtrl', [
-        '$scope', '$state', 'ItemCreationService',
-        function ($scope, $state, ItemCreationService) {
+        '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList',
+        function ($scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList) {
             if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
                 console.log('cancel OverviewCtrl');
                 return;
             }
 
-            $scope.allSteps = _.pluck(ItemCreationService.stepsToDisplay, 'inputData');
+            $scope.allSteps = [];
+            $scope.shopCategoriesById = _.indexBy(ShopCategoriesSelectList, 'id');
+
+            $scope.$watch(
+                function () {
+                    return ItemCreationService.stepsToDisplay;
+                },
+                function (steps) {
+                    $scope.allSteps = _.filter(steps, function (step) {
+                        return step.route !== 'overview';
+                    });
+                }
+            );
+
+            function fetchEntityName(entityList, entityId) {
+                if (_.isString(entityId)) {
+                    return entityId;
+                }
+
+                return _.find(entityList, {id: entityId}).name;
+            }
+
+            var fetchEntityNames = function fetchEntityNames(entityList, entityIds) {
+                return _.map(entityIds, _.partial(fetchEntityName, entityList));
+            };
+            $scope.fetchEntityNames = fetchEntityNames;
+
+            $scope.fetchMusicGenreName = _.partial(fetchEntityName, MusicGenresSelectList);
+            $scope.fetchMusicProgramNames = _.partial(fetchEntityNames, MusicProgramsSelectList);
+            $scope.fetchMusicPluginNames = _.partial(fetchEntityNames, MusicPluginsSelectList);
         }
     ]);

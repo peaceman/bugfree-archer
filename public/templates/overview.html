@@ -3,7 +3,7 @@
 		<h3 class="panel-title">Overview and submit</h3>
 	</div>
 	<div class="panel-body">
-		<pre>{{ allSteps | json }}</pre>
+		<div ng-repeat="step in allSteps" ng-include="'/templates/partials/steps/' + step.route + '.html'"></div>
 	</div>
 	<div class="panel-footer">
 		<button class="btn btn-primary">Submit for review</button>
