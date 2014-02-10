@@ -33,7 +33,7 @@ angular.module('edmShopItems')
 					file: '='
 				},
 				replace: true,
-				template: '<img ng-if="isImageFile(file)" src="{{ file.download_url }}" class="img-rounded" style="width: 100%;">',
+				template: '<img ng-if="isImageFile(file)" ng-src="{{ file.download_url }}" class="img-rounded" style="width: 100%;">',
 				link: function (scope, element, attrs) {
 					var imageMimeTypePattern = new RegExp('^image/');
 					scope.isImageFile = function isImageFile(file) {

@@ -119,7 +119,7 @@ angular.module('edmShopItems')
                     this.deactivateCurrentStep();
 
                     var step = this.stepsToDisplay[stepIndex];
-                    step.isActive = true;
+                    step.activate();
                     this.currentStepIndex = stepIndex;
                     this.ensureRouteOfCurrentStepIsActive();
                 },
@@ -127,7 +127,7 @@ angular.module('edmShopItems')
                     if (_.isUndefined(this.currentStepIndex)) return;
 
                     var step = this.stepsToDisplay[this.currentStepIndex];
-                    step.isActive = false;
+                    step.deactivate();
                 },
                 getCurrentStep: function () {
                     if (_.isUndefined(this.currentStepIndex)) return;

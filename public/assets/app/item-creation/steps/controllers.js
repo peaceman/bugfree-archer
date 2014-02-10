@@ -23,13 +23,12 @@ angular.module('edmShopItems')
             $scope.canSave = function canSave() {
                 var result = $scope.generalForm.$dirty && $scope.generalForm.$valid;
                 currentStep.state = result ? 'done' : 'open';
-                
+
                 return result;
             };
 
             $scope.save = function save() {
-                currentStep.inputData = $scope.inputData;
-                currentStep.state = 'done';
+                currentStep.finishStep($scope.inputData);
                 ItemCreationService.gotoNextStep();
             };
 
@@ -81,8 +80,30 @@ angular.module('edmShopItems')
                 var plugin = {id: pluginId, name: pluginId, banks: []};
                 $scope.staticData.musicPlugins.push(plugin);
 
+                console.warn('createNewPluginWithId', pluginId);
                 return plugin;
             };
+
+            _.each($scope.inputData.musicPluginBanks, function (musicPluginBank) {
+                if (!_.has(musicPluginBank, 'music_plugin_id')) {
+                    return;
+                }
+
+                if (!_.isString(musicPluginBank.music_plugin_id)) {
+                    console.warn('music_plugin_id of newly created bank is not a string');
+                }
+
+                var musicPluginId = musicPluginBank.music_plugin_id;
+                var bankPlugin = _.find($scope.staticData.musicPlugins, {id: musicPluginId});
+
+                if (_.isUndefined(bankPlugin)) {
+                    bankPlugin = createNewPluginWithId(musicPluginId);
+                }
+
+                if (_.isUndefined(_.find(bankPlugin.banks, {id: musicPluginBank.id}))) {
+                    bankPlugin.banks.push(musicPluginBank);
+                }
+            });
 
             $scope.saveNewPluginBank = function () {
                 console.log('saving new plugin bank data', this.inputData.newBank);
@@ -95,7 +116,7 @@ angular.module('edmShopItems')
                 var bankName = this.inputData.newBank.name;
                 var bank = _.find(plugin.banks, {id: bankName});
                 if (_.isUndefined(bank)) {
-                    bank = {id: bankName, name: bankName};
+                    bank = {id: bankName, name: bankName, music_plugin_id: plugin.id};
                     plugin.banks.push(bank);
                 }
 
@@ -158,8 +179,7 @@ angular.module('edmShopItems')
             };
 
             $scope.save = function save() {
-                currentStep.inputData = $scope.inputData;
-                currentStep.state = 'done';
+                currentStep.finishStep($scope.inputData);
                 ItemCreationService.gotoNextStep();
             };
         }
@@ -227,8 +247,7 @@ angular.module('edmShopItems')
             };
             $scope.save = function () {
                 $scope.inputData.selectedFiles = _.filter($scope.inputData.selectedFiles, 'use_as');
-                currentStep.inputData = $scope.inputData;
-                currentStep.state = 'done';
+                currentStep.finishStep($scope.inputData);
                 ItemCreationService.gotoNextStep();
             };
 

@@ -117,13 +117,29 @@ angular.module('edmShopItems')
                     SelectizeUtils.setValueOnSelectize(selectize, ngModel.$viewValue);
                 };
 
+                function optionsArrayDifference(xArr, yArr) {
+                    var onlyInXArr = [];
+
+                    _.each(xArr, function (xVal) {
+                        if (_.findIndex(yArr, {id: xVal.id}) !== -1) {
+                            return;
+                        }
+
+                        onlyInXArr.push(xVal);
+                    });
+
+                    return onlyInXArr;
+                }
+
                 // removes or adds options to the selectize object
                 scope.$watch('listOptions', function (newListOptions, oldListOptions) {
-                    var optionsToRemove = _.difference(oldListOptions, newListOptions);
+                    var optionsToRemove = optionsArrayDifference(oldListOptions, newListOptions);
                     _.each(_.pluck(optionsToRemove, 'id'), selectize.removeOption, selectize);
 
-                    var optionsToAdd = _.difference(newListOptions, oldListOptions);
+                    var optionsToAdd = optionsArrayDifference(newListOptions, oldListOptions);
                     _.each(optionsToAdd, selectize.addOption, selectize);
+
+                    console.info('listOptions watch remove:', optionsToRemove, 'add:', optionsToAdd, 'arguments:', arguments);
                 });
 
                 element
