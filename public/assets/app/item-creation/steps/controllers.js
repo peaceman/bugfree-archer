@@ -32,12 +32,12 @@ angular.module('edmShopItems')
                 ItemCreationService.gotoNextStep();
             };
 
-            $scope.$watch('inputData.shop_category_id', function (newShopCategoryId) {
-                if (_.isUndefined(newShopCategoryId)) return;
+            // $scope.$watch('inputData.shop_category_id', function (newShopCategoryId) {
+            //     if (_.isUndefined(newShopCategoryId)) return;
 
-                var newShopCategory = _.find(ShopCategoriesSelectList, {id: newShopCategoryId});
-                ItemCreationService.targetItemType = newShopCategory.targetItemType;
-            });
+            //     var newShopCategory = _.find(ShopCategoriesSelectList, {id: newShopCategoryId});
+            //     ItemCreationService.targetItemType = newShopCategory.targetItemType;
+            // });
         }
     ])
     .controller('ProjectFileCtrl', [

@@ -2,7 +2,6 @@ angular.module('edmShopItems')
     .factory('ItemCreationServiceFunctions', [
         '$rootScope', '$state',
         function ($rootScope, $state) {
-
             return {
                 fetchStepByRoute: function (route) {
                     return _.find(this.steps, {route: route});
@@ -69,12 +68,23 @@ angular.module('edmShopItems')
                     $rootScope.$watch(this.targetItemTypeWatchClosure, this.refreshStepsToDisplay);
                 },
                 refreshStepsToDisplay: function () {
+                    var currentStep = this.getCurrentStep();
+
                     this.stepsToDisplay = this.fetchStepsToDisplay();
-                    console.log('refreshed steps to display', this.stepsToDisplay);
+                    if (!_.isObject(currentStep)) {
+                        return;
+                    }
+
+                    var stepIndex = _.findIndex(this.stepsToDisplay, currentStep);
+                    this.currentStepIndex = stepIndex === -1 ? undefined : stepIndex;
+                    console.log('refreshed steps to display', this.stepsToDisplay, currentStep, stepIndex);
                 },
                 activateStepWithRoute: function (route) {
                     var routeStep = this.fetchStepByRoute(route);
-                    if (routeStep == this.getCurrentStep()) return true;
+                    if (routeStep === this.getCurrentStep()) {
+                        console.debug('activateStepWithRoute skip activation');
+                        return true;
+                    }
 
                     var stepToActivate = undefined;
                     if (!this.canActivateStep(routeStep)) {
@@ -111,7 +121,7 @@ angular.module('edmShopItems')
                     }
                 },
                 activateStepWithIndex: function (stepIndex) {
-                    if (this.currentStepIndex == stepIndex) {
+                    if (this.currentStepIndex === stepIndex) {
                         console.info('activateStepWithIndex: nothing to do');
                         this.ensureRouteOfCurrentStepIsActive();
                         return;
@@ -146,17 +156,48 @@ angular.module('edmShopItems')
                     }
 
                     this.activateStep(nextStep);
+                },
+                findGeneralStep: function () {
+                    var step = _.find(this.steps, {route: 'general'});
+                    if (!step) {
+                        console.error('missing general step in ItemCreationService@findGeneralStep');
+                        return;
+                    }
+
+                    this.generalStep = step;
+                },
+                refreshTargetItemTypeAfterShopCategoryIdChange: function () {
+                    $rootScope.$watch(this.shopCategoryIdWatchClosure, this.refreshTargetItemType);
+                },
+                shopCategoryIdWatchClosure: function () {
+                    return this.generalStep.inputData.shop_category_id;
+                },
+                refreshTargetItemType: function () {
+                    var newShopCategoryId = this.shopCategoryIdWatchClosure();
+                    if (_.isUndefined(newShopCategoryId)) return;
+
+                    this.shopCategoriesSelectListPromise.then(function (shopCategoriesSelectList) {
+                        var newShopCategory = _.find(shopCategoriesSelectList, {id: newShopCategoryId});
+                        if (!newShopCategory) {
+                            return;
+                        }
+                        
+                        console.log('refreshed targetItemType', this.targetItemType, newShopCategory.targetItemType);
+                        this.targetItemType = newShopCategory.targetItemType;
+                    }.bind(this));
                 }
             };
         }
     ])
     .factory('ItemCreationService', [
-        'BaseService', 'ItemCreationServiceFunctions', 'ItemCreationSteps',
-        function (BaseService, ItemCreationServiceFunctions, ItemCreationSteps) {
+        'BaseService', 'ItemCreationServiceFunctions', 'ItemCreationSteps', 'ShopCategoriesSelectList',
+        function (BaseService, ItemCreationServiceFunctions, ItemCreationSteps, ShopCategoriesSelectList) {
             var defaultProperties = {
                 steps: ItemCreationSteps,
+                shopCategoriesSelectListPromise: ShopCategoriesSelectList,
                 stepsToDisplay: [],
-                targetItemType: undefined
+                targetItemType: undefined,
+                generalStep: undefined
             };
 
             var buildService = function () {
@@ -164,7 +205,9 @@ angular.module('edmShopItems')
                 _.bindAll(service);
 
                 service.resolverFunctions.push(service.refreshStepsToDisplay);
+                service.resolverFunctions.push(service.findGeneralStep);
                 service.watchFunctions.push(service.refreshStepsToDisplayAfterTargetItemTypeChange);
+                service.watchFunctions.push(service.refreshTargetItemTypeAfterShopCategoryIdChange);
                 service.initialize();
 
                 return service;
