@@ -48,9 +48,9 @@
                         <a href="" class="btn btn-default" style="margin-top: -4px;" data-template="pop-test.html" data-container="body" data-placement="top" bs-popover>New Bank</a>
                     </span>
                 </div>
-                
+
                 <validation-message for="music_plugin_bank_ids" />
-            </field-group>             
+            </field-group>
             <script type="text/ng-template" id="pop-test.html">
             <div class="popover">
                 <div class="arrow"></div>
@@ -62,7 +62,7 @@
 
                             <input class="form-control" id="inputMusicPlugin" name="music_plugin_id" ng-model="inputData.newBank.music_plugin_id" required selectize-tags list-config="staticData.listConfigs.newPluginBank" list-options="staticData.musicPlugins" />
                             <validation-message for="music_plugin_id" />
-                        </field-group>      
+                        </field-group>
                         <field-group for="music_bank[name]">
                             <label for="music_bank[name]" class="control-label">Bank name</label>
                             <input class="form-control" id="music_bank[name]" type="text" name="music_bank[name]" ng-model="inputData.newBank.name" required />
@@ -83,15 +83,10 @@
                 </div>
             </div>
             </script>
-            
+
         </div>
-        <div class="panel-footer">
-            <button type="submit" ng-disabled="!canSave()" class="btn btn-default">Next</button>
-            <hr />
-            inputData
-            <pre>{{ inputData | json }}</pre>
-            staticData
-            <pre>{{ staticData | json }}</pre>
+        <div class="panel-footer" style="overflow: hidden;">
+            <button type="submit" ng-disabled="!canSave()" class="btn btn-default pull-right">Next</button>
         </div>
     </form>
 </div>

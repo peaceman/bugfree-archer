@@ -49,11 +49,8 @@
 			<files-table files="inputData.newlyUploadedFiles" panel-title="Newly uploaded files"></files-table>
 			<files-table files="resourceFiles" panel-title="Uploaded files" default-collapse="true"></files-table>
 		</div>
-		<div class="panel-footer">
-			<a type="submit" class="btn btn-default" ng-disabled="!canSave()" href="" ng-click="save()">Next</a>
-			<hr />
-			<pre>{{ inputData | json }}</pre>
-			<pre>{{ resourceFiles | json }}</pre>
+		<div class="panel-footer" style="overflow: hidden;">
+			<a type="submit" class="btn btn-default pull-right" ng-disabled="!canSave()" href="" ng-click="save()">Next</a>
 		</div>
 	</form>
 </div>

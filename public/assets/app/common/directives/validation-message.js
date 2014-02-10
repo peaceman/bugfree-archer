@@ -4,8 +4,8 @@ angular.module('edmShopItems')
             return {
                 required: 'This field is required',
                 pattern: 'Invalid characters',
-                minlength: 'Min length: {{ length }} characters',
-                maxlength: 'Max length: {{ length }} characters'
+                minlength: 'Too short',
+                maxlength: 'Too long'
             };
         }
     ])
