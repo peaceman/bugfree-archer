@@ -1,7 +1,7 @@
 angular.module('edmShopItems')
     .factory('DefaultStep', [
-        '$localStorage',
-        function ($localStorage) {
+        '$localStorage', 'USER_ID',
+        function ($localStorage, USER_ID) {
             return {
                 isActive: false,
                 heading: undefined,
@@ -11,7 +11,7 @@ angular.module('edmShopItems')
                 state: 'open',
                 inputData: {},
                 generateLocalStorageKey: function generateLocalStorageKey() {
-                    var key = 'step-' + this.route;
+                    var key = 'u' + USER_ID + '_step-' + this.route;
                     return key;
                 },
                 loadFromLocalStorage: function loadFromLocalStorage() {
