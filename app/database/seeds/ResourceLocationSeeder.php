@@ -20,7 +20,7 @@ class ResourceLocationSeeder extends Seeder
 			],
 			[
 				'type' => 'filesystem',
-				'state' => 'only_upload',
+				'state' => 'inactive',
 				'is_backup' => false,
 				'upload_order' => 5,
 				'download_order' => 5,
@@ -33,7 +33,7 @@ class ResourceLocationSeeder extends Seeder
 			],
 			[
 				'type' => 'aws',
-				'state' => 'active',
+				'state' => 'inactive',
 				'upload_order' => 1,
 				'download_order' => 1,
 				'settings' => json_encode(
