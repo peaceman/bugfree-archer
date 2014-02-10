@@ -2,7 +2,7 @@
 	<legend>{{ step.heading }}</legend>
 	<ul class="media-list">
 		<li class="media" ng-repeat="file in step.inputData.selectedFiles">
-			<a ng-href="file.download_url" class="pull-left col-sm-2">
+			<a ng-href="{{file.download_url}}" class="pull-left col-sm-2">
 				<image-preview file="file" class="media-object"></image-preview>
 			</a>
 
@@ -12,7 +12,7 @@
 					<table class="table table-condensed table-bordered">
 						<tr>
 							<th colspan="1">Download URL</th>
-							<td colspan="3"><a ng-href="file.download_url">{{ file.download_url }}</a></td>
+							<td colspan="3"><a ng-href="{{file.download_url}}">{{ file.download_url }}</a></td>
 						</tr>
 						<tr>
 							<th>File size</th>
@@ -24,7 +24,7 @@
 					<dl class="dl-horizontal" ng-if="false">
 						<dt>Download URL</dt>
 						<dd>
-							<a ng-href="file.download_url">{{ file.download_url }}</a>
+							<a ng-href="{{file.download_url}}">{{ file.download_url }}</a>
 						</dd>
 
 						<dt>File size</dt>
