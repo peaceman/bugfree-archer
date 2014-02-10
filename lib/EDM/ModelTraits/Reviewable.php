@@ -4,7 +4,7 @@ namespace EDM\ModelTraits;
 /**
  * Class Reviewable
  * @package EDM\ModelTraits
- * 
+ *
  * @property \Review $review
  */
 trait Reviewable
@@ -20,6 +20,7 @@ trait Reviewable
 			->whereHas('review', function ($q) {
 				$q->where('state', '=', \Review::STATE_FINISHED)
 					->where('result', '=', true);
-			});
+			})
+			->orHas('review', '<', 1);
 	}
 }
