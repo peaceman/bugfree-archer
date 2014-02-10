@@ -8,7 +8,7 @@
 		<dd>{{ step.inputData.bpm }}</dd>
 
 		<dt>Description</dt>
-		<dd>{{ step.inputData.description }}</dd>
+		<dd style="white-space: pre-line;">{{ step.inputData.description }}</dd>
 
 		<dt>Music programs</dt>
 		<dd>{{ fetchMusicProgramNames(step.inputData.music_program_ids).join(', ') }}</dd>
