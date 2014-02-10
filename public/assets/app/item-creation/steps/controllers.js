@@ -31,13 +31,6 @@ angular.module('edmShopItems')
                 currentStep.finishStep($scope.inputData);
                 ItemCreationService.gotoNextStep();
             };
-
-            // $scope.$watch('inputData.shop_category_id', function (newShopCategoryId) {
-            //     if (_.isUndefined(newShopCategoryId)) return;
-
-            //     var newShopCategory = _.find(ShopCategoriesSelectList, {id: newShopCategoryId});
-            //     ItemCreationService.targetItemType = newShopCategory.targetItemType;
-            // });
         }
     ])
     .controller('ProjectFileCtrl', [
