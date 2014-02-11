@@ -14,7 +14,7 @@ SSHKit.config.command_map[:artisan] = '/usr/bin/env php artisan --no-interaction
 
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
-set :linked_dirs, %w{app/storage/logs app/storage/sessions}
+set :linked_dirs, %w{app/storage/logs app/storage/sessions public/storage}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :keep_releases, 5
@@ -23,12 +23,12 @@ namespace :deploy do
   task :restart do
     # noop
   end
-  
+
   desc 'create a human friendly string to use as the release folder name'
   task :new_release_path do
     set_release_path env.timestamp.strftime("%Y-%m-%d_%H-%M-%S")
   end
-  
+
   desc 'executes database migrations through laravels artisan'
   task :migrate_database do
     on roles(:app), in: :parallel do
