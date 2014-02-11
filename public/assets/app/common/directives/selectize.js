@@ -47,7 +47,7 @@ angular.module('edmShopItems')
                     addNewValuesAsOptionsToSelectize(selectize, newValues);
 
                 $timeout(function () {
-                    selectize.setValue(value);    
+                    selectize.setValue(value);
                 });
             };
 
@@ -144,7 +144,7 @@ angular.module('edmShopItems')
 
                 element
                     .selectize(_.defaults(scope.listConfig, {
-                        plugins: ['drag_drop'],
+                        plugins: ['drag_drop', 'remove_button'],
                         valueField: 'id',
                         labelField: 'name',
                         searchField: 'name',
