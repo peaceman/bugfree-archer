@@ -25,6 +25,18 @@ class ShopItemRevision extends Eloquent
 	use \EDM\ModelTraits\UserTrackingSessionAware;
 
 	protected $table = 'shop_item_revisions';
+	protected $fillable = [
+		'price', 'title', 'slug',
+	];
+	public static $validationRules = [
+		'shop_item_id' => ['required', 'exists:shop_items'],
+		'shop_category_id' => ['required', 'exists:shop_categories'],
+		'product_revision_id' => ['required'],
+		'product_revision_type' => ['required'],
+		'price' => ['required', 'numeric'],
+		'title' => ['requierd', 'min:3', 'max:128'],
+		'slug' => ['required', 'alpha_dash', 'min:7', 'max:32'],
+	];
 
 	public function shopItem()
 	{

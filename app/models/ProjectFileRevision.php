@@ -10,14 +10,27 @@ use Carbon\Carbon;
  * @property int $sample_resource_file_id
  * @property int $bpm
  * @property string $description
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * @property MusicGenre $musicGenre
  * @property ResourceFile $archiveFile
  * @property ResourceFile $sampleFile
+ * @property ShopItemRevision $shopItemRevision
  */
 class ProjectFileRevision extends Eloquent
 {
 	protected $table = 'project_file_revisions';
+	protected $fillable = [
+		'bpm', 'description',
+	];
+	public static $validationRules = [
+		'music_genre_id' => ['required', 'exists:music_genres'],
+		'sample_file_id' => ['required', 'exists:resource_files'],
+		'archive_file_id' => ['required', 'exists:resource_files'],
+		'bpm' => ['required', 'integer', 'min:0'],
+		'description' => ['required'],
+	];
 
 	public function musicGenre()
 	{
@@ -46,11 +59,11 @@ class ProjectFileRevision extends Eloquent
 
 	public function compatibleBanks()
 	{
-		return $this->belongsToMany('MusicBank', 'project_file_revision_compatible_banks');
+		return $this->belongsToMany('MusicPluginBank', 'project_file_revision_compatible_banks', 'project_file_revision_id', 'music_bank_id');
 	}
 
 	public function shopItemRevision()
 	{
-		return $this->morphOne('ShopItemRevision', 'productRevision');
+		return $this->morphOne('ShopItemRevision', 'product_revision');
 	}
 }

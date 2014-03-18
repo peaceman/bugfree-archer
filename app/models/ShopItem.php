@@ -20,6 +20,25 @@ class ShopItem extends Eloquent
 	const STATE_PERMANENTLY_BLOCKED = 'permanently_blocked';
 
 	protected $table = 'shop_items';
+	protected $fillable = [
+		'state',
+	];
+	public static $validationRules = [
+		'owner_id' => ['required', 'exists:users'],
+		'state' => ['required', 'alpha_dash'],
+	];
+
+	public function __construct(array $attributes = [])
+	{
+		$attributes = array_merge(
+			[
+				'state' => static::STATE_INACTIVE,
+			],
+			$attributes
+		);
+
+		parent::__construct($attributes);
+	}
 
 	public function owner()
 	{

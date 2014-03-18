@@ -17,6 +17,10 @@ use Baum\Node, Carbon\Carbon;
  */
 class ShopCategory extends Node
 {
+	const SAMPLES = 'shop.category.samples';
+	const PROJECT_FILES = 'shop.category.project_files';
+	const TEMPLATES = 'shop.category.templates';
+	const PRESETS = 'shop.category.presets';
 
 	/**
 	 * Table name.

@@ -6,8 +6,8 @@ use Carbon\Carbon;
  *
  * @property int $id
  * @property string $name
- * @proeprty Carbon $created_at
- * @proeprty Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class MusicProgram extends Eloquent
 {
