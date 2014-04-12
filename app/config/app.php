@@ -119,6 +119,7 @@ return array(
 		// app
 		'EDM\Resource\Storage\StorageServiceProvider',
 		'EDM\Resource\UploadServiceProvider',
+		'EDM\Common\ProcessorsServiceProvider',
 	),
 
 	'middleware' => array(

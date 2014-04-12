@@ -1,18 +1,18 @@
 <?php
-namespace EDM\User\Process;
+namespace EDM\User\Processors;
 
-use EDM\ProcessInterface;
+use EDM\ProcessorInterface;
 use Event;
 use Log;
 
-class FinishEmailConfirmation implements ProcessInterface
+class FinishEmailConfirmation implements ProcessorInterface
 {
 	/**
 	 * @param array $data
 	 *
-	 * @throws \EDM\User\Process\Exception\EmailConfirmation\NonExistingConfirmationHash
-	 * @throws \EDM\User\Process\Exception\EmailConfirmation\ExpiredConfirmationHash
-	 * @throws \EDM\User\Process\Exception\EmailConfirmation\AlreadyUsedConfirmationHash
+	 * @throws \EDM\User\Processors\Exception\EmailConfirmation\NonExistingConfirmationHash
+	 * @throws \EDM\User\Processors\Exception\EmailConfirmation\ExpiredConfirmationHash
+	 * @throws \EDM\User\Processors\Exception\EmailConfirmation\AlreadyUsedConfirmationHash
 	 */
 	public function process(array $data = null)
 	{

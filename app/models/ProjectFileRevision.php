@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class ProjectFileRevision
@@ -20,16 +21,16 @@ use Carbon\Carbon;
  */
 class ProjectFileRevision extends Eloquent
 {
+	public static $validationRules = [
+		'music_genre_id' => ['required', 'exists:music_genres,id'],
+		'sample_file_id' => ['required', 'exists:resource_files,id'],
+		'archive_file_id' => ['required', 'exists:resource_files,id'],
+		'bpm' => ['required', 'integer', 'min:0'],
+		'description' => ['required'],
+	];
 	protected $table = 'project_file_revisions';
 	protected $fillable = [
 		'bpm', 'description',
-	];
-	public static $validationRules = [
-		'music_genre_id' => ['required', 'exists:music_genres'],
-		'sample_file_id' => ['required', 'exists:resource_files'],
-		'archive_file_id' => ['required', 'exists:resource_files'],
-		'bpm' => ['required', 'integer', 'min:0'],
-		'description' => ['required'],
 	];
 
 	public function musicGenre()

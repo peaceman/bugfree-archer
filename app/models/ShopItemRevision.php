@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class ShopItemRevision
@@ -34,7 +35,7 @@ class ShopItemRevision extends Eloquent
 		'product_revision_id' => ['required'],
 		'product_revision_type' => ['required'],
 		'price' => ['required', 'numeric'],
-		'title' => ['requierd', 'min:3', 'max:128'],
+		'title' => ['required', 'min:3', 'max:128'],
 		'slug' => ['required', 'alpha_dash', 'min:7', 'max:32'],
 	];
 

@@ -1,5 +1,5 @@
 <?php
-use EDM\User\Process;
+use EDM\User\Processors as UserProcess;
 
 class UserController extends BaseController
 {
@@ -38,16 +38,16 @@ class UserController extends BaseController
 
 	public function performEmailConfirmation($confirmationHash)
 	{
-		$process = new \EDM\User\Process\FinishEmailConfirmation();
+		$process = new UserProcess\FinishEmailConfirmation();
 
 		try {
 			$process->process(['confirmation_hash' => $confirmationHash]);
 			Notification::success(trans('flash.user.email_confirmation_successful'));
 
 			return Redirect::route('auth.log-in');
-		} catch (Process\Exception\EmailConfirmation\NonExistingConfirmationHash $e) {
+		} catch (UserProcess\Exception\EmailConfirmation\NonExistingConfirmationHash $e) {
 			App::abort(404);
-		} catch (Process\Exception\EmailConfirmation\AbstractException $e) {
+		} catch (UserProcess\Exception\EmailConfirmation\AbstractException $e) {
 			$viewData = [
 				'header' => trans('common.email_confirmation'),
 				'header_small' => trans(

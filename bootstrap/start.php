@@ -40,7 +40,7 @@ $env = $app->detectEnvironment(function () {
 |
 */
 
-$app->bindInstallPaths(require __DIR__.'/paths.php');
+$app->bindInstallPaths(require __DIR__ . '/paths.php');
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +53,45 @@ $app->bindInstallPaths(require __DIR__.'/paths.php');
 |
 */
 
-$framework = $app['path.base'].'/vendor/laravel/framework/src';
+$framework = $app['path.base'] . '/vendor/laravel/framework/src';
 
-require $framework.'/Illuminate/Foundation/start.php';
+require $framework . '/Illuminate/Foundation/start.php';
+
+App::bind(User::class, function ($app) {
+	return $app['auth']->user();
+});
+
+App::resolvingAny(function ($object) {
+//	try {
+	if (!is_object($object)) {
+		return;
+	}
+
+	$reflection = new ReflectionClass($object);
+	$publicMethods = $reflection->getMethods(ReflectionMethod::IS_PUBLIC);
+
+	foreach ($publicMethods as $method) {
+		if (!starts_with($method->name, 'inject')) {
+			continue;
+		}
+
+		if ($method->getNumberOfRequiredParameters() !== 1) {
+			continue;
+		}
+
+		list($parameter) = $method->getParameters();
+		$parameterClass = $parameter->getClass();
+
+		if (!$parameterClass) {
+			continue;
+		}
+
+		$dependency = App::make($parameterClass->name);
+		$method->invoke($object, $dependency);
+	}
+//	} catch (ReflectionException $e) {
+//	}
+});
 
 /*
 |--------------------------------------------------------------------------

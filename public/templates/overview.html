@@ -6,6 +6,6 @@
 		<div ng-repeat="step in allSteps" ng-include="'/templates/partials/steps/' + step.route + '.html'"></div>
 	</div>
 	<div class="panel-footer" style="overflow: hidden;">
-		<button class="btn btn-primary pull-right">Submit for review</button>
+		<a class="btn btn-danger pull-right" ng-click="save()" href="">Submit for review</a>
 	</div>
 </div>

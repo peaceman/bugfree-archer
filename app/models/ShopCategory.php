@@ -71,4 +71,17 @@ class ShopCategory extends Node
 	 * @var array
 	 */
 	protected $scoped = array();
+
+	public function getSlugList()
+	{
+		$slugList = [];
+
+		$currentCategory = $this;
+		while ($currentCategory) {
+			array_unshift($slugList, $currentCategory->slug);
+			$currentCategory = $currentCategory->parent;
+		}
+
+		return $slugList;
+	}
 }

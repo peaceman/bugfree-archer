@@ -2,7 +2,7 @@
 namespace EDM\Controllers\User;
 
 use App;
-use EDM\User\Process;
+use EDM\User\Processors;
 use EDM\User\ValidationRules;
 use Exception;
 use Hash;
@@ -10,11 +10,11 @@ use Input;
 use Log;
 use Notification;
 use Redirect;
+use Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use URL;
 use Validator;
 use View;
-use Request;
 
 class ProfileController extends UserBaseController
 {
@@ -140,7 +140,7 @@ class ProfileController extends UserBaseController
 		Notification::success(trans('common.data_update_successful'));
 
 		if ($this->user->email !== ($email = Request::get('email'))) {
-			(new Process\StartEmailConfirmation($this->user))
+			App::make(Processors\StartEmailConfirmation::class)
 				->process(['new_email' => Request::get('email')]);
 
 			Notification::info(trans('user.profile.confirm_new_email'));
@@ -152,7 +152,7 @@ class ProfileController extends UserBaseController
 	protected function handleAvatarDeletion()
 	{
 		try {
-			$process = App::make(Process\DeleteAvatar::class, [0 => $this->user]);
+			$process = App::make(Processors\DeleteAvatar::class);
 			$process->process();
 		} catch (Exception $e) {
 			Log::error(
@@ -170,9 +170,9 @@ class ProfileController extends UserBaseController
 		$avatar = Input::file('avatar');
 
 		try {
-			$process = App::make(Process\CreateAvatar::class, [0 => $this->user]);
+			$process = App::make(Processors\CreateAvatar::class);
 			$process->process(['avatar_file' => $avatar]);
-		} catch (Process\Exception\InvalidAvatarFile $e) {
+		} catch (Processors\Exception\InvalidAvatarFile $e) {
 			Log::notice(
 				'invalid avatar file in the create avatar process',
 				['error' => $e->avatarFile->getError(), 'error_message' => $e->avatarFile->getErrorMessage()]

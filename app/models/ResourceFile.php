@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use EDM\Resource\Storage\FilesystemStorage;
 use EDM\ModelTraits;
 

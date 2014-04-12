@@ -1,7 +1,7 @@
 <?php
 namespace EDM;
 
-interface ProcessInterface
+interface ProcessorInterface
 {
 	public function process(array $data = null);
 }

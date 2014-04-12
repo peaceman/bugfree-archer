@@ -1,5 +1,5 @@
 <?php
-namespace EDM\User\Process\Exception;
+namespace EDM\User\Processors\Exception;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 

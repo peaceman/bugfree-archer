@@ -1,20 +1,22 @@
 <?php
-namespace EDM\User\Process;
+namespace EDM\User\Processors;
 
+use EDM\ProcessorInterface;
 use EDM\Resource\Storage\StorageDirector;
+use EDM\User\UserInjection;
 use User;
 
-class DeleteAvatar extends AbstractUserProcess
+class DeleteAvatar implements ProcessorInterface
 {
+	use UserInjection;
+
 	/**
 	 * @var \EDM\Resource\Storage\StorageDirector
 	 */
 	protected $storageDirector;
 
-	public function __construct(User $user, StorageDirector $storageDirector)
+	public function __construct(StorageDirector $storageDirector)
 	{
-		parent::__construct($user);
-
 		$this->storageDirector = $storageDirector;
 	}
 

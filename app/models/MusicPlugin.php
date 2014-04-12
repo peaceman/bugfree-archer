@@ -1,5 +1,7 @@
 <?php
 use Carbon\Carbon;
+use EDM\MusicPlugin\Processors\CreateMusicPlugin;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
  * Class MusicPlugin
@@ -25,5 +27,19 @@ class MusicPlugin extends Eloquent
 	public function banks()
 	{
 		return $this->hasMany('MusicPluginBank');
+	}
+
+	public static function findOrCreateByName($name, $creationAttributes = [])
+	{
+		$model = static::where('name', $name)->first();
+		if (!$model) {
+			$creationAttributes['name'] = $name;
+
+			/** @var \EDM\MusicPlugin\Processors\CreateMusicPlugin $createMusicPluginProcessor */
+			$createMusicPluginProcessor = App::make(CreateMusicPlugin::class);
+			$model = $createMusicPluginProcessor->process($creationAttributes);
+		}
+
+		return $model;
 	}
 }

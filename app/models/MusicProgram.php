@@ -1,5 +1,7 @@
 <?php
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use EDM\MusicProgram\Processors\CreateMusicProgram as CreateMusicProgramProcessor;
 
 /**
  * Class MusicProgram
@@ -21,4 +23,18 @@ class MusicProgram extends Eloquent
 		'name' => ['required', 'min:3', 'max:64', 'unique:music_programs'],
 		'user_tracking_session_id' => ['required', 'exists:user_tracking_sessions'],
 	];
+
+	public static function findOrCreateByName($name, $creationAttributes = [])
+	{
+		$model = static::where('name', $name)->first();
+		if (!$model) {
+			$creationAttributes['name'] = $name;
+
+			/** @var \EDM\MusicProgram\Processors\CreateMusicProgram $createMusicProgramProcessor */
+			$createMusicProgramProcessor = App::make(CreateMusicProgramProcessor::class);
+			$model = $createMusicProgramProcessor->process($creationAttributes);
+		}
+
+		return $model;
+	}
 }

@@ -1,8 +1,13 @@
 <?php
-namespace EDM\User\Process;
+namespace EDM\User\Processors;
 
-class StartEmailConfirmation extends AbstractUserProcess
+use EDM\ProcessorInterface;
+use EDM\User\UserInjection;
+
+class StartEmailConfirmation implements ProcessorInterface
 {
+	use UserInjection;
+
 	public function process(array $data = null)
 	{
 		$email = $data['new_email'];

@@ -85,13 +85,15 @@ Route::group(
 Route::group(
 	['namespace' => 'EDM\Controllers\Api', 'prefix' => 'api'],
 	function () {
+		Route::resource('shop-items', 'ShopItemController');
+
 		Route::resource('shop-categories', 'ShopCategoryController');
 		Route::resource('music-genres', 'MusicGenreController');
 		Route::resource('music-programs', 'MusicProgramController');
 		Route::resource('music-plugins', 'MusicPluginController');
 		Route::resource('music-plugin-banks', 'MusicPluginBankController');
 		Route::resource('resource-files', 'ResourceFileController');
-		
+
 		Route::get('uploads', 'UploadController@checkChunk');
 		Route::post('uploads', 'UploadController@saveChunk');
 	}

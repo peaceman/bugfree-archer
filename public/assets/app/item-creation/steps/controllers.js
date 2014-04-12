@@ -238,6 +238,7 @@ angular.module('edmShopItems')
 
                 return result;
             };
+
             $scope.save = function () {
                 $scope.inputData.selectedFiles = _.filter($scope.inputData.selectedFiles, 'use_as');
                 currentStep.finishStep($scope.inputData);
@@ -268,8 +269,8 @@ angular.module('edmShopItems')
         }
     ])
     .controller('OverviewCtrl', [
-        '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList',
-        function ($scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList) {
+        '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList', '$http',
+        function ($scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList, $http) {
             if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
                 console.log('cancel OverviewCtrl');
                 return;
@@ -305,5 +306,56 @@ angular.module('edmShopItems')
             $scope.fetchMusicGenreName = _.partial(fetchEntityName, MusicGenresSelectList);
             $scope.fetchMusicProgramNames = _.partial(fetchEntityNames, MusicProgramsSelectList);
             $scope.fetchMusicPluginNames = _.partial(fetchEntityNames, MusicPluginsSelectList);
+
+            $scope.save = function () {
+                var inputData = _.transform($scope.allSteps, function (result, step) {
+                    var stepData = null;
+
+                    switch (step.route) {
+                        case 'project-file':
+                            stepData = _.pick(step.inputData, [
+                                'bpm', 'description', 'music_genre_id'
+                            ]);
+
+                            var convertIdOrNameToObject = function(idOrName) {
+                                return {
+                                    id_or_name: idOrName,
+                                    additional_data: {}
+                                };
+                            };
+
+                            stepData.music_plugin_banks = _.map(step.inputData.music_plugin_bank_ids, function(idOrName) {
+                                var toReturn = convertIdOrNameToObject(idOrName);
+
+                                if (_.isNaN(Number(idOrName))) {
+                                    var pluginBankData = _.find(step.inputData.musicPluginBanks, {
+                                        name: idOrName
+                                    });
+
+                                    if (pluginBankData) {
+                                        toReturn.additional_data.music_plugin_id = pluginBankData.music_plugin_id;
+                                    }
+                                }
+
+                                return toReturn;
+                            });
+
+                            stepData.music_plugins = _.map(step.inputData.music_plugin_ids, convertIdOrNameToObject);
+                            stepData.music_programs = _.map(step.inputData.music_program_ids, convertIdOrNameToObject);
+                            break;
+                        default:
+                            stepData = step.inputData;
+                            break;
+                    }
+
+                    result[step.route] = stepData;
+                }, {});
+
+                console.info(inputData);
+                $http.post('/api/shop-items', {shop_item_data: inputData})
+                    .success(function (data, status, header, config) {
+                        console.debug(arguments);
+                    });
+            };
         }
     ]);
