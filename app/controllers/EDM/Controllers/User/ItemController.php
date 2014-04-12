@@ -14,9 +14,7 @@ class ItemController extends UserBaseController
 
 	public function getCreate()
 	{
-		$musicGenres = \MusicGenre::all();
-		$shopCategories = [];
-		return View::make('user.items.create', compact('shopCategories', 'musicGenres'));
+		return View::make('user.items.create');
 	}
 
 	public function deleteDestroy($username, $itemId)
