@@ -30,8 +30,8 @@ class ShopItemRevision extends Eloquent
 		'price', 'title', 'slug',
 	];
 	public static $validationRules = [
-		'shop_item_id' => ['required', 'exists:shop_items'],
-		'shop_category_id' => ['required', 'exists:shop_categories'],
+		'shop_item_id' => ['required', 'exists:shop_items,id'],
+		'shop_category_id' => ['required', 'exists:shop_categories,id'],
 		'product_revision_id' => ['required'],
 		'product_revision_type' => ['required'],
 		'price' => ['required', 'numeric'],

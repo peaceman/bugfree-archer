@@ -1,7 +1,7 @@
 angular.module('edmShopItems')
     .factory('DefaultStep', [
-        '$localStorage', 'USER_ID',
-        function ($localStorage, USER_ID) {
+        '$localStorage', 'USER_ID', 'SHOP_ITEM_ID',
+        function ($localStorage, USER_ID, SHOP_ITEM_ID) {
             return {
                 isActive: false,
                 heading: undefined,
@@ -11,7 +11,7 @@ angular.module('edmShopItems')
                 state: 'open',
                 inputData: {},
                 generateLocalStorageKey: function generateLocalStorageKey() {
-                    var key = 'u' + USER_ID + '_step-' + this.route;
+                    var key = 'u' + USER_ID + '_si' + SHOP_ITEM_ID + '_step-' + this.route;
                     return key;
                 },
                 loadFromLocalStorage: function loadFromLocalStorage() {
@@ -56,9 +56,16 @@ angular.module('edmShopItems')
                     this.storeInLocalStorage();
                     this.isActive = false;
                 },
-                initialize: function initialize() {
+                initialize: function initialize(dataToLoad) {
                     console.warn('step initialize', this.route);
-                    this.loadFromLocalStorage();
+
+                    if (dataToLoad && !_.has($localStorage, this.generateLocalStorageKey())) {
+                        this.inputData = dataToLoad.inputData;
+                        this.state = dataToLoad.state;
+//                        console.info(dataToLoad);
+                    } else {
+                        this.loadFromLocalStorage();
+                    }
                 }
             };
         }
@@ -69,13 +76,18 @@ angular.module('edmShopItems')
             var steps = [];
 
             this.$get = [
-                'DefaultStep',
-                function (DefaultStep) {
+                'DefaultStep', 'EDIT_DATA',
+                function (DefaultStep, editData) {
                     return _.map(steps, function (step) {
                         var step = _.defaults(step, _.cloneDeep(DefaultStep));
                         _.bindAll(step);
 
-                        step.initialize();
+                        if (!editData) {
+                            step.initialize();
+                        } else {
+                            step.initialize(editData[step.route]);
+                        }
+
                         return step;
                     });
                 }

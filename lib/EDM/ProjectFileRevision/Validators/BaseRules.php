@@ -29,7 +29,7 @@ class BaseRules implements ValidatorInterface
 		$validator = $this->validatorFactory->make($validationData, $validationRules);
 
 		if ($validator->fails()) {
-			throw new Common\Exception\Validation($this->validatorFactory);
+			throw new Common\Exception\Validation($validator);
 		}
 	}
 

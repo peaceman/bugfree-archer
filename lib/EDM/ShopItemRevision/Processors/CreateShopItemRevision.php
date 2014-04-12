@@ -2,14 +2,12 @@
 namespace EDM\ShopItemRevision\Processors;
 
 use EDM\Common;
-use EDM\ProcessorInterface;
 use EDM\ShopItemRevision\ValidationRules;
-use Illuminate\Support\Str;
 use Review;
 use ShopItemRevision;
 use Validator;
 
-class CreateShopItemRevision implements ProcessorInterface
+class CreateShopItemRevision extends AbstractBaseProcessor
 {
 	public function process(array $data = null)
 	{
@@ -35,18 +33,4 @@ class CreateShopItemRevision implements ProcessorInterface
 		return $shopItemRevision;
 	}
 
-	protected function generateSlug(ShopItemRevision $shopItemRevision)
-	{
-		$slug = Str::limit(
-			sprintf(
-				'%s-%s',
-				Str::quickRandom(3),
-				Str::slug(object_get($shopItemRevision, 'title'))
-			),
-			32,
-			''
-		);
-
-		return $slug;
-	}
 }

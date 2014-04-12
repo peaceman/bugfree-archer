@@ -1,18 +1,17 @@
 <?php
 namespace EDM\ProjectFileRevision\Processors;
 
-use App;
-use ProjectFileRevision;
-
-class CreateProjectFileRevision extends AbstractBaseProcessor
+class UpdateProjectFileRevision extends AbstractBaseProcessor
 {
 	public function process(array $data = null)
 	{
+		/** @var \ProjectFileRevision $projectFileRevision */
+		$projectFileRevision = array_get($data, 'product_revision');
 		$inputData = array_get($data, 'input_data', []);
 
-		$projectFileRevision = new ProjectFileRevision([
+		$projectFileRevision->fill([
 			'bpm' => array_get($inputData, 'project-file.bpm'),
-			'description' => array_get($inputData, 'project-file.description')
+			'description' => array_get($inputData, 'project-file.description'),
 		]);
 
 		$this->setMusicGenreOnProjectFileRevision($inputData, $projectFileRevision);
@@ -26,5 +25,4 @@ class CreateProjectFileRevision extends AbstractBaseProcessor
 
 		return $projectFileRevision;
 	}
-
 }

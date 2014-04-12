@@ -38,7 +38,8 @@ return [
 	'items' => [
 		'notifications' => [
 			'created' => 'The shop item has been created',
-			'deleted' => 'The shop item has been deleted'
+			'deleted' => 'The shop item has been deleted',
+			'updated' => 'The shop item has been updated',
 		],
 		'create' => [
 			'dashboard_header' => 'Submit a new shop item',

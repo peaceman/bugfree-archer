@@ -48,14 +48,43 @@ class ProjectFileRevision extends Eloquent
 		return $this->belongsTo('ResourceFile', 'sample_file_id');
 	}
 
-	public function compatiblePrograms()
+	public function shopItemRevision()
 	{
-		return $this->belongsToMany('MusicProgram', 'project_file_revision_compatible_programs');
+		return $this->morphOne('ShopItemRevision', 'product_revision');
 	}
 
-	public function compatiblePlugins()
+	public function generateStepData()
 	{
-		return $this->belongsToMany('MusicPlugin', 'project_file_revision_compatible_plugins');
+		$archiveFileData = $this->archiveFile->toArray();
+		$archiveFileData['use_as'] = 'archive';
+
+		$sampleFileData = $this->sampleFile->toArray();
+		$sampleFileData['use_as'] = 'sample';
+
+		$stepData = [
+			'upload-file' => [
+				'state' => 'done',
+				'inputData' => [
+					'selectedFiles' => [
+						$archiveFileData,
+						$sampleFileData,
+					],
+				],
+			],
+			'project-file' => [
+				'state' => 'done',
+				'inputData' => [
+					'bpm' => $this->bpm,
+					'description' => $this->description,
+					'music_genre_id' => $this->music_genre_id,
+					'music_plugin_bank_ids' => $this->compatibleBanks()->get(['id'])->lists('id'),
+					'music_plugin_ids' => $this->compatiblePlugins()->get(['id'])->lists('id'),
+					'music_program_ids' => $this->compatiblePrograms()->get(['id'])->lists('id'),
+				],
+			],
+		];
+
+		return $stepData;
 	}
 
 	public function compatibleBanks()
@@ -63,8 +92,13 @@ class ProjectFileRevision extends Eloquent
 		return $this->belongsToMany('MusicPluginBank', 'project_file_revision_compatible_banks', 'project_file_revision_id', 'music_bank_id');
 	}
 
-	public function shopItemRevision()
+	public function compatiblePlugins()
 	{
-		return $this->morphOne('ShopItemRevision', 'product_revision');
+		return $this->belongsToMany('MusicPlugin', 'project_file_revision_compatible_plugins');
+	}
+
+	public function compatiblePrograms()
+	{
+		return $this->belongsToMany('MusicProgram', 'project_file_revision_compatible_programs');
 	}
 }

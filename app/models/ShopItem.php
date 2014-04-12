@@ -46,11 +46,41 @@ class ShopItem extends Eloquent
 	{
 		parent::boot();
 
-		static::deleting(function($shopItem) {
+		static::deleting(function ($shopItem) {
 			foreach ($shopItem->revisions as $revision) {
 				$revision->delete();
 			}
 		});
+	}
+
+	public function generateStepData()
+	{
+		$latestRevision = $this->latestRevision();
+
+		$stepData = [
+			'general' => [
+				'inputData' => [
+					'title' => $latestRevision->title,
+					'price' => (int)$latestRevision->price,
+					'shop_category_id' => $latestRevision->shopCategory->id
+				],
+				'state' => 'done',
+			],
+		];
+
+		$stepData = array_merge($stepData, $latestRevision->productRevision->generateStepData());
+
+//		dd($stepData);
+		return $stepData;
+	}
+
+	/**
+	 * @return \ShopItemRevision|null
+	 */
+	public function latestRevision()
+	{
+		$latestRevision = $this->revisions()->latest()->first();
+		return $latestRevision;
 	}
 
 	public function revisions()
@@ -58,9 +88,9 @@ class ShopItem extends Eloquent
 		return $this->hasMany('ShopItemRevision');
 	}
 
-	public function latestRevision()
+	public function canUpdateLatestRevision()
 	{
-		$latestRevision = $this->revisions()->latest()->first();
-		return $latestRevision;
+		$latestRevision = $this->latestRevision();
+		return $latestRevision->review->state === Review::STATE_WAITING;
 	}
 }

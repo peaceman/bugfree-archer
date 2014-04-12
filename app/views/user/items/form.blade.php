@@ -31,7 +31,18 @@ angular
 			'ngStorage'
 		]
 	)
-	.constant('USER_ID', {{ $user->id }});
+	.constant('USER_ID', {{ $user->id }})
+	.constant('SHOP_ITEMS_LISTING_URL', '{{ route('user.items', ['username' => $user->username]) }}')
+	@if (isset($shopItem))
+	.constant('SHOP_ITEM_ID', {{ $shopItem->id }})
+	@else
+	.constant('SHOP_ITEM_ID', false)
+	@endif
+	@if (isset($stepData))
+	.constant('EDIT_DATA', {{ json_encode($stepData) }})
+	@else
+	.constant('EDIT_DATA', false)
+	@endif
 </script>
 <script src="{{ asset('/assets/app/common/utils.js') }}"></script>
 <script src="{{ asset('/assets/app/common/base-service.js') }}"></script>

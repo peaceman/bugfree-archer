@@ -269,8 +269,8 @@ angular.module('edmShopItems')
         }
     ])
     .controller('OverviewCtrl', [
-        '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList', '$http', '$timeout',
-        function ($scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList, $http, $timeout) {
+        'SHOP_ITEMS_LISTING_URL', '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList', '$http', '$timeout', 'SHOP_ITEM_ID',
+        function (SHOP_ITEMS_LISTING_URL, $scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList, $http, $timeout, SHOP_ITEM_ID) {
             if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
                 console.log('cancel OverviewCtrl');
                 return;
@@ -352,21 +352,29 @@ angular.module('edmShopItems')
                 }, {});
 
 //                console.info(inputData);
-                $http.post('/api/shop-items', {shop_item_data: inputData})
-                    .success(function (data, status, headers, config) {
+                var success = function (data, status, headers, config) {
 //                        console.debug(arguments);
 
-                        _.each($scope.allSteps, function (step) {
-                            step.clearLocalStorage();
-                        });
-
-                        $timeout(function () {
-                            window.location.href = window.location.pathname.replace('/create', '')
-                        }, 250);
-                    })
-                    .error(function (data, status, headers, config) {
-                        console.error(arguments);
+                    _.each($scope.allSteps, function (step) {
+                        step.clearLocalStorage();
                     });
+
+                    $timeout(function () {
+                        window.location.href = SHOP_ITEMS_LISTING_URL;
+                    }, 250);
+                };
+                var failure = function (data, status, headers, config) {
+                    console.error(arguments);
+                };
+
+                var requestBody = {shop_item_data: inputData};
+                var promise = SHOP_ITEM_ID
+                    ? $http.put('/api/shop-items/' + SHOP_ITEM_ID, requestBody)
+                    : $http.post('/api/shop-items', requestBody);
+
+                promise
+                    .success(success)
+                    .error(failure);
             };
         }
     ]);
