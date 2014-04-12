@@ -30,6 +30,7 @@ return [
 			'category' => 'Category',
 			'title' => 'Title',
 			'price' => 'Price',
+			'review_state' => 'Review state',
 		],
 		'actions' => [
 			'delete' => 'Delete',
