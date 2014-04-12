@@ -67,7 +67,7 @@ angular.module('edmShopItems')
                             'ShopCategoriesSelectList': 'ShopCategoriesSelectList',
                             'MusicGenresSelectList': 'MusicGenresSelectList',
                             'MusicPluginsSelectList': 'MusicPluginsSelectList',
-                            'MusicProgramsSelectList': 'MusicProgramsSelectList'                            
+                            'MusicProgramsSelectList': 'MusicProgramsSelectList'
                         }
                     }
                 }
@@ -80,26 +80,24 @@ angular.module('edmShopItems')
                 {
                     heading: 'General information',
                     text: 'moar dafuq information',
-                    route: 'general',
-                    // state: 'done'
+                    route: 'general'
                 },
                 {
                     heading: 'Project file information',
                     text: 'moar dafuq project file information',
                     route: 'project-file',
-                    // state: 'done'
                     requiredTargetItemTypes: ['project-files.templates', 'project-files.presets']
                 },
                 {
                     heading: 'File upload area',
                     text: 'upload your files',
-                    route: 'upload-file',
+                    route: 'upload-file'
                 },
                 {
                     heading: 'Overview and submit',
                     text: 'moar dafuq overview with ultimate information',
-                    route: 'overview',
-                }                
+                    route: 'overview'
+                }
             ]);
         }
     ])

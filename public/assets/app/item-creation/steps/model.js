@@ -35,6 +35,12 @@ angular.module('edmShopItems')
 
                     console.debug('storeInLocalStorage route:', this.route, 'dataToStore:', dataToStore);
                 },
+                clearLocalStorage: function clearLocalStorage() {
+                    var storageKey = this.generateLocalStorageKey();
+                    delete $localStorage[storageKey];
+
+                    console.warn('deleted', storageKey, 'from $localStorage');
+                },
                 finishStep: function finishStep(inputData) {
                     this.inputData = inputData;
                     this.state = 'done';

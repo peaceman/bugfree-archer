@@ -269,8 +269,8 @@ angular.module('edmShopItems')
         }
     ])
     .controller('OverviewCtrl', [
-        '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList', '$http',
-        function ($scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList, $http) {
+        '$scope', '$state', 'ItemCreationService', 'ShopCategoriesSelectList', 'MusicGenresSelectList', 'MusicPluginsSelectList', 'MusicProgramsSelectList', '$http', '$timeout',
+        function ($scope, $state, ItemCreationService, ShopCategoriesSelectList, MusicGenresSelectList, MusicPluginsSelectList, MusicProgramsSelectList, $http, $timeout) {
             if (!ItemCreationService.activateStepWithRoute($state.current.name)) {
                 console.log('cancel OverviewCtrl');
                 return;
@@ -317,14 +317,14 @@ angular.module('edmShopItems')
                                 'bpm', 'description', 'music_genre_id'
                             ]);
 
-                            var convertIdOrNameToObject = function(idOrName) {
+                            var convertIdOrNameToObject = function (idOrName) {
                                 return {
                                     id_or_name: idOrName,
                                     additional_data: {}
                                 };
                             };
 
-                            stepData.music_plugin_banks = _.map(step.inputData.music_plugin_bank_ids, function(idOrName) {
+                            stepData.music_plugin_banks = _.map(step.inputData.music_plugin_bank_ids, function (idOrName) {
                                 var toReturn = convertIdOrNameToObject(idOrName);
 
                                 if (_.isNaN(Number(idOrName))) {
@@ -351,10 +351,21 @@ angular.module('edmShopItems')
                     result[step.route] = stepData;
                 }, {});
 
-                console.info(inputData);
+//                console.info(inputData);
                 $http.post('/api/shop-items', {shop_item_data: inputData})
-                    .success(function (data, status, header, config) {
-                        console.debug(arguments);
+                    .success(function (data, status, headers, config) {
+//                        console.debug(arguments);
+
+                        _.each($scope.allSteps, function (step) {
+                            step.clearLocalStorage();
+                        });
+
+                        $timeout(function () {
+                            window.location.href = window.location.pathname.replace('/create', '')
+                        }, 250);
+                    })
+                    .error(function (data, status, headers, config) {
+                        console.error(arguments);
                     });
             };
         }
