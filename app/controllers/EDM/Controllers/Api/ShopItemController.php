@@ -14,6 +14,7 @@ class ShopItemController extends BaseController
 		$createShopItemProcessor = App::make(CreateShopItemProcessor::class);
 		$result = $createShopItemProcessor->process($inputData);
 
+		\Notification::success(trans('user.items.notifications.created'));
 		return $this->response->json($result['shop_item']->toArray(), 201);
 	}
 }

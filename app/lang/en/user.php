@@ -37,6 +37,7 @@ return [
 	],
 	'items' => [
 		'notifications' => [
+			'created' => 'The shop item has been created',
 			'deleted' => 'The shop item has been deleted'
 		],
 		'create' => [
