@@ -14,6 +14,6 @@ class ShopItemController extends BaseController
 		$createShopItemProcessor = App::make(CreateShopItemProcessor::class);
 		$result = $createShopItemProcessor->process($inputData);
 
-		return $this->response->json($result);
+		return $this->response->json($result['shop_item']->toArray(), 201);
 	}
 }

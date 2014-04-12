@@ -88,9 +88,9 @@ class CreateProjectFileRevision implements ProcessorInterface
 	protected function setCompatibleSoftwareOnProjectFileRevision(array $inputData, ProjectFileRevision $projectFileRevision)
 	{
 		$compatibleSoftwareTypes = [
-			['relation_name' => 'banks', 'model_class' => \MusicPluginBank::class],
-			['relation_name' => 'plugins', 'model_class' => \MusicPlugin::class],
 			['relation_name' => 'programs', 'model_class' => \MusicProgram::class],
+			['relation_name' => 'plugins', 'model_class' => \MusicPlugin::class],
+			['relation_name' => 'banks', 'model_class' => \MusicPluginBank::class],
 		];
 
 		foreach ($compatibleSoftwareTypes as $compatibleSoftwareType) {

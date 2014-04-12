@@ -33,6 +33,11 @@ class MusicPluginBank extends Eloquent
 		if (!$model) {
 			$creationAttributes['name'] = $name;
 
+			if (!is_numeric($creationAttributes['music_plugin_id'])) {
+				$musicPlugin = MusicPlugin::where('name', $creationAttributes['music_plugin_id'])->first();
+				$creationAttributes['music_plugin_id'] = $musicPlugin->id;
+			}
+
 			/** @var \EDM\MusicPluginBank\Processors\CreateMusicPluginBank $createMusicPluginBankProcessor */
 			$createMusicPluginBankProcessor = App::make(CreateMusicPluginBankProcessor::class);
 			$model = $createMusicPluginBankProcessor->process($creationAttributes);
