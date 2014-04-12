@@ -62,7 +62,6 @@ App::bind(User::class, function ($app) {
 });
 
 App::resolvingAny(function ($object) {
-//	try {
 	if (!is_object($object)) {
 		return;
 	}
@@ -89,8 +88,6 @@ App::resolvingAny(function ($object) {
 		$dependency = App::make($parameterClass->name);
 		$method->invoke($object, $dependency);
 	}
-//	} catch (ReflectionException $e) {
-//	}
 });
 
 /*
