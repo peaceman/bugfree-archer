@@ -1,5 +1,5 @@
 $(function () {
-	$('[data-toggle=tooltip]').tooltip();
+    $('[data-toggle=tooltip]').tooltip();
     $('[data-toggle=tab]').on('shown.bs.tab', function (e) {
         var hash = $(e.target).attr('href');
         if (hash.substr(0, 1) == '#') {
@@ -7,7 +7,11 @@ $(function () {
         }
     });
 
-    if (location.hash.substr(0,2) == '#!') {
+    if (location.hash.substr(0, 2) == '#!') {
         $("a[href='#" + location.hash.substr(2) + "']").tab('show');
     }
+
+    $(document).on('submit', '.delete-form', function () {
+        return confirm('Are you sure?');
+    });
 });
