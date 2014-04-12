@@ -5,6 +5,7 @@ use EDM\Common;
 use EDM\ProcessorInterface;
 use EDM\ShopItemRevision\ValidationRules;
 use Illuminate\Support\Str;
+use Review;
 use ShopItemRevision;
 use Validator;
 
@@ -29,6 +30,7 @@ class CreateShopItemRevision implements ProcessorInterface
 		$shopItemRevision->shopItem()->associate($data['shop_item']);
 
 		$data['product_revision']->shopItemRevision()->save($shopItemRevision);
+		$shopItemRevision->review()->save(new Review());
 
 		return $shopItemRevision;
 	}

@@ -22,4 +22,18 @@ return [
 	'address' => 'Address',
 	'postcode' => 'Postcode',
 	'country' => 'Country',
+	'table' => [
+		'headers' => [
+			'id' => '#',
+			'actions' => 'Actions',
+			'state' => 'State',
+			'category' => 'Category',
+			'title' => 'Title',
+			'price' => 'Price',
+		],
+		'actions' => [
+			'delete' => 'Delete',
+			'edit' => 'Edit',
+		],
+	],
 ];

@@ -39,6 +39,21 @@ class ShopItemRevision extends Eloquent
 		'slug' => ['required', 'alpha_dash', 'min:7', 'max:32'],
 	];
 
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::deleting(function($shopItemRevision) {
+			if ($shopItemRevision->productRevision) {
+				$shopItemRevision->productRevision->delete();
+			}
+
+			if ($shopItemRevision->review) {
+				$shopItemRevision->review->delete();
+			}
+		});
+	}
+
 	public function shopItem()
 	{
 		return $this->belongsTo('ShopItem');

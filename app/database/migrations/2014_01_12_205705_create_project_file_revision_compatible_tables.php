@@ -19,11 +19,11 @@ class CreateProjectFileRevisionCompatibleTables extends Migration {
 
 			$table->foreign('project_file_revision_id', 'pfrcpr_pfr_fk')
 				->references('id')->on('project_file_revisions')
-				->onUpdate('cascade')->onDelete('restrict');
+				->onUpdate('cascade')->onDelete('cascade');
 
 			$table->foreign('music_program_id', 'pfrcpr_mp_fk')
 				->references('id')->on('music_programs')
-				->onUpdate('cascade')->onDelete('restrict');
+				->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('project_file_revision_compatible_plugins', function(Blueprint $table)
@@ -33,11 +33,11 @@ class CreateProjectFileRevisionCompatibleTables extends Migration {
 
 			$table->foreign('project_file_revision_id', 'pfrcpl_pfr_fk')
 				->references('id')->on('project_file_revisions')
-				->onUpdate('cascade')->onDelete('restrict');
+				->onUpdate('cascade')->onDelete('cascade');
 
 			$table->foreign('music_plugin_id', 'pfrcpl_mp_fk')
 				->references('id')->on('music_plugins')
-				->onUpdate('cascade')->onDelete('restrict');
+				->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('project_file_revision_compatible_banks', function(Blueprint $table)
@@ -47,11 +47,11 @@ class CreateProjectFileRevisionCompatibleTables extends Migration {
 
 			$table->foreign('project_file_revision_id', 'pfrcb_pfr_fk')
 				->references('id')->on('project_file_revisions')
-				->onUpdate('cascade')->onDelete('restrict');
+				->onUpdate('cascade')->onDelete('cascade');
 
 			$table->foreign('music_bank_id', 'pfrcb_mb_fk')
 				->references('id')->on('music_banks')
-				->onUpdate('cascade')->onDelete('restrict');
+				->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

@@ -4,6 +4,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
+        "raveren/kint": "dev-master",
         "laravel/framework": "4.1.*",
         "webpatser/laravel-countries": "dev-master",
         "slushie/laravel-middleware": "dev-master",
@@ -12,8 +13,7 @@
         "supremenewmedia/finance": "dev-master",
         "baum/baum": "dev-develop",
         "doctrine/dbal": "dev-master",
-        "flowjs/flow-php-server": "dev-master",
-        "raveren/kint": "dev-master"
+        "flowjs/flow-php-server": "dev-master"
     },
     "autoload": {
         "classmap": [

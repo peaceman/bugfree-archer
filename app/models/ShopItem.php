@@ -1,5 +1,6 @@
 <?php
 use Carbon\Carbon;
+use EDM\ModelTraits;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
@@ -14,19 +15,19 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  */
 class ShopItem extends Eloquent
 {
+	use ModelTraits\OwnerAware;
 	const STATE_ACTIVE = 'active';
 	const STATE_INACTIVE = 'inactive';
 	const STATE_REPORTED = 'reported';
 	const STATE_TEMPORARILY_BLOCKED = 'temporarily_blocked';
 	const STATE_PERMANENTLY_BLOCKED = 'permanently_blocked';
-
-	protected $table = 'shop_items';
-	protected $fillable = [
-		'state',
-	];
 	public static $validationRules = [
 		'owner_id' => ['required', 'exists:users'],
 		'state' => ['required', 'alpha_dash'],
+	];
+	protected $table = 'shop_items';
+	protected $fillable = [
+		'state',
 	];
 
 	public function __construct(array $attributes = [])
@@ -41,13 +42,25 @@ class ShopItem extends Eloquent
 		parent::__construct($attributes);
 	}
 
-	public function owner()
+	protected static function boot()
 	{
-		return $this->belongsTo('User');
+		parent::boot();
+
+		static::deleting(function($shopItem) {
+			foreach ($shopItem->revisions as $revision) {
+				$revision->delete();
+			}
+		});
 	}
 
 	public function revisions()
 	{
 		return $this->hasMany('ShopItemRevision');
+	}
+
+	public function latestRevision()
+	{
+		$latestRevision = $this->revisions()->latest()->first();
+		return $latestRevision;
 	}
 }

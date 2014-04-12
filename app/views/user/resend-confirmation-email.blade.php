@@ -27,7 +27,8 @@
 
 	<div class="form-group">
 		<div class="col-md-offset-2 col-md-4">
-			<button type="submit" class="btn btn-default">{{ trans('user.resend_confirmation_email.submit_button') }}
+			<button type="submit" class="btn btn-default">
+				{{ trans('user.resend_confirmation_email.submit_button') }}
 			</button>
 		</div>
 	</div>

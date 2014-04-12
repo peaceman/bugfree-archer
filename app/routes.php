@@ -74,6 +74,8 @@ Route::group(
 
 			Route::get('users/{username}/items', ['as' => 'user.items', 'uses' => 'ItemController@getIndex']);
 			Route::get('users/{username}/items/create', ['as' => 'user.items.create', 'uses' => 'ItemController@getCreate']);
+			Route::get('users/{username}/items/{item_id}/edit', ['as' => 'user.items.edit', 'uses' => 'ItemController@getEdit']);
+			Route::delete('users/{username}/items/{item_id}', ['as' => 'user.items.delete', 'uses' => 'ItemController@deleteDestroy']);
 			Route::get(
 				'users/{username}/customer-questions',
 				['as' => 'user.customer-questions', 'uses' => 'CustomerQuestionController@getIndex']

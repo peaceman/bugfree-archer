@@ -36,6 +36,9 @@ return [
 		'avatar_upload_failed' => 'Avatar upload failed',
 	],
 	'items' => [
+		'notifications' => [
+			'deleted' => 'The shop item has been deleted'
+		],
 		'create' => [
 			'dashboard_header' => 'Submit a new shop item',
 			'form' => [

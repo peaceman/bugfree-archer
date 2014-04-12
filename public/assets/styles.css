@@ -10,6 +10,10 @@
     padding-left: 0px;
 }
 
+.table-action-button, .delete-form {
+    display: inline-block;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 
