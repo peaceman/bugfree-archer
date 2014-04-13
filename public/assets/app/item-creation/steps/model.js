@@ -62,7 +62,7 @@ angular.module('edmShopItems')
                     if (dataToLoad && !_.has($localStorage, this.generateLocalStorageKey())) {
                         this.inputData = dataToLoad.inputData;
                         this.state = dataToLoad.state;
-//                        console.info(dataToLoad);
+                        console.info('loaded from server', dataToLoad);
                     } else {
                         this.loadFromLocalStorage();
                     }

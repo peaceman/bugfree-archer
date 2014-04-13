@@ -149,7 +149,7 @@ angular.module('edmShopItems')
                         labelField: 'name',
                         searchField: 'name',
                         create: true,
-                        options: scope.listOptions,
+                        options: scope.listOptions
                     }));
 
                 var selectize = element[0].selectize;

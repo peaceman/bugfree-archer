@@ -50,7 +50,7 @@ angular.module('edmShopItems')
                 music_plugin_bank_ids: [],
                 bpm: undefined,
                 description: undefined,
-                musicPluginBanks: [],
+                musicPluginBanks: []
             });
 
             $scope.inputData = currentStep.inputData;
@@ -139,9 +139,11 @@ angular.module('edmShopItems')
                 this.$hide();
             };
 
+            // todo musicPluginBanks should be externalized as a service to avoid bugs, when the data is loaded from local storage
+            var initializedMusicPluginBanks = false;
             var determineAvailablePluginBanks = function determineAvailablePluginBanks(newData, oldData) {
-                if (newData === oldData) {
-                    console.debug('ignore call to determineAvailablePluginBanks; data is identical');
+                if (newData === oldData && initializedMusicPluginBanks) {
+                    console.debug('ignore call to determineAvailablePluginBanks; data is identical', newData, oldData);
                     return;
                 }
 
@@ -158,11 +160,13 @@ angular.module('edmShopItems')
 
                 console.log('set available banks', banks);
                 $scope.inputData.musicPluginBanks = banks;
+                initializedMusicPluginBanks = true;
             };
 
             // fill the bank selection field with banks in dependency of the currently selected plugins
             $scope.$watch('inputData.music_plugin_ids', determineAvailablePluginBanks, true);
             $scope.$watch('inputData.music_plugin_bank_ids', determineAvailablePluginBanks, true);
+            determineAvailablePluginBanks();
 
             $scope.canSave = function canSave() {
                 var result = $scope.projectFileForm.$dirty && $scope.projectFileForm.$valid;
@@ -295,7 +299,11 @@ angular.module('edmShopItems')
                     return entityId;
                 }
 
-                return _.find(entityList, {id: entityId}).name;
+                var entity = _.find(entityList, {id: entityId});
+                if (!entity) {
+                    console.error('couldnt find entity in entity list', entityList, entityId);
+                }
+                return entity.name;
             }
 
             var fetchEntityNames = function fetchEntityNames(entityList, entityIds) {
