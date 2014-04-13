@@ -23,10 +23,10 @@
 		<td>{{ $shopItem->latestRevision()->price }}</td>
 		<td>
 			<a class="btn btn-primary btn-xs table-action-button"
-			   href="{{ route('user.items.edit', ['username' => Auth::user()->username, 'item_id' => $shopItem->id]) }}">
+			   href="{{ route('user.items.edit', ['username' => $user->username, 'item_id' => $shopItem->id]) }}">
 				{{ trans('common.table.actions.edit') }}
 			   </a>
-			{{ Form::delete(route('user.items.delete', ['username' => Auth::user()->username, 'item_id' => $shopItem->id]), trans('common.table.actions.delete'), [], ['class' => 'btn btn-danger btn-xs']) }}
+			{{ Form::delete(route('user.items.delete', ['username' => $user->username, 'item_id' => $shopItem->id]), trans('common.table.actions.delete'), [], ['class' => 'btn btn-danger btn-xs']) }}
 		</td>
 	</tr>
 	@endforeach

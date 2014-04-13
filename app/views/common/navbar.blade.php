@@ -32,9 +32,9 @@
 							class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="{{ route('user.dashboard', ['username' => Auth::user()->username]) }}">{{ trans('navbar.dashboard') }}</a>
+							<a href="{{ route('user.dashboard', ['username' => $user->username]) }}">{{ trans('navbar.dashboard') }}</a>
 						</li>
-						<li><a href="{{ route('user.password') }}">{{ trans('navbar.password_settings') }}</a></li>
+<!--						<li><a href="{{ route('user.password') }}">{{ trans('navbar.password_settings') }}</a></li>-->
 						<li class="divider"></li>
 						<li>
 							<a href="{{ route('auth.log-out') }}">{{ trans('navbar.log_out') }}</a>
