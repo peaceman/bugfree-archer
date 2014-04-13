@@ -1,9 +1,9 @@
 @extends('layouts.admin.dashboard')
 @section('dashboard.header')
 <h1>
-	{{{ trans('admin.review.page_header.big') }}}
+	{{{ trans('admin.review.page_header.reviews') }}}
 	<small>
-		{{{ trans('admin.review.page_header.small') }}} {{{ $amountOfWaitingReviews }}}
+		{{{ trans('admin.review.page_header.amount_of_waiting_reviews') }}} {{{ $amountOfWaitingReviews }}}
 	</small>
 </h1>
 @stop

@@ -24,8 +24,8 @@ return [
 	],
 	'review' => [
 		'page_header' => [
-			'big' => 'Reviews',
-			'small' => 'Amount of waiting reviews',
+			'reviews' => 'Reviews',
+			'amount_of_waiting_reviews' => 'Amount of waiting reviews',
 		],
 		'panel_header' => [
 			'reviews_in_state' => 'Reviews in state',
