@@ -20,7 +20,7 @@
 		<td>{{ $shopItem->state }}</td>
 		<td>{{ $shopItem->latestRevision()->review->state }}</td>
 		<td>{{ $shopItem->latestRevision()->shopCategory->name }}</td>
-		<td>{{ $shopItem->latestRevision()->price }}</td>
+		<td style="text-align: right;">{{ $shopItem->latestRevision()->price }} EUR</td>
 		<td>
 			<a class="btn btn-primary btn-xs table-action-button"
 			   href="{{ route('user.items.edit', ['username' => $user->username, 'item_id' => $shopItem->id]) }}">
