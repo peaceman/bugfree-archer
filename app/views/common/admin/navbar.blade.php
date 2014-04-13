@@ -27,6 +27,7 @@
 				<li>
 					<a href="{{ route('admin.reviews.index') }}">
 						{{ trans('admin.navbar.reviews') }}
+						<span class="badge">{{{ $amountOfWaitingReviews or '' }}}</span>
 					</a>
 				</li>
 				<li class="dropdown">

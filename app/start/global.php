@@ -92,4 +92,8 @@ if (Auth::check()) {
 	View::share('user', Auth::user());
 }
 
+View::composer('common.admin.navbar', function ($view) {
+	$view->with('amountOfWaitingReviews', Review::amountOfWaitingReviews());
+});
+
 View::shared('errors')->setFormat('<span class="help-block">:message</span>');

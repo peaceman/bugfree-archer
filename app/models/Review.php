@@ -48,4 +48,13 @@ class Review extends Eloquent
 	{
 		return $this->morphTo();
 	}
+
+	public static function amountOfWaitingReviews()
+	{
+		$amount = static::query()
+			->where('state', static::STATE_WAITING)
+			->count();
+
+		return $amount;
+	}
 }
