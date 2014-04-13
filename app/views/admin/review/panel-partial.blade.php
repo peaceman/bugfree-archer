@@ -8,6 +8,7 @@
 			<th>{{{ trans('common.table.headers.id') }}}</th>
 			<th>{{{ trans('common.table.headers.type') }}}</th>
 			<th>{{{ trans('common.table.headers.name') }}}</th>
+			<th>{{{ trans('common.table.headers.submitter') }}}</th>
 			<th>{{{ trans('common.table.headers.created_at') }}}</th>
 			<th>{{{ trans('common.table.headers.reviewer') }}}</th>
 			<th>{{{ trans('common.table.headers.accepted') }}}</th>
@@ -20,7 +21,8 @@
 		<tr>
 			<td>{{{ $review->id }}}</td>
 			<td>{{{ $review->reviewee_type }}}</td>
-			<td>{{{ $review->reviewee->getNameForReview() }}}</td>
+			<td>{{{ $review->reviewee->getNameForReview() }}}
+			<td>{{{ $review->reviewee->getSubmitter()->email }}}</td>
 			<td>{{{ $review->created_at }}}</td>
 			<td>{{{ $review->reviewer->username }}}</td>
 			<td>

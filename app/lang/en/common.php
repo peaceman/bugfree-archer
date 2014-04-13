@@ -38,6 +38,7 @@ return [
 			'created_at' => 'Created at',
 			'updated_at' => 'Updated at',
 			'reviewed_at' => 'Reviewed at',
+			'submitter' => 'Submitter',
 		],
 		'actions' => [
 			'delete' => 'Delete',
