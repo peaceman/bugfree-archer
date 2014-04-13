@@ -1,10 +1,22 @@
+@section('wrapped')
+@include('common.navbar', ['categories' => []])
+<div class="container">
+	@include('common.messages')
+	@yield('content', 'no content available')
+</div>
+@stop
 <!DOCTYPE html>
 <html>
 <head>
 	<title>EDM Market</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Bootstrap -->
-	<link rel="stylesheet" href="{{ asset('/assets/bootstrap/css/bootstrap.min.css') }}">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
     <link rel="stylesheet" href="{{ asset('/assets/selectize/css/selectize.css') }}"/>
     <link rel="stylesheet" href="{{ asset('/assets/selectize/css/selectize.bootstrap3.css') }}"/>
 	<link rel="stylesheet" href="{{ asset('/assets/styles.css') }}"/>
@@ -18,18 +30,14 @@
 </head>
 <body>
 <div id="wrap">
-	@include('common.navbar', ['categories' => [], 'user' => null])
-	<div class="container">
-		@include('common.messages')
-		@yield('content', 'no content available')
-	</div>
+	@yield('wrapped')
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="{{ asset('/assets/jquery-ui.js') }}"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{{ asset('/assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="{{ asset('/assets/selectize/js/standalone/selectize.js') }}"></script>
 <script src="{{ asset('/assets/scripts.js') }}"></script>
 @yield('scripts.footer', '')
