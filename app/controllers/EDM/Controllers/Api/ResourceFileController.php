@@ -1,9 +1,10 @@
 <?php
 namespace EDM\Controllers\Api;
 
+use EDM\Controllers\AuthenticatedBaseController;
 use ResourceFile;
 
-class ResourceFileController extends BaseController
+class ResourceFileController extends AuthenticatedBaseController
 {
 	public function index()
 	{

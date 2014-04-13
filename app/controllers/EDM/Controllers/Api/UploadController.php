@@ -1,15 +1,16 @@
 <?php
 namespace EDM\Controllers\Api;
 
-use Illuminate\Support\Facades\Response;
-use Illuminate\Http\Request;
-use Illuminate\View\Environment as ViewFactory;
-use Flow;
-use EDM\Resource\Storage\StorageDirector;
 use Config;
+use EDM\Controllers\AuthenticatedBaseController;
+use EDM\Resource\Storage\StorageDirector;
+use Flow;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\View\Environment as ViewFactory;
 use ResourceFile;
 
-class UploadController extends BaseController
+class UploadController extends AuthenticatedBaseController
 {
 	protected $flowFile;
 	protected $flowRequest;

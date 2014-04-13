@@ -2,10 +2,11 @@
 namespace EDM\Controllers\Api;
 
 use App;
+use EDM\Controllers\AuthenticatedBaseController;
 use EDM\ShopItem\Processors\CreateShopItem as CreateShopItemProcessor;
 use EDM\ShopItem\Processors\UpdateShopItem as UpdateShopItemProcessor;
 
-class ShopItemController extends BaseController
+class ShopItemController extends AuthenticatedBaseController
 {
 	public function store()
 	{

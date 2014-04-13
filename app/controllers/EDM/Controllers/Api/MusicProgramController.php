@@ -1,10 +1,14 @@
 <?php
 namespace EDM\Controllers\Api;
 
+use EDM\Controllers\AuthenticatedBaseController;
 use EDM\MusicProgram\ValidationRules;
-use MusicProgram, Review, Validator, Log;
+use Log;
+use MusicProgram;
+use Review;
+use Validator;
 
-class MusicProgramController extends BaseController
+class MusicProgramController extends AuthenticatedBaseController
 {
 	public function index()
 	{

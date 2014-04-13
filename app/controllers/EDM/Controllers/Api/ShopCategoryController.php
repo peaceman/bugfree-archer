@@ -1,9 +1,10 @@
 <?php
 namespace EDM\Controllers\Api;
 
+use EDM\Controllers\AuthenticatedBaseController;
 use ShopCategory;
 
-class ShopCategoryController extends BaseController
+class ShopCategoryController extends AuthenticatedBaseController
 {
 	public function index()
 	{

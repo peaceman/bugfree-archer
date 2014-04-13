@@ -101,4 +101,9 @@ Route::group(
 	}
 );
 
-Route::get('me/password', ['as' => 'user.password', 'uses' => 'UserController@showPasswordForm']);
+Route::group(
+	['namespace' => 'EDM\Controllers\Admin', 'prefix' => 'admin'],
+	function () {
+		Route::get('', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@showDashboard']);
+	}
+);
