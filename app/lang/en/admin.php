@@ -21,5 +21,19 @@ return [
 			'big' => 'Admin dashboard',
 			'small' => 'the force will be with you',
 		]
-	]
+	],
+	'review' => [
+		'page_header' => [
+			'big' => 'Reviews',
+			'small' => 'Amount of waiting reviews',
+		],
+		'panel_header' => [
+			'reviews_in_state' => 'Reviews in state',
+		],
+		'states' => [
+			Review::STATE_WAITING => 'waiting',
+			Review::STATE_IN_PROGRESS => 'in progress',
+			Review::STATE_FINISHED => 'finished',
+		],
+	],
 ];

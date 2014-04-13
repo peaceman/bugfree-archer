@@ -31,10 +31,18 @@ return [
 			'title' => 'Title',
 			'price' => 'Price',
 			'review_state' => 'Review state',
+			'reviewer' => 'Reviewer',
+			'accepted' => 'Accepted',
+			'type' => 'Type',
+			'name' => 'Name',
+			'created_at' => 'Created at',
+			'updated_at' => 'Updated at',
+			'reviewed_at' => 'Reviewed at',
 		],
 		'actions' => [
 			'delete' => 'Delete',
 			'edit' => 'Edit',
+			'details' => 'Details',
 		],
 	],
 ];

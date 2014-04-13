@@ -27,3 +27,40 @@ body {
 body {
     padding-top: 50px;
 }
+
+.panel-footer .pagination { margin: 0; }
+
+/*.panel-heading .pagination,*/
+/*.panel-footer .pagination {*/
+    /*margin: -11px -16px; *//* Based off default .panel-heading padding */
+
+/*> li {*/
+/*> a,*/
+/*> span {*/
+      /*padding: 10px 18px; *//* Based off default .panel-heading padding */
+  /*}*/
+/*}*/
+
+/*}*/
+
+/*.panel-heading .pagination {*/
+/*> li {*/
+/*&:last-child {*/
+/*> a,*/
+/*> span {*/
+      /*border-bottom-right-radius: 0;*/
+  /*}*/
+/*}*/
+/*}*/
+/*}*/
+
+/*.panel-footer .pagination {*/
+/*> li {*/
+/*&:last-child {*/
+/*> a,*/
+/*> span {*/
+      /*border-top-right-radius: 0;*/
+  /*}*/
+/*}*/
+/*}*/
+/*}*/

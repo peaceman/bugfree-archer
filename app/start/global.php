@@ -92,7 +92,7 @@ if (Auth::check()) {
 	View::share('user', Auth::user());
 }
 
-View::composer('common.admin.navbar', function ($view) {
+View::composer(['common.admin.navbar', 'admin.review.index'], function ($view) {
 	$view->with('amountOfWaitingReviews', Review::amountOfWaitingReviews());
 });
 

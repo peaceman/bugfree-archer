@@ -23,4 +23,9 @@ trait Reviewable
 			})
 			->orHas('review', '<', 1);
 	}
+
+	public function getNameForReview()
+	{
+		return $this->name;
+	}
 }

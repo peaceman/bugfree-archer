@@ -39,6 +39,11 @@ class ShopItemRevision extends Eloquent
 		'slug' => ['required', 'alpha_dash', 'min:7', 'max:32'],
 	];
 
+	public function getNameForReview()
+	{
+		return $this->title;
+	}
+
 	protected static function boot()
 	{
 		parent::boot();

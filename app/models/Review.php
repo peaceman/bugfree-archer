@@ -39,6 +39,39 @@ class Review extends Eloquent
 		$this->state = static::STATE_WAITING;
 	}
 
+	public static function amountOfWaitingReviews()
+	{
+		$amount = static::query()
+			->where('state', static::STATE_WAITING)
+			->count();
+
+		return $amount;
+	}
+
+	public static function fetchPaginatedReviewsWithState($state, $perPage = 10)
+	{
+		/** @var \Illuminate\Database\Query\Builder $query */
+		$query = static::withState($state)
+			->orderBy('created_at', 'desc');
+		$pageQueryParamName = 'p' . ucfirst($state);
+
+		$paginationEnv = new \Illuminate\Pagination\Environment(
+			App::make('request'),
+			App::make('view'),
+			App::make('translator'),
+			$pageQueryParamName
+		);
+		$paginationEnv->setViewName(App::make('config')['view.pagination']);
+		App::refresh('request', $paginationEnv, 'setRequest');
+
+		\DB::connection()->setPaginator($paginationEnv);
+		$result = $query->paginate($perPage);
+		\DB::connection()->setPaginator(App::make('paginator'));
+
+		$result->appends(Input::except($pageQueryParamName));
+		return $result;
+	}
+
 	public function reviewer()
 	{
 		return $this->belongsTo('User');
@@ -49,12 +82,15 @@ class Review extends Eloquent
 		return $this->morphTo();
 	}
 
-	public static function amountOfWaitingReviews()
+	public function scopeWithState($query, $state)
 	{
-		$amount = static::query()
-			->where('state', static::STATE_WAITING)
-			->count();
+		return $query->where('state', $state);
+	}
 
-		return $amount;
+	public function getReviewedAtAttribute()
+	{
+		return $this->state === static::STATE_FINISHED
+			? $this->updated_at
+			: null;
 	}
 }
