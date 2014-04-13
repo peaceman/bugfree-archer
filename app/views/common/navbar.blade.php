@@ -27,6 +27,10 @@
 					<a href="{{ route('start-selling') }}">{{ trans('navbar.start_selling') }}</a>
 				</li>
 				@if (Auth::check())
+				<!-- todo admin check -->
+				<li>
+					<a href="{{ route('admin.dashboard') }}">{{ trans('navbar.admin') }}</a>
+				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" href="" data-toggle="dropdown">{{ $user->username }} <b
 							class="caret"></b></a>
@@ -39,10 +43,6 @@
 							<a href="{{ route('auth.log-out') }}">{{ trans('navbar.log_out') }}</a>
 						</li>
 					</ul>
-				</li>
-				<!-- todo admin check -->
-				<li>
-					<a href="{{ route('admin.dashboard') }}">{{ trans('navbar.admin') }}</a>
 				</li>
 				@else
 				<li><a href="{{ route('user.sign-up') }}">{{ trans('navbar.sign_up') }}</a></li>

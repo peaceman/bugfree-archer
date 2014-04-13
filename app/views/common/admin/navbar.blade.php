@@ -13,6 +13,9 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="/">{{ trans('admin.navbar.frontend') }}</a>
+				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" href="" data-toggle="dropdown">{{ $user->username }} <b
 							class="caret"></b></a>
@@ -25,9 +28,6 @@
 							<a href="{{ route('auth.log-out') }}">{{ trans('navbar.log_out') }}</a>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<a href="/">{{ trans('admin.navbar.frontend') }}</a>
 				</li>
 			</ul>
 		</div>
