@@ -88,13 +88,8 @@ require app_path() . '/macros.php';
 
 Event::subscribe(new EDM\User\UserEventHandler);
 
-View::composer(
-	'common.navbar',
-	function ($view) {
-		if (Auth::check()) {
-			$view->with('user', Auth::user());
-		}
-	}
-);
+if (Auth::check()) {
+	View::share('user', Auth::user());
+}
 
 View::shared('errors')->setFormat('<span class="help-block">:message</span>');
