@@ -5,8 +5,8 @@ use EDM\Controllers\AuthenticatedBaseController;
 
 class DashboardController extends AuthenticatedBaseController
 {
-	public function showDashboard()
+	public function show()
 	{
-		return $this->response->view('admin.dashboard');
+		return $this->response->view('admin.dashboard.home');
 	}
 }

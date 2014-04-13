@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>EDM Market</title>
+	<title>@yield('title', 'EDM Market')</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
@@ -29,9 +29,7 @@
 	@yield('scripts.header', '')
 </head>
 <body>
-<div id="wrap">
-	@yield('wrapped')
-</div>
+@yield('wrapped')
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="//code.jquery.com/jquery.js"></script>

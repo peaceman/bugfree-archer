@@ -104,6 +104,6 @@ Route::group(
 Route::group(
 	['namespace' => 'EDM\Controllers\Admin', 'prefix' => 'admin'],
 	function () {
-		Route::get('', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@showDashboard']);
+		Route::get('', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@show']);
 	}
 );
