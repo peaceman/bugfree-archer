@@ -105,5 +105,16 @@ Route::group(
 	['namespace' => 'EDM\Controllers\Admin', 'prefix' => 'admin'],
 	function () {
 		Route::get('', ['as' => 'admin.dashboard', 'uses' => 'DashboardController@show']);
+
+		Route::resource('users', 'UserController');
+		Route::resource('shop-items', 'ShopItemController');
+		Route::resource('shop-categories', 'ShopCategoryController');
+		Route::resource('reviews', 'ReviewController');
+		Route::resource('music-genres', 'MusicGenreController');
+		Route::resource('music-programs', 'MusicProgramController');
+		Route::resource('music-plugins', 'MusicPluginController');
+		Route::resource('music-plugin-banks', 'MusicPluginBankController');
+		Route::resource('resource-files', 'ResourceFileController');
+		Route::resource('resource-locations', 'ResourceLocationController');
 	}
 );
