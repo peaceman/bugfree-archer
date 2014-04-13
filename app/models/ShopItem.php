@@ -70,7 +70,6 @@ class ShopItem extends Eloquent
 
 		$stepData = array_merge($stepData, $latestRevision->productRevision->generateStepData());
 
-//		dd($stepData);
 		return $stepData;
 	}
 
