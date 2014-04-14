@@ -26,11 +26,12 @@ class Review extends Eloquent
 	const REVIEWEE_MUSIC_PROGRAM = 'MusicProgram';
 	const REVIEWEE_MUSIC_PLUGIN = 'MusicPlugin';
 	public static $validationRules = [
-		'reviewer_id' => ['required', 'exists:users'],
+		'reviewer_id' => ['required', 'exists:users,id'],
 		'state' => ['required', 'alpha_dash'],
 		'reviewee_id' => ['required'],
 		'reviewee_type' => ['required'],
-		'result' => ['digits:1', 'in,0,1'],
+		'result' => ['digits:1', 'in:0,1'],
+		'result_reasoning' => ['required_if:result,0']
 	];
 	protected $table = 'reviews';
 
