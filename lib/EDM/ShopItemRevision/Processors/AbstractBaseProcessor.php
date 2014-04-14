@@ -6,7 +6,7 @@ use EDM\ShopItemRevision\ValidatorBag;
 use Illuminate\Support\Str;
 use ShopItemRevision;
 
-abstract class AbstractBaseProcessor implements ProcessorInterface
+abstract class AbstractBaseProcessor extends \EDM\AbstractBaseProcessor implements ProcessorInterface
 {
 	/**
 	 * @var ValidatorBag

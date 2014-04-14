@@ -39,6 +39,17 @@ class ShopItemRevision extends Eloquent
 		'slug' => ['required', 'alpha_dash', 'min:7', 'max:32'],
 	];
 
+	public function finishedReviewWithResult($accepted)
+	{
+		$processor = $accepted
+			? \App::make(\EDM\ShopItemRevision\Processors\AcceptShopItemRevision::class)
+			: \App::make(\EDM\ShopItemRevision\Processors\RejectShopItemRevision::class);
+
+		$processor->process([
+			'shop_item_revision' => $this,
+		]);
+	}
+
 	public function getNameForReview()
 	{
 		return $this->title;

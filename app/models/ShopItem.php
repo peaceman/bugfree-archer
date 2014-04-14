@@ -76,6 +76,19 @@ class ShopItem extends Eloquent
 	/**
 	 * @return \ShopItemRevision|null
 	 */
+	public function latestAcceptedRevision()
+	{
+		$latestRevision = $this->revisions()
+			->accepted()
+			->latest()
+			->first();
+
+		return $latestRevision;
+	}
+
+	/**
+	 * @return \ShopItemRevision|null
+	 */
 	public function latestRevision()
 	{
 		$latestRevision = $this->revisions()->latest()->first();

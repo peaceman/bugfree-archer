@@ -21,6 +21,8 @@ class FinishReview extends AbstractBaseProcessor
 		$this->executeValidatorsOnReview($this->validatorBag->preSave, $review);
 		$review->save();
 		$this->executeValidatorsOnReview($this->validatorBag->postSave, $review);
+
+		$review->reviewee->finishedReviewWithResult((bool)$review->result);
 	}
 
 	/**
