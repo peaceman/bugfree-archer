@@ -212,7 +212,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSales()
 	{
+		return 923;
+	}
+
+	public function getAmountOfSalesOfToday()
+	{
 		return 23;
+	}
+
+	public function getAmountOfSalesOfThisWeek()
+	{
+		return 86;
 	}
 
 	public function getRevenue()

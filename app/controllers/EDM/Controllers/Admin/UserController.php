@@ -26,4 +26,13 @@ class UserController extends \EDM\Controllers\AuthenticatedBaseController
 			'amountOfActiveUsers' => \User::where('state', \User::STATE_ACTIVE)->count(),
 		]);
 	}
+
+	public function show($userId)
+	{
+		$user = \User::findOrFail($userId);
+
+		return $this->response->view('admin.user.show', [
+			'user' => $user,
+		]);
+	}
 }

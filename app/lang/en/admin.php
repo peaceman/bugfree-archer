@@ -53,6 +53,7 @@ return [
 	'user' => [
 		'page_header' => [
 			'users' => 'Users',
+			'user' => 'User',
 			'amount_of_active_users' => 'Amount of active users',
 			'latest_active' => 'Latest active users',
 			'latest_unconfirmed' => 'Latest unconfirmed users',
@@ -65,5 +66,9 @@ return [
 			\User::STATE_UNCONFIRMED_EMAIL => 'unconfirmed email',
 		],
 		'public_profile' => 'Public profile',
+		'sales_summary' => 'Sales summary',
+		'today_sold' => 'Today sold',
+		'weekly_sales' => 'Weekly sales',
+		'total_sold' => 'Total sold',
 	],
 ];

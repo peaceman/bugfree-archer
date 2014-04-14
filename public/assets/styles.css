@@ -30,6 +30,14 @@ body {
 
 .panel-footer .pagination { margin: 0; }
 
+table.sales-summary td {
+    text-align: right;
+}
+
+table.sales-summary tbody th {
+    text-transform: uppercase;
+}
+
 /*.panel-heading .pagination,*/
 /*.panel-footer .pagination {*/
     /*margin: -11px -16px; *//* Based off default .panel-heading padding */
