@@ -18,7 +18,7 @@
 		<td>{{ $shopItem->id }}</td>
 		<td>{{ $shopItem->latestRevision()->title }}</td>
 		<td>{{ $shopItem->state }}</td>
-		<td>{{ $shopItem->latestRevision()->review->state }}</td>
+		<td>{{{ trans('admin.review.states.' . $shopItem->latestRevision()->review->state) }}}</td>
 		<td>{{ $shopItem->latestRevision()->shopCategory->name }}</td>
 		<td style="text-align: right;">{{ $shopItem->latestRevision()->price }} EUR</td>
 		<td>
