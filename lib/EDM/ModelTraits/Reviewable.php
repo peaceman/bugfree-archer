@@ -28,4 +28,8 @@ trait Reviewable
 	{
 		return $this->name;
 	}
+
+	public function finishedReviewWithResult($accepted)
+	{
+	}
 }
