@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property int $country_id
  *
  * @property User $user
+ * @property Country $country
  */
 class UserAddress extends Eloquent
 {
@@ -21,5 +22,10 @@ class UserAddress extends Eloquent
 	public function user()
 	{
 		return $this->belongsTo('User');
+	}
+
+	public function country()
+	{
+		return $this->belongsTo('Country');
 	}
 }

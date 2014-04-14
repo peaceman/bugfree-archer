@@ -46,5 +46,14 @@
 	@if ($user->getProfile()->hasAvatar())
 	<img src="{{{ $user->getProfile()->avatar->getUrl() }}}" class="img-rounded" alt="" style="width: 100%;"/>
 	@endif
+
+	@if($user->address)
+	<address style="margin-top: 10px;">
+		<strong>{{{ $user->real_name }}}</strong><br>
+		{{{ $user->address->address_lines }}}<br>
+		{{{ $user->address->postcode }}} {{{ $user->address->locality }}}<br>
+		{{{ $user->address->country->name }}}
+	</address>
+	@endif
 </div>
 @stop
