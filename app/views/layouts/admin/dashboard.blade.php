@@ -15,6 +15,7 @@ EDM Admin
 			<div class="page-header">
 				@yield('dashboard.header')
 			</div>
+			@include('common.messages')
 		</div>
 	</div>
 	<div class="row">
