@@ -13,6 +13,23 @@
 @stop
 @section('content')
 <div class="col-sm-12">
+	@if($review->state === \Review::STATE_FINISHED)
+		<div class="panel panel-{{{ $review->result ? 'success' : 'danger' }}}">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					{{{ trans('admin.review.panel_header.result') }}}
+					<em>{{{ trans('admin.review.' . $review->result ? 'accepted' : 'rejected') }}}</em>
+				</h3>
+			</div>
+			<div class="panel-body">
+				<h4>{{{ trans('admin.review.result_reasoning') }}}</h4>
+				<blockquote>
+					<p>{{{ $review->result_reasoning ?: 'N/A' }}}</p>
+					<footer>{{{ $review->reviewer->username }}} / {{{ $review->reviewed_at }}}</footer>
+				</blockquote>
+			</div>
+		</div>
+	@endif
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">

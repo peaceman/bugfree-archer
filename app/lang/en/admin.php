@@ -33,7 +33,8 @@ return [
 		'panel_header' => [
 			'reviews_in_state' => 'Reviews in state',
 			'overview' => 'Overview',
-			'current_state' => 'Current state',
+			'current_state' => 'Current review state',
+			'result' => 'Review result',
 		],
 		'states' => [
 			Review::STATE_WAITING => 'waiting',
@@ -46,5 +47,7 @@ return [
 		],
 		'result_reasoning' => 'Reasoning of the judgement',
 		'start' => 'Start review',
+		'accepted' => 'Accepted',
+		'rejected' => 'Rejected',
 	],
 ];
