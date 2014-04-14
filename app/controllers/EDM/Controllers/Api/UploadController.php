@@ -6,6 +6,7 @@ use EDM\Controllers\AuthenticatedBaseController;
 use EDM\Resource\Storage\StorageDirector;
 use Flow;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Response;
 use Illuminate\View\Environment as ViewFactory;
 use ResourceFile;
@@ -16,10 +17,10 @@ class UploadController extends AuthenticatedBaseController
 	protected $flowRequest;
 	protected $storageDirector;
 
-	public function __construct(Response $response, Request $request, ViewFactory $view, 
+	public function __construct(Response $response, Redirector $redirector, Request $request, ViewFactory $view,
 		Flow\File $flowFile, Flow\RequestInterface $flowRequest, StorageDirector $storageDirector)
 	{
-		parent::__construct($response, $request, $view);
+		parent::__construct($response, $redirector, $request, $view);
 		$this->flowFile = $flowFile;
 		$this->flowRequest = $flowRequest;
 		$this->storageDirector = $storageDirector;

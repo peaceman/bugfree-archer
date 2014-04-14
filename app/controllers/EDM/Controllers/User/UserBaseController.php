@@ -3,6 +3,10 @@ namespace EDM\Controllers\User;
 
 use BaseController;
 use App;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Response;
+use Illuminate\View\Environment as ViewFactory;
 use User;
 
 class UserBaseController extends BaseController
@@ -12,8 +16,9 @@ class UserBaseController extends BaseController
 	 */
 	protected $user;
 
-	public function __construct()
+	public function __construct(Response $response, Redirector $redirector, Request $request, ViewFactory $view)
 	{
+		parent::__construct($response, $redirector, $request, $view);
 		$this->beforeFilter('@fetchUser');
 	}
 

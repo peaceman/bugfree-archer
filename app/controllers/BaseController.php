@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\Environment as ViewFactory;
 use Illuminate\Routing\Controller;
+use Illuminate\Routing\Redirector;
 
 class BaseController extends Controller
 {
@@ -22,13 +23,20 @@ class BaseController extends Controller
 	protected $views;
 
 	/**
+	 * @var \Illuminate\Routing\Redirector
+	 */
+	protected $redirector;
+
+	/**
 	 * @param Response $response
+	 * @param Illuminate\Routing\Redirector $redirector
 	 * @param Request $request
 	 * @param ViewFactory $view
 	 */
-	public function __construct(Response $response, Request $request, ViewFactory $view)
+	public function __construct(Response $response, Redirector $redirector, Request $request, ViewFactory $view)
 	{
 		$this->response = $response;
+		$this->redirector = $redirector;
 		$this->request = $request;
 		$this->views = $view;
 	}
