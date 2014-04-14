@@ -61,8 +61,8 @@ return [
 	],
 	'notifications' => [
 		'update' => [
-			'failed' => 'The update has been failed',
-			'succeeded' => 'The update has been succeeded',
+			'failed' => 'The update has failed',
+			'succeeded' => 'The update has succeeded',
 		],
 	],
 ];
