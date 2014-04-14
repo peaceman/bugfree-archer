@@ -34,6 +34,8 @@ namespace :deploy do
     on roles(:app), in: :parallel do
       with({'APPLICATION_ENV' => fetch(:stage)}) do
         within release_path do
+          execute :composer, 'self-update'
+          execute :composer, :dump
           execute :artisan, :migrate
         end
       end
