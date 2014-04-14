@@ -32,11 +32,13 @@ return [
 		],
 		'panel_header' => [
 			'reviews_in_state' => 'Reviews in state',
+			'overview' => 'Overview',
 		],
 		'states' => [
 			Review::STATE_WAITING => 'waiting',
 			Review::STATE_IN_PROGRESS => 'in progress',
 			Review::STATE_FINISHED => 'finished',
 		],
+		'result_reasoning' => 'Reasoning of the judgement',
 	],
 ];

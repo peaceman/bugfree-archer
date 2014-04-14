@@ -23,6 +23,11 @@ return [
 	'postcode' => 'Postcode',
 	'country' => 'Country',
 	'files' => 'Files',
+	'feedback' => 'Feedback',
+	'button' => [
+		'accept' => 'Accept',
+		'reject' => 'Reject',
+	],
 	'table' => [
 		'headers' => [
 			'id' => '#',

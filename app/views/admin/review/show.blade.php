@@ -13,6 +13,33 @@
 @stop
 @section('content')
 <div class="col-sm-12">
-@include('admin.review.details-partials.' . snake_case($review->reviewee_type, '-'), ['reviewee' => $review->reviewee])
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				{{{ trans('admin.review.panel_header.overview') }}}
+			</h3>
+		</div>
+		{{ Form::open(['route' => ['admin.reviews.update', $review->id]]) }}
+			<div class="panel-body">
+				@include('admin.review.details-partials.' . snake_case($review->reviewee_type, '-'), ['reviewee' => $review->reviewee])
+				<fieldset>
+					<legend>{{{ trans('common.feedback') }}}</legend>
+					<div class="form-group">
+						<label for="result-reasoning-input">{{{ trans('admin.review.result_reasoning') }}}</label>
+						<textarea id="result-reasoning-input" name="result_reasoning" class="form-control" cols="30" rows="10"></textarea>
+					</div>
+				</fieldset>
+			</div>
+			<div class="panel-footer">
+				<div class="pull-right">
+					<input class="btn btn-danger" type="submit" name="reject"
+						   value="{{{ trans('common.button.reject') }}}"/>
+					<input class="btn btn-success" type="submit" name="accept"
+						   value="{{{ trans('common.button.accept') }}}"/>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		{{ Form::close() }}
+	</div>
 </div>
 @stop
