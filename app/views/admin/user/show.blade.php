@@ -39,7 +39,7 @@
 		</div>
 		<div class="col-sm-6">
 			<h3 style="margin-top: 10px;">{{{ $user->real_name }}}</h3>
-			<p>{{{ $user->getProfile()->about or 'N/A' }}}</p>
+			<p>{{{ $user->getProfile()->about ?: 'N/A' }}}</p>
 			<p>
 				<a href="{{{ $user->getProfile()->website }}}">{{{ $user->getProfile()->website }}}</a>
 			</p>
@@ -76,23 +76,31 @@
 					</tr>
 					</thead>
 					<tbody>
-					@foreach($shopItems as $shopItem)
-					<tr>
-						<td>{{{ $shopItem->id }}}</td>
-						<td>{{{ $shopItem->latestRevision()->title }}}</td>
-						<td>{{{ $shopItem->state }}}</td>
-						<td>{{{ trans('admin.review.states.' . $shopItem->latestRevision()->review->state) }}}</td>
-						<td>{{{ $shopItem->latestRevision()->shopCategory->name }}}</td>
-						<td style="text-align: right;">{{{ $shopItem->latestRevision()->price }}} EUR</td>
-						<td>
-							<a class="btn btn-primary btn-xs table-action-button"
-							   href="{{{ route('user.items.edit', ['username' => $user->username, 'item_id' => $shopItem->id]) }}}">
-								{{{ trans('common.table.actions.edit') }}}
-							</a>
-							{{ Form::delete(route('user.items.delete', ['username' => $user->username, 'item_id' => $shopItem->id]), trans('common.table.actions.delete'), [], ['class' => 'btn btn-danger btn-xs']) }}
-						</td>
-					</tr>
-					@endforeach
+					@if($shopItems->count())
+						@foreach($shopItems as $shopItem)
+							<tr>
+								<td>{{{ $shopItem->id }}}</td>
+								<td>{{{ $shopItem->latestRevision()->title }}}</td>
+								<td>{{{ $shopItem->state }}}</td>
+								<td>{{{ trans('admin.review.states.' . $shopItem->latestRevision()->review->state) }}}</td>
+								<td>{{{ $shopItem->latestRevision()->shopCategory->name }}}</td>
+								<td style="text-align: right;">{{{ $shopItem->latestRevision()->price }}} EUR</td>
+								<td>
+									<a class="btn btn-primary btn-xs table-action-button"
+									   href="{{{ route('user.items.edit', ['username' => $user->username, 'item_id' => $shopItem->id]) }}}">
+										{{{ trans('common.table.actions.edit') }}}
+									</a>
+									{{ Form::delete(route('user.items.delete', ['username' => $user->username, 'item_id' => $shopItem->id]), trans('common.table.actions.delete'), [], ['class' => 'btn btn-danger btn-xs']) }}
+								</td>
+							</tr>
+						@endforeach
+					@else
+						<tr>
+							<td style="text-align: center;" colspan="7">
+								{{{ trans('common.table.no_entries') }}}
+							</td>
+						</tr>
+					@endif
 					</tbody>
 				</table>
 				{{ $shopItems->links() }}

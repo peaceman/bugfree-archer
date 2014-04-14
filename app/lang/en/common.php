@@ -62,6 +62,7 @@ return [
 			'edit' => 'Edit',
 			'details' => 'Details',
 		],
+		'no_entries' => 'No entries available',
 	],
 	'notifications' => [
 		'update' => [
