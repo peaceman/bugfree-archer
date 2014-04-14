@@ -101,4 +101,27 @@ class ProjectFileRevision extends Eloquent
 	{
 		return $this->belongsToMany('MusicProgram', 'project_file_revision_compatible_programs');
 	}
+
+	public function getNamesOfCompatibleMusicPrograms()
+	{
+		return $this->compatiblePrograms()->lists('name');
+	}
+
+	public function getNamesOfCompatibleMusicPlugins()
+	{
+		return $this->compatiblePlugins()->lists('name');
+	}
+
+	public function getNamesOfCompatibleMusicPluginBanks()
+	{
+		return $this->compatibleBanks()->lists('name');
+	}
+
+	public function getFiles()
+	{
+		return [
+			['use_as' => 'sample', 'file' => $this->sampleFile],
+			['use_as' => 'archive', 'file' => $this->archiveFile],
+		];
+	}
 }

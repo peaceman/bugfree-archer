@@ -126,3 +126,9 @@ function fieldAttributes($name, $attributes = array())
 
 	return array_merge(['class' => 'form-control', 'id' => 'id-field-' . $name], $attributes);
 }
+
+function nice_bytesize($size)
+{
+	$units = array('Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB');
+	return @round($size / pow(1024, ($i = max(floor(log($size, 1024)), 0))), 2).' '.$units[$i];
+}

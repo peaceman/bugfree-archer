@@ -26,6 +26,9 @@ return [
 		'page_header' => [
 			'reviews' => 'Reviews',
 			'amount_of_waiting_reviews' => 'Amount of waiting reviews',
+			'details' => 'Details of review',
+			'about' => 'about',
+			'from' => 'from',
 		],
 		'panel_header' => [
 			'reviews_in_state' => 'Reviews in state',

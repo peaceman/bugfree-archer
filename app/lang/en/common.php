@@ -22,6 +22,7 @@ return [
 	'address' => 'Address',
 	'postcode' => 'Postcode',
 	'country' => 'Country',
+	'files' => 'Files',
 	'table' => [
 		'headers' => [
 			'id' => '#',
@@ -39,6 +40,12 @@ return [
 			'updated_at' => 'Updated at',
 			'reviewed_at' => 'Reviewed at',
 			'submitter' => 'Submitter',
+			'music_genre' => 'Music genre',
+			'bpm' => 'BPM',
+			'description' => 'Description',
+			'music_programs' => 'Music programs',
+			'music_plugins' => 'Music plugins',
+			'music_plugin_banks' => 'Music plugin banks',
 		],
 		'actions' => [
 			'delete' => 'Delete',

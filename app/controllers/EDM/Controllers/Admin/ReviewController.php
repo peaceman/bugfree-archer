@@ -14,4 +14,13 @@ class ReviewController extends AuthenticatedBaseController
 			'reviewsInWaitingState' => Review::fetchPaginatedReviewsWithState(Review::STATE_WAITING, 5),
 		]);
 	}
+
+	public function show($reviewId)
+	{
+		$review = Review::findOrFail($reviewId);
+
+		return $this->response->view('admin.review.show', [
+			'review' => $review,
+		]);
+	}
 }
