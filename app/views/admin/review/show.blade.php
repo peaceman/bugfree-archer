@@ -48,6 +48,7 @@
 		</div>
 		{{ Form::open(['route' => ['admin.reviews.update', $review->id], 'method' => 'put']) }}
 			<div class="panel-body">
+				@include('admin.review.details-partials.submitter', ['reviewee' => $review->reviewee])
 				@include('admin.review.details-partials.' . snake_case($review->reviewee_type, '-'), ['reviewee' => $review->reviewee])
 				@if($review->state === \Review::STATE_IN_PROGRESS)
 					<fieldset>
