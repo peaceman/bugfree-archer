@@ -1,17 +1,17 @@
 <?php
 namespace EDM\Common\Injections;
 
-use Illuminate\Validation\Validator;
+use Illuminate\Validation\Factory;
 
 trait ValidatorInjection
 {
 	/**
-	 * @var Validator
+	 * @var Factory
 	 */
-	protected $validator;
+	protected $validatorFactory;
 
-	public function injectValidator(Validator $validator)
+	public function injectValidator(Factory $validator)
 	{
-		$this->validator = $validator;
+		$this->validatorFactory = $validator;
 	}
 }
