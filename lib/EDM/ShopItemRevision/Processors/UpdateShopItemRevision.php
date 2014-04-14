@@ -1,8 +1,12 @@
 <?php
 namespace EDM\ShopItemRevision\Processors;
 
+use EDM\User\UserInjection;
+
 class UpdateShopItemRevision extends AbstractBaseProcessor
 {
+	use UserInjection;
+
 	public function process(array $data = null)
 	{
 		/** @var \ShopItemRevision $shopItemRevision */
@@ -15,6 +19,7 @@ class UpdateShopItemRevision extends AbstractBaseProcessor
 		}
 
 		$this->executeValidatorsOnShopItemRevision($this->validatorBag->preSave, $shopItemRevision);
+		$shopItemRevision->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
 		$shopItemRevision->save();
 		$this->executeValidatorsOnShopItemRevision($this->validatorBag->postSave, $shopItemRevision);
 
