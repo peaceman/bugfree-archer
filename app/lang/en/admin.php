@@ -33,12 +33,18 @@ return [
 		'panel_header' => [
 			'reviews_in_state' => 'Reviews in state',
 			'overview' => 'Overview',
+			'current_state' => 'Current state',
 		],
 		'states' => [
 			Review::STATE_WAITING => 'waiting',
 			Review::STATE_IN_PROGRESS => 'in progress',
 			Review::STATE_FINISHED => 'finished',
 		],
+		'notifications' => [
+			'started' => 'You started the review process',
+			'finished' => 'You finished the review process',
+		],
 		'result_reasoning' => 'Reasoning of the judgement',
+		'start' => 'Start review',
 	],
 ];

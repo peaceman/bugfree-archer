@@ -21,6 +21,7 @@ class ProcessorsServiceProvider extends ServiceProvider
 		$this->registerProjectFileRevisionProcessors();
 		$this->registerProductRevisionProcessorManagers();
 		$this->registerShopItemRevisionProcessors();
+		$this->registerReviewProcessors();
 	}
 
 	protected function registerProjectFileRevisionProcessors()
@@ -64,6 +65,27 @@ class ProcessorsServiceProvider extends ServiceProvider
 			$validatorBag->preSave[] = $app->make(ShopItemRevision\Validators\BaseRules::class);
 
 			return new UpdateShopItemRevision($validatorBag);
+		});
+	}
+
+	protected function registerReviewProcessors()
+	{
+		$this->app->bind(\EDM\Review\Processors\StartReview::class, function ($app) {
+			/** @var \Illuminate\Foundation\Application $app */
+			$validatorBag = new \EDM\Review\ValidatorBag();
+
+			$validatorBag->preSave[] = $app->make(\EDM\Review\Validators\BaseRules::class);
+
+			return new \EDM\Review\Processors\StartReview($validatorBag);
+		});
+
+		$this->app->bind(\EDM\Review\Processors\FinishReview::class, function ($app) {
+			/** @var \Illuminate\Foundation\Application $app */
+			$validatorBag = new \EDM\Review\ValidatorBag();
+
+			$validatorBag->preSave[] = $app->make(\EDM\Review\Validators\BaseRules::class);
+
+			return new \EDM\Review\Processors\FinishReview($validatorBag);
 		});
 	}
 

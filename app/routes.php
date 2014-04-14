@@ -109,6 +109,8 @@ Route::group(
 		Route::resource('users', 'UserController');
 		Route::resource('shop-items', 'ShopItemController');
 		Route::resource('shop-categories', 'ShopCategoryController');
+
+		Route::post('reviews/{reviewId}/start', ['as' => 'admin.reviews.start', 'uses' => 'ReviewController@postStart']);
 		Route::resource('reviews', 'ReviewController');
 		Route::resource('music-genres', 'MusicGenreController');
 		Route::resource('music-programs', 'MusicProgramController');

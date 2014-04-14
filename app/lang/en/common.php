@@ -58,4 +58,10 @@ return [
 			'details' => 'Details',
 		],
 	],
+	'notifications' => [
+		'update' => [
+			'failed' => 'The update has been failed',
+			'succeeded' => 'The update has been succeeded',
+		],
+	],
 ];

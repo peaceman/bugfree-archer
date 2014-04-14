@@ -17,28 +17,39 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				{{{ trans('admin.review.panel_header.overview') }}}
+				@if($review->state === \Review::STATE_WAITING)
+					{{ Form::open(['route' => ['admin.reviews.start', $review->id], 'class' => 'pull-right']) }}
+					<button class="btn btn-primary btn-xs" type="submit">{{{ trans('admin.review.start') }}}</button>
+					{{ Form::close() }}
+				@else
+					<span class="pull-right">
+						{{{ trans('admin.review.panel_header.current_state') }}} <em>{{{ trans('admin.review.states.' . $review->state) }}}</em>
+					</span>
+				@endif
+				<div class="clearfix"></div>
 			</h3>
 		</div>
-		{{ Form::open(['route' => ['admin.reviews.update', $review->id]]) }}
+		{{ Form::open(['route' => ['admin.reviews.update', $review->id], 'method' => 'put']) }}
 			<div class="panel-body">
 				@include('admin.review.details-partials.' . snake_case($review->reviewee_type, '-'), ['reviewee' => $review->reviewee])
-				<fieldset>
-					<legend>{{{ trans('common.feedback') }}}</legend>
-					<div class="form-group">
-						<label for="result-reasoning-input">{{{ trans('admin.review.result_reasoning') }}}</label>
-						<textarea id="result-reasoning-input" name="result_reasoning" class="form-control" cols="30" rows="10"></textarea>
+				@if($review->state === \Review::STATE_IN_PROGRESS)
+					<fieldset>
+						<legend>{{{ trans('common.feedback') }}}</legend>
+						{{ Form::textareaField('result_reasoning', trans('admin.review.result_reasoning'), null, ['rows' => 5]) }}
+					</fieldset>
+				@endif
+			</div>
+			@if($review->state === \Review::STATE_IN_PROGRESS)
+				<div class="panel-footer">
+					<div class="pull-right">
+						<input class="btn btn-danger" type="submit" name="reject"
+							   value="{{{ trans('common.button.reject') }}}"/>
+						<input class="btn btn-success" type="submit" name="accept"
+							   value="{{{ trans('common.button.accept') }}}"/>
 					</div>
-				</fieldset>
-			</div>
-			<div class="panel-footer">
-				<div class="pull-right">
-					<input class="btn btn-danger" type="submit" name="reject"
-						   value="{{{ trans('common.button.reject') }}}"/>
-					<input class="btn btn-success" type="submit" name="accept"
-						   value="{{{ trans('common.button.accept') }}}"/>
+					<div class="clearfix"></div>
 				</div>
-				<div class="clearfix"></div>
-			</div>
+			@endif
 		{{ Form::close() }}
 	</div>
 </div>

@@ -23,4 +23,42 @@ class ReviewController extends AuthenticatedBaseController
 			'review' => $review,
 		]);
 	}
+
+	public function update($reviewId)
+	{
+		$review = Review::findOrFail($reviewId);
+
+		try {
+			/** @var \EDM\Review\Processors\FinishReview $finishReviewProcessor */
+			$finishReviewProcessor = \App::make(\EDM\Review\Processors\FinishReview::class);
+			$finishReviewProcessor->process([
+				'review' => $review,
+				'review_result' => $this->request->has('accept') ? 1 : 0,
+				'input_data' => $this->request->all(),
+			]);
+
+			\Notification::success(trans('admin.review.notifications.finished'));
+			return $this->redirector->route('admin.reviews.index');
+		} catch (\EDM\Common\Exception\Validation $e) {
+			\Notification::error(trans('common.notifications.update.failed'));
+			return $this->redirector->route('admin.reviews.show', ['reviewId' => $review->id])
+				->withErrors($e->validator);
+		}
+	}
+
+	public function postStart($reviewId)
+	{
+		$review = Review::findOrFail($reviewId);
+
+		/** @var \EDM\Review\Processors\StartReview $startReviewProcessor */
+		$startReviewProcessor = \App::make(\EDM\Review\Processors\StartReview::class);
+		$startReviewProcessor->process([
+			'review' => $review
+		]);
+
+		\Notification::info(trans('admin.review.notifications.started'));
+		return $this->redirector->action('admin.reviews.show', [
+			'reviewId' => $review->id,
+		]);
+	}
 }
