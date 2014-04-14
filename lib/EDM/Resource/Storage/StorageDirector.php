@@ -66,7 +66,7 @@ class StorageDirector
 			}
 		);
 
-		return $this->sortLocationsByUploadOrder($this->resourceLocations);
+		return $this->sortLocationsByUploadOrder($locationsForQueuedStore);
 	}
 
 	/**

@@ -58,7 +58,7 @@ class UploadController extends AuthenticatedBaseController
 			$resourceFile->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
 
 			if ($resourceFile->save()) {
-				$this->storageDirector->initialStorageTransport($resourceFile, $infoFile->getRealPath());
+				$this->storageDirector->initialStorageTransport($resourceFile, $infoFile->getRealPath(), true);
 				unlink($infoFile->getRealPath());
 				return $this->response->json($resourceFile->toArray());
 			} else {
