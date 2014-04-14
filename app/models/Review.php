@@ -49,11 +49,19 @@ class Review extends Eloquent
 		return $amount;
 	}
 
-	public static function fetchPaginatedReviewsWithState($state, $perPage = 10)
+	public static function fetchPaginatedReviewsWithState($state, $orderBy = null, $perPage = null)
 	{
+		if (is_null($orderBy)) {
+			$orderBy = 'created_at';
+		}
+
+		if (is_null($perPage)) {
+			$perPage = 10;
+		}
+
 		/** @var \Illuminate\Database\Query\Builder $query */
 		$query = static::withState($state)
-			->orderBy('created_at', 'desc');
+			->orderBy($orderBy, 'desc');
 		$pageQueryParamName = 'p' . ucfirst($state);
 
 		$paginationEnv = new \Illuminate\Pagination\Environment(
