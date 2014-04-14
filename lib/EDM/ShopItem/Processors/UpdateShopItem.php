@@ -26,12 +26,12 @@ class UpdateShopItem extends CreateShopItem
 		$shopCategory = $this->fetchShopCategory($inputData);
 
 		/** @var \ShopItemRevision $shopItemRevision */
-		if (!$shopItem->canUpdateLatestRevision()) {
-			$productRevision = $this->createProductRevision($shopCategory, $inputData);
-			$shopItemRevision = $this->createShopItemRevision($shopItem, $shopCategory, $productRevision, array_get($inputData, 'general'));
-		} else {
+		if ($shopItem->canUpdateLatestRevision()) {
 			$shopItemRevision = $this->updateShopItemRevision($shopItem->latestRevision(), $shopCategory, array_get($inputData, 'general'));
 			$productRevision = $this->updateProductRevision($shopCategory, $shopItemRevision->productRevision, $inputData);
+		} else {
+			$productRevision = $this->createProductRevision($shopCategory, $inputData);
+			$shopItemRevision = $this->createShopItemRevision($shopItem, $shopCategory, $productRevision, array_get($inputData, 'general'));
 		}
 
 		return [
