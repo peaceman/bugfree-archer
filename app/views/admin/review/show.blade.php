@@ -18,7 +18,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					{{{ trans('admin.review.panel_header.result') }}}
-					<em>{{{ trans('admin.review.' . $review->result ? 'accepted' : 'rejected') }}}</em>
+					<em>{{{ trans('admin.review.' . ($review->result ? 'accepted' : 'rejected')) }}}</em>
 				</h3>
 			</div>
 			<div class="panel-body">

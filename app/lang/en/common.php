@@ -51,6 +51,7 @@ return [
 			'music_programs' => 'Music programs',
 			'music_plugins' => 'Music plugins',
 			'music_plugin_banks' => 'Music plugin banks',
+			'music_plugin' => 'Music plugin',
 		],
 		'actions' => [
 			'delete' => 'Delete',
