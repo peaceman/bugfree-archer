@@ -70,5 +70,11 @@ return [
 		'today_sold' => 'Today sold',
 		'weekly_sales' => 'Weekly sales',
 		'total_sold' => 'Total sold',
+		'view_user_sessions' => 'View user sessions',
+		'view_transactions' => 'View transactions',
+		'view_submissions' => 'View submissions',
+		'view_ratings' => 'View ratings',
+		'view_comments' => 'View comments',
+		'view_orders' => 'View orders',
 	],
 ];

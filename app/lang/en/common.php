@@ -24,6 +24,7 @@ return [
 	'country' => 'Country',
 	'files' => 'Files',
 	'feedback' => 'Feedback',
+	'action' => 'Action',
 	'button' => [
 		'accept' => 'Accept',
 		'reject' => 'Reject',

@@ -5,6 +5,50 @@
 	<small>
 		{{{ $user->username }}} (<a href="mailto:{{{ $user->email }}}">{{{ $user->email }}}</a>)
 	</small>
+
+	<div class="btn-group pull-right">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<span class="glyphicon glyphicon-cog"></span> {{{ trans('common.action') }}}
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li>
+				<a href="#">
+					{{{ trans('admin.user.view_user_sessions') }}}
+				</a>
+			</li>
+			<li>
+				<a href="">
+					{{{ trans('admin.user.view_transactions') }}}
+				</a>
+			</li>
+			<li>
+				<a href="">
+					{{{ trans('admin.user.view_submissions') }}}
+				</a>
+			</li>
+			<li>
+				<a href="">
+					{{{ trans('admin.user.view_ratings') }}}
+				</a>
+			</li>
+			<li>
+				<a href="">
+					{{{ trans('admin.user.view_comments') }}}
+				</a>
+			</li>
+			<li>
+				<a href="">
+					{{{ trans('admin.user.view_orders') }}}
+				</a>
+			</li>
+			<li class="divider"></li>
+			<li>
+				<a href="#">
+					{{{ trans('common.table.actions.edit') }}}
+				</a>
+			</li>
+		</ul>
+	</div>
 </h1>
 @stop
 @section('content')
