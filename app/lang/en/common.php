@@ -52,6 +52,10 @@ return [
 			'music_plugins' => 'Music plugins',
 			'music_plugin_banks' => 'Music plugin banks',
 			'music_plugin' => 'Music plugin',
+			'qualifies_as_vendor' => 'Qualifies as vendor',
+			'products' => 'Products',
+			'sales' => 'Sales',
+			'revenue' => 'Revenue',
 		],
 		'actions' => [
 			'delete' => 'Delete',

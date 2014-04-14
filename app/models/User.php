@@ -143,6 +143,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->hasMany('UserTrackingSession');
 	}
 
+	public function shopItems()
+	{
+		return $this->hasMany('ShopItem', 'owner_id');
+	}
+
 	public function profile()
 	{
 		return $this->hasOne('UserProfile');
@@ -198,5 +203,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		}
 
 		return $this->address;
+	}
+
+	public function getQualifiesAsVendor()
+	{
+		return (bool)$this->address;
+	}
+
+	public function getAmountOfSales()
+	{
+		return 23;
+	}
+
+	public function getRevenue()
+	{
+		return 42.23;
 	}
 }

@@ -81,6 +81,8 @@ Route::group(
 				['as' => 'user.customer-questions', 'uses' => 'CustomerQuestionController@getIndex']
 			);
 		});
+
+		Route::get('users/{username}', ['as' => 'user.public-profile', 'uses' => 'ProfileController@getPublicProfile']);
 	}
 );
 

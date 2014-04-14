@@ -50,4 +50,20 @@ return [
 		'accepted' => 'Accepted',
 		'rejected' => 'Rejected',
 	],
+	'user' => [
+		'page_header' => [
+			'users' => 'Users',
+			'amount_of_active_users' => 'Amount of active users',
+			'latest_active' => 'Latest active users',
+			'latest_unconfirmed' => 'Latest unconfirmed users',
+		],
+		'states' => [
+			\User::STATE_ACTIVE => 'active',
+			\User::STATE_INACTIVE => 'inactive',
+			\User::STATE_PERMA_BAN => 'permanent ban',
+			\User::STATE_TMP_BAN => 'temporary ban',
+			\User::STATE_UNCONFIRMED_EMAIL => 'unconfirmed email',
+		],
+		'public_profile' => 'Public profile',
+	],
 ];
