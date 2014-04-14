@@ -1,6 +1,6 @@
 {{ Form::model($userProfile, ['route' => ['user.profile.perform.basic', $user->username], 'class' => 'form-horizontal', 'files' => true]) }}
 <fieldset>
-	<legend>{{ trans('user.profile.basic_information') }}</legend>
+	<legend>{{{ trans('user.profile.basic_information') }}}</legend>
 	<div class="form-group {{ $errors->has('website') ? 'has-error' : '' }}">
 		{{ Form::label('website', trans('common.website'), ['class' => 'control-label col-md-2']) }}
 		<div class="col-md-6">
@@ -18,13 +18,13 @@
 			@if ($errors->has('about'))
 			{{ $errors->first('about') }}
 			@else
-			<div class="help-block">{{ trans('user.profile.about_help_text') }}</div>
+			<div class="help-block">{{{ trans('user.profile.about_help_text') }}}</div>
 			@endif
 		</div>
 	</div>
 </fieldset>
 <fieldset>
-	<legend>{{ trans('user.profile.pictures') }}</legend>
+	<legend>{{{ trans('user.profile.pictures') }}}</legend>
 	<div class="form-group {{ $errors->has('avatar') ? 'has-error' : '' }}">
 		{{ Form::label('avatar', trans('common.avatar'), ['class' => 'control-label col-md-2']) }}
 		<div class="col-md-4">
@@ -35,11 +35,11 @@
 		</div>
 		<div class="col-md-4">
 			@if ($userAvatar)
-			<img class="img-rounded" src="{{ $userAvatar->getUrl() }}" style="height: 75px"/>
+			<img class="img-rounded" src="{{{ $userAvatar->getUrl() }}}" style="height: 75px"/>
 			<div class="checkbox">
 				<label>
 					{{ Form::checkbox('avatar-delete', true) }}
-					{{ trans('common.delete') }}
+					{{{ trans('common.delete') }}}
 				</label>
 			</div>
 			@endif
@@ -49,7 +49,7 @@
 	<div class="form-group">
 		<div class="col-md-4 col-md-offset-2">
 			<button class="btn btn-default">
-				{{ trans('common.submit') }}
+				{{{ trans('common.submit') }}}
 			</button>
 		</div>
 	</div>

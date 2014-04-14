@@ -13,7 +13,7 @@
 		<table class="table table-condensed table-bordered">
 			<tr>
 				<th colspan="1">Download URL</th>
-				<td colspan="3"><a href="{{{ $file->download_url }}}" target="_blank">{{ $file->download_url }}</a></td>
+				<td colspan="3"><a href="{{{ $file->download_url }}}" target="_blank">{{{ $file->download_url }}}</a></td>
 			</tr>
 			<tr>
 				<th>File size</th>

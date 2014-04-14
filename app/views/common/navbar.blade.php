@@ -4,12 +4,12 @@
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">{{ trans('navbar.toggle_navigation') }}</span>
+				<span class="sr-only">{{{ trans('navbar.toggle_navigation') }}}</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">{{ trans('navbar.brand') }}</a>
+			<a class="navbar-brand" href="/">{{{ trans('navbar.brand') }}}</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -17,36 +17,36 @@
 			<ul class="nav navbar-nav">
 				@foreach ($categories as $category)
 				<li>
-					<a href="/{{ $category->slug }}">{{ $category->name }}</a>
+					<a href="/{{{ $category->slug }}}">{{{ $category->name }}}</a>
 				</li>
 				@endforeach
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="{{ route('start-selling') }}">{{ trans('navbar.start_selling') }}</a>
+					<a href="{{{ route('start-selling') }}}">{{{ trans('navbar.start_selling') }}}</a>
 				</li>
 				@if (Auth::check())
 				<!-- todo admin check -->
 				<li>
-					<a href="{{ route('admin.dashboard') }}">{{ trans('navbar.admin') }}</a>
+					<a href="{{{ route('admin.dashboard') }}}">{{{ trans('navbar.admin') }}}</a>
 				</li>
 				<li class="dropdown">
-					<a class="dropdown-toggle" href="" data-toggle="dropdown">{{ $user->username }} <b
+					<a class="dropdown-toggle" href="" data-toggle="dropdown">{{{ $user->username }}} <b
 							class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="{{ route('user.dashboard', ['username' => $user->username]) }}">{{ trans('navbar.dashboard') }}</a>
+							<a href="{{{ route('user.dashboard', ['username' => $user->username]) }}}">{{{ trans('navbar.dashboard') }}}</a>
 						</li>
 						<li class="divider"></li>
 						<li>
-							<a href="{{ route('auth.log-out') }}">{{ trans('navbar.log_out') }}</a>
+							<a href="{{{ route('auth.log-out') }}}">{{{ trans('navbar.log_out') }}}</a>
 						</li>
 					</ul>
 				</li>
 				@else
-				<li><a href="{{ route('user.sign-up') }}">{{ trans('navbar.sign_up') }}</a></li>
-				<li><a href="{{ route('auth.log-in') }}">{{ trans('navbar.log_in') }}</a></li>
+				<li><a href="{{{ route('user.sign-up') }}}">{{{ trans('navbar.sign_up') }}}</a></li>
+				<li><a href="{{{ route('auth.log-in') }}}">{{{ trans('navbar.log_in') }}}</a></li>
 				@endif
 			</ul>
 		</div>

@@ -3,8 +3,8 @@
 EDM Admin
 @stop
 @section('dashboard.header')
-<h1>{{ trans('admin.dashboard.page_header.big') }}
-	<small>{{ trans('admin.dashboard.page_header.small') }}</small>
+<h1>{{{ trans('admin.dashboard.page_header.big') }}}
+	<small>{{{ trans('admin.dashboard.page_header.small') }}}</small>
 </h1>
 @stop
 @section('wrapped')

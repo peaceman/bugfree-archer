@@ -8,7 +8,7 @@
 <div class="row">
 	<!-- log in -->
 	<div class="col-md-6">
-		<form class="form-horizontal" action="{{ route('auth.perform.log-in') }}" method="POST">
+		<form class="form-horizontal" action="{{{ route('auth.perform.log-in') }}}" method="POST">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h2 class="panel-title">Already a member? Log in:</h2>
@@ -118,13 +118,13 @@
 
 				<div class="panel-footer">
 					<button type="submit"
-							class="btn btn-default btn-block btn-success">{{ trans('common.sign_up') }}
+							class="btn btn-default btn-block btn-success">{{{ trans('common.sign_up') }}}
 					</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
-<a href="{{ route('user.resend-confirmation-email') }}" class="btn btn-link">{{
-	trans('common.resend_confirmation_email') }}</a>
+<a href="{{{ route('user.resend-confirmation-email') }}}" class="btn btn-link">{{{
+	trans('common.resend_confirmation_email') }}}</a>
 @stop

@@ -10,7 +10,7 @@
 		<div class="form-group">
 			<div class="col-md-9 col-md-offset-3">
 				<button class="btn btn-default">
-					{{ trans('common.submit') }}
+					{{{ trans('common.submit') }}}
 				</button>
 			</div>
 		</div>
