@@ -29,10 +29,12 @@ class UserController extends \EDM\Controllers\AuthenticatedBaseController
 
 	public function show($userId)
 	{
+		/** @var \User $user */
 		$user = \User::findOrFail($userId);
 
 		return $this->response->view('admin.user.show', [
 			'user' => $user,
+			'shopItems' => $user->shopItems()->paginate(),
 		]);
 	}
 }
