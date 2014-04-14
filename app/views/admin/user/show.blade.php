@@ -12,7 +12,7 @@
 	<table class="table table-condensed sales-summary">
 		<thead>
 		<tr>
-			<th colspan="2">{{{ trans('admin.user.sales_summary') }}}</th>
+			<th colspan="2" class="h3">{{{ trans('admin.user.sales_summary') }}}</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -34,5 +34,17 @@
 		</tr>
 		</tbody>
 	</table>
+</div>
+<div class="col-sm-6">
+	<h3 style="margin-top: 10px;">{{{ $user->real_name }}}</h3>
+	<p>{{{ $user->getProfile()->about or 'N/A' }}}</p>
+	<p>
+		<a href="{{{ $user->getProfile()->website }}}">{{{ $user->getProfile()->website }}}</a>
+	</p>
+</div>
+<div class="col-sm-3">
+	@if ($user->getProfile()->hasAvatar())
+	<img src="{{{ $user->getProfile()->avatar->getUrl() }}}" class="img-rounded" alt="" style="width: 100%;"/>
+	@endif
 </div>
 @stop
