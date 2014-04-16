@@ -8,10 +8,15 @@ class ReviewController extends AuthenticatedBaseController
 {
 	public function index()
 	{
+		$amountOfInProgressReviews = \Review::where('state', \Review::STATE_IN_PROGRESS)->count();
+		$amountOfFinishedReviews = \Review::where('state', \Review::STATE_FINISHED)->count();
+
 		return $this->response->view('admin.review.index', [
-			'reviewsInFinishedState' => Review::fetchPaginatedReviewsWithState(Review::STATE_FINISHED, 'updated_at'),
-			'reviewsInInProgressState' => Review::fetchPaginatedReviewsWithState(Review::STATE_IN_PROGRESS),
+			'reviewsInFinishedState' => Review::fetchPaginatedReviewsWithState(Review::STATE_FINISHED, 'updated_at', 5),
+			'reviewsInInProgressState' => Review::fetchPaginatedReviewsWithState(Review::STATE_IN_PROGRESS, null, 5),
 			'reviewsInWaitingState' => Review::fetchPaginatedReviewsWithState(Review::STATE_WAITING, null, 5),
+			'amountOfInProgressReviews' => $amountOfInProgressReviews,
+			'amountOfFinishedReviews' => $amountOfFinishedReviews,
 		]);
 	}
 

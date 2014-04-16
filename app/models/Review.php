@@ -78,6 +78,7 @@ class Review extends Eloquent
 		\DB::connection()->setPaginator(App::make('paginator'));
 
 		$result->appends(Input::except($pageQueryParamName));
+		$result->fragment('!' . str_replace('_', '-', $state));
 		return $result;
 	}
 
