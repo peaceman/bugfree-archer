@@ -77,4 +77,19 @@ return [
 		'view_comments' => 'View comments',
 		'view_orders' => 'View orders',
 	],
+	'resource_location' => [
+		'page_header' => [
+			'resource_locations' => 'Resource locations',
+			'description' => 'a resource location is a type of storage for files',
+		],
+		'types' => [
+			'filesystem' => 'Filesystem',
+			'aws' => 'AWS',
+		],
+		'states' => [
+			\ResourceLocation::STATE_ACTIVE => 'active',
+			\ResourceLocation::STATE_INACTIVE => 'inactive',
+			\ResourceLocation::STATE_ONLY_UPLOAD => 'only upload',
+		]
+	]
 ];

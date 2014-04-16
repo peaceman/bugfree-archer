@@ -63,13 +63,13 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="{{{ route('admin.resource-files.index') }}}">
-								{{{ trans('admin.navbar.resource_files') }}}
+							<a href="{{{ route('admin.resource-locations.index') }}}">
+								{{{ trans('admin.navbar.resource_locations') }}}
 							</a>
 						</li>
 						<li>
-							<a href="{{{ route('admin.resource-locations.index') }}}">
-								{{{ trans('admin.navbar.resource_locations') }}}
+							<a href="{{{ route('admin.resource-files.index') }}}">
+								{{{ trans('admin.navbar.resource_files') }}}
 							</a>
 						</li>
 					</ul>

@@ -57,6 +57,9 @@ return [
 			'products' => 'Products',
 			'sales' => 'Sales',
 			'revenue' => 'Revenue',
+			'is_backup' => 'Is backup?',
+			'upload_order' => 'Upload order',
+			'download_order' => 'Download order',
 		],
 		'actions' => [
 			'delete' => 'Delete',
