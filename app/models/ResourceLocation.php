@@ -27,6 +27,11 @@ class ResourceLocation extends Eloquent
 		return $this->hasMany('ResourceFileLocation');
 	}
 
+	public function resourceFiles()
+	{
+		return $this->belongsToMany('ResourceFile', 'resource_file_locations');
+	}
+
 	public function qualifiesForInstantTransport()
 	{
 		return $this->upload_order === Config::get('storage.instant_transport_upload_order');
@@ -48,5 +53,19 @@ class ResourceLocation extends Eloquent
 		}
 
 		return $storage;
+	}
+
+	public function getAmountOfFiles()
+	{
+		return $this->resourceFileLocations()
+			->where('state', \ResourceFileLocation::STATE_UPLOADED)
+			->count();
+	}
+
+	public function getSpaceUsage()
+	{
+		return $this->resourceFiles()
+			->where('state', \ResourceFileLocation::STATE_UPLOADED)
+			->sum('resource_files.size');
 	}
 }

@@ -16,6 +16,8 @@
 			<th>{{{ trans('common.table.headers.type') }}}</th>
 			<th>{{{ trans('common.table.headers.state') }}}</th>
 			<th>{{{ trans('common.table.headers.is_backup') }}}</th>
+			<th>{{{ trans('common.files') }}}</th>
+			<th>{{{ trans('common.used_space') }}}</th>
 			<th>{{{ trans('common.table.headers.upload_order') }}}</th>
 			<th>{{{ trans('common.table.headers.download_order') }}}</th>
 			<th>{{{ trans('common.table.headers.updated_at') }}}</th>
@@ -29,6 +31,8 @@
 			<td>{{{ trans('admin.resource_location.types.' . $resourceLocation->type) }}}</td>
 			<td>{{{ trans('admin.resource_location.states.' . $resourceLocation->state) }}}</td>
 			<td><span class="glyphicon glyphicon-{{{ $resourceLocation->is_backup ? 'ok' : 'remove' }}}"></span></td>
+			<td>{{{ $resourceLocation->getAmountOfFiles() }}}</td>
+			<td>{{{ nice_bytesize($resourceLocation->getSpaceUsage()) }}}</td>
 			<td>{{{ $resourceLocation->upload_order }}}</td>
 			<td>{{{ $resourceLocation->download_order }}}</td>
 			<td>{{{ $resourceLocation->updated_at }}}</td>

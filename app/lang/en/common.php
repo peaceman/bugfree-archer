@@ -23,6 +23,7 @@ return [
 	'postcode' => 'Postcode',
 	'country' => 'Country',
 	'files' => 'Files',
+	'used_space' => 'Used space',
 	'feedback' => 'Feedback',
 	'action' => 'Action',
 	'button' => [
