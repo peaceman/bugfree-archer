@@ -29,7 +29,9 @@ class ResourceLocation extends Eloquent
 
 	public function resourceFiles()
 	{
-		return $this->belongsToMany('ResourceFile', 'resource_file_locations');
+		return $this->belongsToMany('ResourceFile', 'resource_file_locations')
+			->withPivot('identifier', 'state')
+			->withTimestamps();
 	}
 
 	public function qualifiesForInstantTransport()

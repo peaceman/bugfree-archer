@@ -81,6 +81,8 @@ return [
 		'page_header' => [
 			'resource_locations' => 'Resource locations',
 			'description' => 'a resource location is a type of storage for files',
+			'details' => 'Resource location details',
+			'of_type' => 'of type',
 		],
 		'types' => [
 			'filesystem' => 'Filesystem',

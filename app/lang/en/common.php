@@ -25,6 +25,7 @@ return [
 	'files' => 'Files',
 	'used_space' => 'Used space',
 	'feedback' => 'Feedback',
+	'overview' => 'Overview',
 	'action' => 'Action',
 	'button' => [
 		'accept' => 'Accept',
@@ -61,6 +62,12 @@ return [
 			'is_backup' => 'Is backup?',
 			'upload_order' => 'Upload order',
 			'download_order' => 'Download order',
+			'identifier' => 'Identifier',
+			'original_filename' => 'Original filename',
+			'mime_type' => 'MIME type',
+			'file_size' => 'File size',
+			'download' => 'Download',
+			'is_protected' => 'Is protected',
 		],
 		'actions' => [
 			'delete' => 'Delete',
