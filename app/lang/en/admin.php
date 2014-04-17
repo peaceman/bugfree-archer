@@ -104,5 +104,10 @@ return [
 		'page_header' => [
 			'music_genres' => 'Music genres',
 		]
+	],
+	'music_program' => [
+		'page_header' => [
+			'music_programs' => 'Music programs',
+		]
 	]
 ];
