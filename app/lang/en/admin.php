@@ -125,4 +125,9 @@ return [
 			'shop_categories' => 'Shop categories',
 		],
 	],
+	'shop_item' => [
+		'page_header' => [
+			'shop_items' => 'Shop items',
+		],
+	],
 ];

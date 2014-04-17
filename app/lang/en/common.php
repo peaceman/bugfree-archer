@@ -72,6 +72,7 @@ return [
 			'download' => 'Download',
 			'is_protected' => 'Is protected',
 			'parent' => 'Parent',
+			'owner' => 'Owner',
 		],
 		'actions' => [
 			'delete' => 'Delete',
