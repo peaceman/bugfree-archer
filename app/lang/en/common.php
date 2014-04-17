@@ -71,6 +71,7 @@ return [
 			'file_size' => 'File size',
 			'download' => 'Download',
 			'is_protected' => 'Is protected',
+			'parent' => 'Parent',
 		],
 		'actions' => [
 			'delete' => 'Delete',

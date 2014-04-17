@@ -120,4 +120,9 @@ return [
 			'music_plugin_banks' => 'Music plugin banks',
 		],
 	],
+	'shop_category' => [
+		'page_header' => [
+			'shop_categories' => 'Shop categories',
+		],
+	],
 ];
