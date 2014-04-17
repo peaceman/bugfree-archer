@@ -29,6 +29,7 @@ return [
 	'action' => 'Action',
 	'settings' => 'Settings',
 	'change_state' => 'Change state',
+	'total_amount' => 'Total amount',
 	'button' => [
 		'accept' => 'Accept',
 		'reject' => 'Reject',

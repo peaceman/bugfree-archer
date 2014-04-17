@@ -32,6 +32,10 @@ trait UserTrackingSessionAware
 
 	public function getSubmitter()
 	{
+		if (!$this->userTrackingSession) {
+			return null;
+		}
+
 		return $this->userTrackingSession->user;
 	}
 }

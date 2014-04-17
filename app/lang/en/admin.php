@@ -99,5 +99,10 @@ return [
 			'resource_files' => 'Resource files',
 			'total_amount' => 'Total amount',
 		]
+	],
+	'music_genre' => [
+		'page_header' => [
+			'music_genres' => 'Music genres',
+		]
 	]
 ];
