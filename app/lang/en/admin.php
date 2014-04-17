@@ -109,5 +109,10 @@ return [
 		'page_header' => [
 			'music_programs' => 'Music programs',
 		]
-	]
+	],
+	'music_plugin' => [
+		'page_header' => [
+			'music_plugins' => 'Music plugins',
+		]
+	],
 ];
