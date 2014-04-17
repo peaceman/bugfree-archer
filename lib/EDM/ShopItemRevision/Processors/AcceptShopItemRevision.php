@@ -27,6 +27,8 @@ class AcceptShopItemRevision extends AbstractBaseProcessor
 				throw new \EDM\ShopItemRevision\Exception\InvalidShopItemState($shopItemRevision);
 		}
 
+		$shopItem->activeRevision()->associate($shopItemRevision);
+		$shopItem->save();
 		// todo send notification mail
 	}
 

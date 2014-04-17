@@ -11,22 +11,22 @@
 <div class="row">
 	<div class="col-md-9">
 		<ul class="media-list">
-			@foreach($shopItemRevisions as $shopItemRevision)
+			@foreach($shopItems as $shopItem)
 			<li class="media">
-				<a class="pull-left" href="{{{ route('shop-items.show', [$shopItemRevision->slug]) }}}">
+				<a class="pull-left" href="{{{ route('shop-items.show', [$shopItem->activeRevision->slug]) }}}">
 					<img class="media-object" src="" alt="" style="height: 78px; width: 130px;"/>
 				</a>
 				<div class="media-body">
 					<div class="row">
 						<div class="col-md-4">
 							<h4 class="media-heading">
-								<a href="{{{ route('shop-items.show', [$shopItemRevision->slug]) }}}">
-									{{{ $shopItemRevision->title }}}
+								<a href="{{{ route('shop-items.show', [$shopItem->activeRevision->slug]) }}}">
+									{{{ $shopItem->activeRevision->title }}}
 								</a>
 							</h4>
 							Seller:
-							<a href="{{{ route('user.public-profile', [$shopItemRevision->getSubmitter()->username]) }}}">
-								{{{ $shopItemRevision->getSubmitter()->username }}}
+							<a href="{{{ route('user.public-profile', [$shopItem->activeRevision->getSubmitter()->username]) }}}">
+								{{{ $shopItem->activeRevision->getSubmitter()->username }}}
 							</a>
 							<div class="rating">
 								<span class="glyphicon glyphicon-star"></span>
@@ -38,11 +38,11 @@
 						</div>
 						<div class="col-md-6">
 							<small>
-								{{{ implode(', ', $shopItemRevision->getMetaData()) }}}
+								{{{ implode(', ', $shopItem->activeRevision->getMetaData()) }}}
 							</small>
 						</div>
 						<div class="col-md-2">
-							<div class="price">{{{ $shopItemRevision->price }}} &euro;</div>
+							<div class="price">{{{ $shopItem->activeRevision->price }}} &euro;</div>
 						</div>
 					</div>
 				</div>

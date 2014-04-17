@@ -100,6 +100,11 @@ class ShopItem extends Eloquent
 		return $this->hasMany('ShopItemRevision');
 	}
 
+	public function activeRevision()
+	{
+		return $this->belongsTo('ShopItemRevision', 'active_revision_id');
+	}
+
 	public function canUpdateLatestRevision()
 	{
 		$latestRevision = $this->latestRevision();

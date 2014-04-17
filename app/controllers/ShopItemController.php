@@ -8,12 +8,11 @@ class ShopItemController extends BaseController
 
 		/** @var ShopCategory $category */
 		$category = ShopCategory::where('slug', $categorySlug)->firstOrFail();
-		$shopItemRevisions = $category->getAcceptedShopItemRevisions()->paginate();
-//		$shopItemRevisions = ShopItemRevision::query()->paginate();
+		$shopItems = $category->getAcceptedShopItems()->paginate();
 
 		return $this->response->view('shop-item.index', [
 			'shopCategory' => $category,
-			'shopItemRevisions' => $shopItemRevisions,
+			'shopItems' => $shopItems,
 		]);
 	}
 }

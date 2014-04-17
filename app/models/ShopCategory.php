@@ -77,10 +77,14 @@ class ShopCategory extends Node
 		return $this->hasMany('ShopItemRevision', 'shop_category_id');
 	}
 
-	public function getAcceptedShopItemRevisions()
+	public function getAcceptedShopItems()
 	{
-		return $this->shopItemRevisions()
-			->accepted();
+		$result = ShopItem::query()
+			->whereHas('activeRevision', function ($query) {
+				$query->where('shop_category_id', $this->id);
+			});
+
+		return $result;
 	}
 
 	public function getSlugList()
