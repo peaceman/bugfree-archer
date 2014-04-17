@@ -115,4 +115,9 @@ return [
 			'music_plugins' => 'Music plugins',
 		]
 	],
+	'music_plugin_bank' => [
+		'page_header' => [
+			'music_plugin_banks' => 'Music plugin banks',
+		],
+	],
 ];
