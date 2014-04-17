@@ -1,5 +1,5 @@
 <?php
-namespace EDM\ProjectFileRevision;
+namespace EDM;
 
 class ValidatorBag
 {

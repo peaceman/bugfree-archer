@@ -28,18 +28,18 @@ class ProcessorsServiceProvider extends ServiceProvider
 	{
 		$this->app->bind(CreateProjectFileRevision::class, function ($app) {
 			/** @var \Illuminate\Foundation\Application $app */
-			$validatorBag = new ProjectFileRevision\ValidatorBag();
+			$validatorBag = new \EDM\ValidatorBag();
 
-			$validatorBag->preSave[] = $app->make(ProjectFileRevision\Validators\BaseRules::class);
+			$validatorBag->preSave[] = $app->make(\EDM\Common\Validators\BaseRules::class);
 
 			return new CreateProjectFileRevision($validatorBag);
 		});
 
 		$this->app->bind(UpdateProjectFileRevision::class, function ($app) {
 			/** @var \Illuminate\Foundation\Application $app */
-			$validatorBag = new ProjectFileRevision\ValidatorBag();
+			$validatorBag = new \EDM\ValidatorBag();
 
-			$validatorBag->preSave[] = $app->make(ProjectFileRevision\Validators\BaseRules::class);
+			$validatorBag->preSave[] = $app->make(\EDM\Common\Validators\BaseRules::class);
 
 			return new UpdateProjectFileRevision($validatorBag);
 		});
@@ -86,6 +86,18 @@ class ProcessorsServiceProvider extends ServiceProvider
 			$validatorBag->preSave[] = $app->make(\EDM\Review\Validators\BaseRules::class);
 
 			return new \EDM\Review\Processors\FinishReview($validatorBag);
+		});
+	}
+
+	protected function registerResourceLocationProcessors()
+	{
+		$this->app->bind(\EDM\ResourceLocation\Processors\UpdateResourceLocation::class, function ($app) {
+			/** @var \Illuminate\Foundation\Application $app */
+			$validatorBag = new \EDM\ValidatorBag();
+
+			$validatorBag->preSave[] = $app->make(\EDM\Common\Validators\BaseRules::class);
+
+			return new \EDM\ResourceLocation\Processors\UpdateResourceLocation($validatorBag);
 		});
 	}
 

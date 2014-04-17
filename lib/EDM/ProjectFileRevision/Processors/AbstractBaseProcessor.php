@@ -10,23 +10,10 @@ use MusicGenre;
 use ProjectFileRevision;
 use ResourceFile;
 
-abstract class AbstractBaseProcessor implements ProcessorInterface
+abstract class AbstractBaseProcessor extends \EDM\AbstractBaseProcessor implements ProcessorInterface
 {
 	/**
-	 * @var \EDM\ProjectFileRevision\ValidatorBag
-	 */
-	protected $validatorBag;
-
-	/**
-	 * @param \EDM\ProjectFileRevision\ValidatorBag $validatorBag
-	 */
-	public function __construct(\EDM\ProjectFileRevision\ValidatorBag $validatorBag)
-	{
-		$this->validatorBag = $validatorBag;
-	}
-
-	/**
-	 * @param \EDM\ProjectFileRevision\ValidatorInterface[] $validators
+	 * @param \EDM\ValidatorInterface[] $validators
 	 * @param ProjectFileRevision $projectFileRevision
 	 */
 	protected function executeValidatorsOnProjectFileRevision(array $validators, ProjectFileRevision $projectFileRevision)

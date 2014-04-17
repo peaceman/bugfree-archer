@@ -21,6 +21,12 @@ class ResourceLocation extends Eloquent
 	const STATE_INACTIVE = 'inactive';
 	const STATE_ONLY_UPLOAD = 'only_upload';
 	protected $table = 'resource_locations';
+	public static $validationRules = [
+		'type' => ['required'],
+		'state' => ['required', 'in:active,inactive,only_upload'],
+		'upload_order' => ['integer'],
+		'download_order' => ['integer'],
+	];
 
 	public function resourceFileLocations()
 	{

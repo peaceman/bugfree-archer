@@ -7,7 +7,7 @@ class FinishReview extends AbstractBaseProcessor
 	{
 		/** @var \Review $review */
 		$review = $this->requireData($data, 'review');
-		$inputData = $this->requireData($data, 'input_data', []);
+		$inputData = $this->requireData($data, 'input_data');
 		$reviewResult = $this->requireData($data, 'review_result');
 
 		$this->checkState($review);
