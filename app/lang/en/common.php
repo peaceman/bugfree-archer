@@ -27,6 +27,7 @@ return [
 	'feedback' => 'Feedback',
 	'overview' => 'Overview',
 	'action' => 'Action',
+	'settings' => 'Settings',
 	'button' => [
 		'accept' => 'Accept',
 		'reject' => 'Reject',

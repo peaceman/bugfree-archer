@@ -10,40 +10,54 @@
 @stop
 @section('content')
 <div class="col-sm-12">
-	<fieldset>
-		<legend>{{{ trans('common.overview') }}}</legend>
-		<dl class="dl-horizontal">
-			<dt>{{{ trans('common.table.headers.id') }}}</dt>
-			<dd>{{{ $rL->id }}}</dd>
+	<div class="row">
+		<div class="col-sm-6">
+			<fieldset>
+				<legend>{{{ trans('common.overview') }}}</legend>
+				<dl class="dl-horizontal">
+					<dt>{{{ trans('common.table.headers.id') }}}</dt>
+					<dd>{{{ $rL->id }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.type') }}}</dt>
-			<dd>{{{ trans('admin.resource_location.types.' . $rL->type) }}}</dd>
+					<dt>{{{ trans('common.table.headers.type') }}}</dt>
+					<dd>{{{ trans('admin.resource_location.types.' . $rL->type) }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.state') }}}</dt>
-			<dd>{{{ trans('admin.resource_location.states.' . $rL->state) }}}</dd>
+					<dt>{{{ trans('common.table.headers.state') }}}</dt>
+					<dd>{{{ trans('admin.resource_location.states.' . $rL->state) }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.is_backup') }}}</dt>
-			<dd><span class="glyphicon glyphicon-{{{ $rL->is_backup ? 'ok' : 'remove' }}}"></span></dd>
+					<dt>{{{ trans('common.table.headers.is_backup') }}}</dt>
+					<dd><span class="glyphicon glyphicon-{{{ $rL->is_backup ? 'ok' : 'remove' }}}"></span></dd>
 
-			<dt>{{{ trans('common.files') }}}</dt>
-			<dd>{{{ $rL->getAmountOfFiles() }}}</dd>
+					<dt>{{{ trans('common.files') }}}</dt>
+					<dd>{{{ $rL->getAmountOfFiles() }}}</dd>
 
-			<dt>{{{ trans('common.used_space') }}}</dt>
-			<dd>{{{ nice_bytesize($rL->getSpaceUsage()) }}}</dd>
+					<dt>{{{ trans('common.used_space') }}}</dt>
+					<dd>{{{ nice_bytesize($rL->getSpaceUsage()) }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.upload_order') }}}</dt>
-			<dd>{{{ $rL->upload_order }}}</dd>
+					<dt>{{{ trans('common.table.headers.upload_order') }}}</dt>
+					<dd>{{{ $rL->upload_order }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.download_order') }}}</dt>
-			<dd>{{{ $rL->download_order }}}</dd>
+					<dt>{{{ trans('common.table.headers.download_order') }}}</dt>
+					<dd>{{{ $rL->download_order }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.created_at') }}}</dt>
-			<dd>{{{ $rL->created_at }}}</dd>
+					<dt>{{{ trans('common.table.headers.created_at') }}}</dt>
+					<dd>{{{ $rL->created_at }}}</dd>
 
-			<dt>{{{ trans('common.table.headers.updated_at') }}}</dt>
-			<dd>{{{ $rL->updated_at }}}</dd>
-		</dl>
-	</fieldset>
+					<dt>{{{ trans('common.table.headers.updated_at') }}}</dt>
+					<dd>{{{ $rL->updated_at }}}</dd>
+				</dl>
+			</fieldset>
+		</div>
+		<div class="col-sm-6">
+			<fieldset>
+				<legend>{{{ trans('common.settings') }}}</legend>
+			</fieldset>
+			@if($rL->settings)
+			<pre>{{{ json_encode(json_decode($rL->settings), JSON_PRETTY_PRINT) }}}</pre>
+			@else
+			N/A
+			@endif
+		</div>
+	</div>
 	<fieldset>
 		<legend>{{{ trans('common.files') }}}</legend>
 		<table class="table table-condensed table-hover">
