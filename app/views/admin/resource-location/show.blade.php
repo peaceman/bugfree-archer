@@ -1,6 +1,9 @@
 @extends('layouts.admin.dashboard')
 @section('dashboard.header')
 <h1>
+	<a class="pull-right" href="{{{ route('admin.resource-locations.edit', [$rL->id]) }}}">
+		{{{ trans('common.table.actions.edit') }}}
+	</a>
 	{{{ trans('admin.resource_location.page_header.details') }}}
 	<small>
 		{{{ trans('admin.resource_location.page_header.of_type') }}}
