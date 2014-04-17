@@ -72,6 +72,17 @@ class ShopCategory extends Node
 	 */
 	protected $scoped = array();
 
+	public function shopItemRevisions()
+	{
+		return $this->hasMany('ShopItemRevision', 'shop_category_id');
+	}
+
+	public function getAcceptedShopItemRevisions()
+	{
+		return $this->shopItemRevisions()
+			->accepted();
+	}
+
 	public function getSlugList()
 	{
 		$slugList = [];

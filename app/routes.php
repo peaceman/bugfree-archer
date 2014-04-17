@@ -53,6 +53,12 @@ Route::post(
 	['as' => 'user.perform.resend-confirmation-email', 'uses' => 'UserController@performResendConfirmationEmail']
 );
 
+Route::get(
+	'categories/{categorySlugs}',
+	['as' => 'shop-item.index.by-category', 'uses' => 'ShopItemController@getIndexByCategory']
+)
+->where('categorySlugs', '[a-z-/]+');
+
 Route::group(
 	['namespace' => 'EDM\Controllers\User'],
 	function () {

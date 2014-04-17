@@ -17,7 +17,7 @@
 			<ul class="nav navbar-nav">
 				@foreach ($categories as $category)
 				<li>
-					<a href="/{{{ $category->slug }}}">{{{ $category->name }}}</a>
+					<a href="/categories/{{{ implode('/', $category->getSlugList()) }}}">{{{ trans($category->name) }}}</a>
 				</li>
 				@endforeach
 			</ul>

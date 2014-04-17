@@ -96,4 +96,8 @@ View::composer(['common.admin.navbar', 'admin.review.index'], function ($view) {
 	$view->with('amountOfWaitingReviews', Review::amountOfWaitingReviews());
 });
 
+View::composer('common.navbar', function ($view) {
+	$view->with('categories', ShopCategory::where('can_contain_items', true)->get());
+});
+
 View::shared('errors')->setFormat('<span class="help-block">:message</span>');
