@@ -12,17 +12,6 @@ use ResourceFile;
 
 abstract class AbstractBaseProcessor extends \EDM\AbstractBaseProcessor implements ProcessorInterface
 {
-	/**
-	 * @param \EDM\ValidatorInterface[] $validators
-	 * @param ProjectFileRevision $projectFileRevision
-	 */
-	protected function executeValidatorsOnProjectFileRevision(array $validators, ProjectFileRevision $projectFileRevision)
-	{
-		foreach ($validators as $validator) {
-			$validator->validate($projectFileRevision);
-		}
-	}
-
 	protected function setMusicGenreOnProjectFileRevision(array $inputData, ProjectFileRevision $projectFileRevision)
 	{
 		$idOrName = array_get($inputData, 'project-file.music_genre_id');
