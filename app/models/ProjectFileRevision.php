@@ -60,7 +60,7 @@ class ProjectFileRevision extends Eloquent
 			'music_genre' => $this->musicGenre->name,
 			'music_programs' => implode(', ', $this->getNamesOfCompatibleMusicPrograms()),
 			'music_plugins' => implode(', ', $this->getNamesOfCompatibleMusicPlugins()),
-			'music_banks' => implode(', ', $this->getNamesOfCompatibleMusicPluginBanks()),
+			'music_plugin_banks' => implode(', ', $this->getNamesOfCompatibleMusicPluginBanks()),
 		];
 	}
 
