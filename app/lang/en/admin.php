@@ -93,5 +93,11 @@ return [
 			\ResourceLocation::STATE_INACTIVE => 'inactive',
 			\ResourceLocation::STATE_ONLY_UPLOAD => 'only upload',
 		]
+	],
+	'resource_file' => [
+		'page_header' => [
+			'resource_files' => 'Resource files',
+			'total_amount' => 'Total amount',
+		]
 	]
 ];

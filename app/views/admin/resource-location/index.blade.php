@@ -40,9 +40,6 @@
 				<a class="btn btn-default btn-xs" href="{{{ route('admin.resource-locations.show', [$resourceLocation->id]) }}}">
 					{{{ trans('common.table.actions.details') }}}
 				</a>
-				<a class="btn btn-default btn-xs" href="{{{ route('admin.resource-locations.edit', [$resourceLocation->id]) }}}">
-					{{{ trans('common.table.actions.edit') }}}
-				</a>
 			</td>
 		</tr>
 		@endforeach
