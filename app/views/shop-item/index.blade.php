@@ -13,8 +13,8 @@
 		<ul class="media-list">
 			@foreach($shopItemRevisions as $shopItemRevision)
 			<li class="media">
-				<a class="pull-left" href="">
-					<img class="media-object" src="" alt="" style="height: 80px; width: 80px;"/>
+				<a class="pull-left" href="{{{ route('shop-items.show', [$shopItemRevision->slug]) }}}">
+					<img class="media-object" src="" alt="" style="height: 78px; width: 130px;"/>
 				</a>
 				<div class="media-body">
 					<div class="row">
