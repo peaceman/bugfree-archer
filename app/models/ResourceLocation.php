@@ -34,6 +34,24 @@ class ResourceLocation extends Eloquent
 			->withTimestamps();
 	}
 
+	public function getPossibleStates()
+	{
+		$reflectionClass = new \ReflectionClass($this);
+		$constants = $reflectionClass->getConstants();
+
+		$stateConstants = [];
+		foreach ($constants as $constantName => $constantValue) {
+			if (\Illuminate\Support\Str::startsWith($constantName, 'STATE_')) {
+				$stateConstants[$constantName] = $constantValue;
+			}
+		}
+
+		$currentState = $this->state;
+		return array_filter($stateConstants, function ($stateConstant) use ($currentState) {
+			return $stateConstant !== $currentState;
+		});
+	}
+
 	public function qualifiesForInstantTransport()
 	{
 		return $this->upload_order === Config::get('storage.instant_transport_upload_order');

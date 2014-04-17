@@ -28,6 +28,7 @@ return [
 	'overview' => 'Overview',
 	'action' => 'Action',
 	'settings' => 'Settings',
+	'change_state' => 'Change state',
 	'button' => [
 		'accept' => 'Accept',
 		'reject' => 'Reject',

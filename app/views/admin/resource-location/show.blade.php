@@ -1,9 +1,6 @@
 @extends('layouts.admin.dashboard')
 @section('dashboard.header')
 <h1>
-	<a class="pull-right" href="{{{ route('admin.resource-locations.edit', [$rL->id]) }}}">
-		{{{ trans('common.table.actions.edit') }}}
-	</a>
 	{{{ trans('admin.resource_location.page_header.details') }}}
 	<small>
 		{{{ trans('admin.resource_location.page_header.of_type') }}}
@@ -12,6 +9,21 @@
 </h1>
 @stop
 @section('content')
+<script type="text/javascript">
+	$(function () {
+		var form = $('form#state-selection');
+		$('a', form).on('click', function (e) {
+			e.preventDefault();
+			var stateInput = $('<input>', {
+				type: 'hidden',
+				name: 'state',
+				value: $(this).attr('data-state')
+			});
+			form.append(stateInput);
+			form.submit();
+		});
+	});
+</script>
 <div class="col-sm-12">
 	<div class="row">
 		<div class="col-sm-6">
@@ -25,7 +37,23 @@
 					<dd>{{{ trans('admin.resource_location.types.' . $rL->type) }}}</dd>
 
 					<dt>{{{ trans('common.table.headers.state') }}}</dt>
-					<dd>{{{ trans('admin.resource_location.states.' . $rL->state) }}}</dd>
+					<dd>
+						{{{ trans('admin.resource_location.states.' . $rL->state) }}}
+						{{ Form::open(['id' => 'state-selection', 'method' => 'put', 'route' => ['admin.resource-locations.update', $rL->id]]) }}
+						<div class="btn-group btn-group-xs">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+								{{{ trans('common.change_state') }}} <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								@foreach($rL->getPossibleStates() as $state)
+								<li>
+									<a href="" data-state="{{{ $state }}}" >{{{ $state }}}</a>
+								</li>
+								@endforeach
+							</ul>
+						</div>
+						{{ Form::close() }}
+					</dd>
 
 					<dt>{{{ trans('common.table.headers.is_backup') }}}</dt>
 					<dd><span class="glyphicon glyphicon-{{{ $rL->is_backup ? 'ok' : 'remove' }}}"></span></dd>
