@@ -24,6 +24,11 @@
 		});
 	});
 </script>
+<style type="text/css">
+	form#state-selection {
+		display: inline;
+	}
+</style>
 <div class="col-sm-12">
 	<div class="row">
 		<div class="col-sm-6">
