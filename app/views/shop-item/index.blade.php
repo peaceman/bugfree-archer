@@ -36,12 +36,12 @@
 								<span class="glyphicon glyphicon-star-empty"></span>
 							</div>
 						</div>
-						<div class="col-md-5">
+						<div class="col-md-6">
 							<small>
 								{{{ implode(', ', $shopItemRevision->getMetaData()) }}}
 							</small>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<div class="price">{{{ $shopItemRevision->price }}} &euro;</div>
 						</div>
 					</div>
