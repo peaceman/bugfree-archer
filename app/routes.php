@@ -55,9 +55,14 @@ Route::post(
 
 Route::get(
 	'categories/{categorySlugs}',
-	['as' => 'shop-item.index.by-category', 'uses' => 'ShopItemController@getIndexByCategory']
+	['as' => 'shop-items.index.by-category', 'uses' => 'ShopItemController@getIndexByCategory']
 )
 ->where('categorySlugs', '[a-z-/]+');
+
+Route::get(
+	'items/{itemSlug}',
+	['as' => 'shop-items.show', 'uses' => 'ShopItemController@getShow']
+);
 
 Route::group(
 	['namespace' => 'EDM\Controllers\User'],

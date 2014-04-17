@@ -53,6 +53,17 @@ class ProjectFileRevision extends Eloquent
 		return $this->morphOne('ShopItemRevision', 'product_revision');
 	}
 
+	public function getMetaData()
+	{
+		return [
+			'bpm' => $this->bpm,
+			'music_genre' => $this->musicGenre->name,
+			'music_programs' => implode(', ', $this->getNamesOfCompatibleMusicPrograms()),
+			'music_plugins' => implode(', ', $this->getNamesOfCompatibleMusicPlugins()),
+			'music_banks' => implode(', ', $this->getNamesOfCompatibleMusicPluginBanks()),
+		];
+	}
+
 	public function generateStepData()
 	{
 		$archiveFileData = $this->archiveFile->toArray();

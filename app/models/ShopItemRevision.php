@@ -84,4 +84,16 @@ class ShopItemRevision extends Eloquent
 	{
 		return $this->morphTo();
 	}
+
+	public function getMetaData()
+	{
+		$metaData = $this->productRevision->getMetaData();
+
+		$toReturn = [];
+		foreach ($metaData as $name => $value) {
+			$toReturn[] = trans('shop.meta_data.' . $name) . ': ' . $value;
+		}
+
+		return $toReturn;
+	}
 }
