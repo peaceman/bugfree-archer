@@ -15,4 +15,20 @@ class ShopItemController extends BaseController
 			'shopItems' => $shopItems,
 		]);
 	}
+
+	public function getShow($itemSlug)
+	{
+		$shopItem = ShopItem::query()
+			->where('state', '=', ShopItem::STATE_ACTIVE)
+			->whereHas('activeRevision', function ($query) use ($itemSlug) {
+				$query->where('slug', '=', $itemSlug);
+			})
+			->firstOrFail();
+
+		return $this->response->view('shop-item.show', [
+			'shopItem' => $shopItem,
+			'shopItemRevision' => $shopItem->activeRevision,
+			'seller' => $shopItem->owner,
+		]);
+	}
 }

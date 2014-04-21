@@ -17,11 +17,14 @@ trait Reviewable
 	public function scopeAccepted($query)
 	{
 		return $query
-			->whereHas('review', function ($q) {
-				$q->where('state', '=', \Review::STATE_FINISHED)
-					->where('result', '=', true);
-			})
-			->orHas('review', '<', 1);
+			->where(function ($query) {
+				$query
+					->whereHas('review', function ($q) {
+						$q->where('state', '=', \Review::STATE_FINISHED)
+							->where('result', '=', true);
+					})
+					->orHas('review', '<', 1);
+			});
 	}
 
 	public function getNameForReview()

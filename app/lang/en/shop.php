@@ -13,5 +13,8 @@ return [
 		'music_plugins' => 'Plugins',
 		'music_plugin_banks' => 'Banks',
 	],
-	'search_filter' => 'Search / Filter'
+	'search_filter' => 'Search / Filter',
+	'buy_now' => 'Buy Now',
+	'seller' => 'Seller',
+	'ratings' => 'Ratings',
 ];
