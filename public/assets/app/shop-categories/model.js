@@ -37,7 +37,15 @@ angular.module('edmShopItems')
     ])
     .factory('ShopCategoriesFileConfig', [
         function () {
-            var projectFilesConfig = {
+            var pictureDefault = {
+                'listing-picture': {
+                    displayText: 'Listing picture',
+                    required: false,
+                    amount: 1
+                }
+            };
+
+            var projectFilesConfig = _.defaults({
                 'sample': {
                     displayText: 'Sample',
                     required: true,
@@ -48,10 +56,15 @@ angular.module('edmShopItems')
                     required: true,
                     amount: 1
                 }
-            };
-            var samplesConfig = {
-                // todo missing config
-            };
+            }, pictureDefault);
+
+            var samplesConfig = _.defaults({
+                'sample': {
+                    displayText: 'Sample',
+                    required: true,
+                    amount: 1
+                }
+            }, pictureDefault);
 
             return {
                 'project-files.templates': projectFilesConfig,
