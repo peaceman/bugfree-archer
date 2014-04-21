@@ -28,6 +28,7 @@ class ShopItemController extends BaseController
 		return $this->response->view('shop-item.show', [
 			'shopItem' => $shopItem,
 			'shopItemRevision' => $shopItem->activeRevision,
+			'productRevision' => $shopItem->activeRevision->productRevision,
 			'seller' => $shopItem->owner,
 		]);
 	}

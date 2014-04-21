@@ -1,3 +1,7 @@
+.panel-body > dl {
+    margin-bottom: 0px;
+}
+
 .price {
     font-size: 33px;
     text-align: right;
