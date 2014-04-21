@@ -19,12 +19,10 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property ResourceFile $sampleFile
  * @property ShopItemRevision $shopItemRevision
  */
-class ProjectFileRevision extends Eloquent
+class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 {
 	public static $validationRules = [
 		'music_genre_id' => ['required', 'exists:music_genres,id'],
-		'sample_file_id' => ['required', 'exists:resource_files,id'],
-		'archive_file_id' => ['required', 'exists:resource_files,id'],
 		'bpm' => ['required', 'integer', 'min:0'],
 		'description' => ['required'],
 	];
@@ -36,16 +34,6 @@ class ProjectFileRevision extends Eloquent
 	public function musicGenre()
 	{
 		return $this->belongsTo('MusicGenre');
-	}
-
-	public function archiveFile()
-	{
-		return $this->belongsTo('ResourceFile', 'archive_file_id');
-	}
-
-	public function sampleFile()
-	{
-		return $this->belongsTo('ResourceFile', 'sample_file_id');
 	}
 
 	public function shopItemRevision()
@@ -128,11 +116,37 @@ class ProjectFileRevision extends Eloquent
 		return $this->compatibleBanks()->lists('name');
 	}
 
+	public function getResourceFileTypes()
+	{
+		return ['sample', 'archive', 'listing-picture'];
+	}
+
 	public function getFiles()
 	{
-		return [
-			['use_as' => 'sample', 'file' => $this->sampleFile],
-			['use_as' => 'archive', 'file' => $this->archiveFile],
-		];
+		$files = $this->shopItemRevision->resourceFiles()
+			->get()
+			->map(function ($resourceFile) {
+				return ['use_as' => $resourceFile->pivot->file_type, 'file' => $resourceFile];
+			});
+
+		return $files;
+	}
+
+	public function getSampleFileAttribute()
+	{
+		$sampleFile = $this->shopItemRevision->resourceFiles()
+			->wherePivot('file_type', '=', 'sample')
+			->first();
+
+		return $sampleFile ?: null;
+	}
+
+	public function getArchiveFileAttribute()
+	{
+		$archiveFile = $this->shopItemRevision->resourceFiles()
+			->wherePivot('file_type', '=', 'archive')
+			->first();
+
+		return $archiveFile ?: null;
 	}
 }

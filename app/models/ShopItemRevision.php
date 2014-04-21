@@ -85,6 +85,13 @@ class ShopItemRevision extends Eloquent
 		return $this->morphTo();
 	}
 
+	public function resourceFiles()
+	{
+		return $this->belongsToMany('ResourceFile', 'shop_item_revision_files')
+			->withPivot('file_type')
+			->withTimestamps();
+	}
+
 	public function getMetaData()
 	{
 		$metaData = $this->productRevision->getMetaData();

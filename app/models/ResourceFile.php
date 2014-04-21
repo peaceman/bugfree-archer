@@ -23,17 +23,22 @@ class ResourceFile extends Eloquent
 	protected $hidden = ['userTrackingSession', 'user_tracking_session_id'];
 	protected $appends = ['download_url'];
 
+	public function shopItemRevisions()
+	{
+		return $this->belongsToMany('ShopItemRevision', 'shop_item_revision_files')
+			->withPivot('file_type')
+			->withTimestamps();
+	}
+
 	public function inUseByShopItems()
 	{
-		$query = DB::table('project_file_revisions')
-			->join('shop_item_revisions', 'shop_item_revisions.product_revision_id', '=', 'project_file_revisions.id')
-			->join('shop_items', 'shop_items.id', '=', 'shop_item_revisions.shop_item_id')
-			->where('sample_file_id', '=', $this->id)
-			->orWhere('archive_file_id', '=', $this->id)
-			->groupBy('shop_items.id');
+		$shopItemIds = $this->shopItemRevisions()
+			->get()
+			->map(function ($shopItemRevision) {
+				return $shopItemRevision->shop_item_id;
+			});
 
-		$result = $query->get();
-		return $result;
+		return $shopItemIds;
 	}
 
 	public function getDownloadUrlAttribute()

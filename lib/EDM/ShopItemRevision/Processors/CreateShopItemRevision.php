@@ -31,7 +31,15 @@ class CreateShopItemRevision extends AbstractBaseProcessor
 		$shopItemRevision->shopItem()->associate($data['shop_item']);
 		$shopItemRevision->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
 
-		$data['product_revision']->shopItemRevision()->save($shopItemRevision);
+		$productRevision = $this->requireData($data, 'product_revision');
+		$productRevision->shopItemRevision()->save($shopItemRevision);
+
+		$this->storeResourceFileAssociationsOfProduct(
+			$shopItemRevision,
+			$productRevision,
+			$this->requireData($data, 'resource_files')
+		);
+
 		$shopItemRevision->review()->save(new Review());
 
 		return $shopItemRevision;

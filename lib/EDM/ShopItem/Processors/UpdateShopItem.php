@@ -27,11 +27,11 @@ class UpdateShopItem extends CreateShopItem
 
 		/** @var \ShopItemRevision $shopItemRevision */
 		if ($shopItem->canUpdateLatestRevision()) {
-			$shopItemRevision = $this->updateShopItemRevision($shopItem->latestRevision(), $shopCategory, array_get($inputData, 'general'));
+			$shopItemRevision = $this->updateShopItemRevision($shopItem->latestRevision(), $shopCategory, $inputData);
 			$productRevision = $this->updateProductRevision($shopCategory, $shopItemRevision->productRevision, $inputData);
 		} else {
 			$productRevision = $this->createProductRevision($shopCategory, $inputData);
-			$shopItemRevision = $this->createShopItemRevision($shopItem, $shopCategory, $productRevision, array_get($inputData, 'general'));
+			$shopItemRevision = $this->createShopItemRevision($shopItem, $shopCategory, $productRevision, $inputData);
 		}
 
 		return [
@@ -47,8 +47,9 @@ class UpdateShopItem extends CreateShopItem
 		$updateProcessor = App::make(UpdateShopItemRevisionProcessor::class);
 
 		$data = [
-			'price' => array_get($inputData, 'price'),
-			'title' => array_get($inputData, 'title'),
+			'price' => array_get($inputData, 'general.price'),
+			'title' => array_get($inputData, 'general.title'),
+			'resource_files' => array_get($inputData, 'upload-file.selectedFiles', []),
 			'shop_category' => $shopCategory,
 		];
 

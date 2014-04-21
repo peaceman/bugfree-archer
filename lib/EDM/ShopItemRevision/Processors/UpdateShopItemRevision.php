@@ -23,6 +23,12 @@ class UpdateShopItemRevision extends AbstractBaseProcessor
 		$shopItemRevision->save();
 		$this->executeValidatorsOnShopItemRevision($this->validatorBag->postSave, $shopItemRevision);
 
+		$this->storeResourceFileAssociationsOfProduct(
+			$shopItemRevision,
+			$shopItemRevision->productRevision,
+			$this->requireData($inputData, 'resource_files')
+		);
+
 		return $shopItemRevision;
 	}
 

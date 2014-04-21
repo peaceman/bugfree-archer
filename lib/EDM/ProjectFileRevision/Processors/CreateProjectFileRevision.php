@@ -16,7 +16,6 @@ class CreateProjectFileRevision extends AbstractBaseProcessor
 		]);
 
 		$this->setMusicGenreOnProjectFileRevision($inputData, $projectFileRevision);
-		$this->setResourceFilesOnProjectFileRevision($inputData, $projectFileRevision);
 		$this->executeValidatorsOnProjectFileRevision($this->validatorBag->preSave, $projectFileRevision);
 
 		$projectFileRevision->save();

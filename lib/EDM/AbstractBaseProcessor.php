@@ -44,4 +44,22 @@ abstract class AbstractBaseProcessor implements ProcessorInterface
 
 		return $result;
 	}
+
+	protected function storeResourceFileAssociationsOfProduct(\ShopItemRevision $shopItemRevision, \ProductRevisionInterface $productRevision, array $resourceFiles)
+	{
+		$resourceFileTypes = $productRevision->getResourceFileTypes();
+
+		$syncData = [];
+		foreach ($resourceFiles as $resourceFileInfo) {
+			$fileType = $resourceFileInfo['use_as'];
+			if (!in_array($fileType, $resourceFileTypes)) {
+				continue;
+			}
+
+			$resourceFile = \ResourceFile::findOrFail($resourceFileInfo['id']);
+			$syncData[$resourceFile->id] = ['file_type' => $fileType];
+		}
+
+		$shopItemRevision->resourceFiles()->sync($syncData);
+	}
 }

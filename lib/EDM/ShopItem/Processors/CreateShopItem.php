@@ -27,7 +27,7 @@ class CreateShopItem implements ProcessorInterface
 		$shopCategory = $this->fetchShopCategory($data);
 
 		$productRevision = $this->createProductRevision($shopCategory, $data);
-		$shopItemRevision = $this->createShopItemRevision($shopItem, $shopCategory, $productRevision, array_get($data, 'general'));
+		$shopItemRevision = $this->createShopItemRevision($shopItem, $shopCategory, $productRevision, $data);
 
 		return [
 			'shop_item' => $shopItem,
@@ -74,11 +74,12 @@ class CreateShopItem implements ProcessorInterface
 		$createProcess = App::make(CreateShopItemRevisionProcess::class);
 
 		$shopItemRevision = $createProcess->process([
-			'price' => array_get($inputData, 'price'),
-			'title' => array_get($inputData, 'title'),
+			'price' => array_get($inputData, 'general.price'),
+			'title' => array_get($inputData, 'general.title'),
 			'shop_category' => $shopCategory,
 			'shop_item' => $shopItem,
 			'product_revision' => $productRevision,
+			'resource_files' => array_get($inputData, 'upload-file.selectedFiles', []),
 		]);
 
 		return $shopItemRevision;
