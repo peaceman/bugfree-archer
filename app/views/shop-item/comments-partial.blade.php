@@ -1,30 +1,18 @@
 <fieldset>
 	<legend>Comments</legend>
 	<ul class="list-unstyled">
+		@foreach ($comments as $comment)
 		<li>
 			<blockquote>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-				<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+				<p>{{{ $comment->content }}}</p>
+				<footer>{{{ $comment->submitter->username }}} at {{{ $comment->created_at }}}</footer>
 			</blockquote>
 		</li>
+		@endforeach
+		@if (!count($comments))
 		<li>
-			<blockquote>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-				<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-			</blockquote>
+			{{{ trans('shop.no_comments') }}}
 		</li>
-		<li>
-			<blockquote>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-				<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-			</blockquote>
-		</li>
-		<li>
-			<blockquote>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-				<footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
-			</blockquote>
-
-		</li>
+		@endif
 	</ul>
 </fieldset>

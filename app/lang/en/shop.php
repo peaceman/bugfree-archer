@@ -17,4 +17,5 @@ return [
 	'buy_now' => 'Buy Now',
 	'seller' => 'Seller',
 	'ratings' => 'Ratings',
+	'no_comments' => 'There are no comments yet',
 ];

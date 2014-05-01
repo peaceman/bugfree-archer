@@ -30,6 +30,7 @@ class ShopItemController extends BaseController
 			'shopItemRevision' => $shopItem->activeRevision,
 			'productRevision' => $shopItem->activeRevision->productRevision,
 			'seller' => $shopItem->owner,
+			'comments' => $shopItem->comments()->orderBy('created_at', 'asc')->get(),
 		]);
 	}
 }

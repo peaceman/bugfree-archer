@@ -38,4 +38,9 @@ trait UserTrackingSessionAware
 
 		return $this->userTrackingSession->user;
 	}
+
+	public function getSubmitterAttribute()
+	{
+		return $this->getSubmitter();
+	}
 }
