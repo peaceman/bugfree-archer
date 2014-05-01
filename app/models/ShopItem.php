@@ -12,6 +12,10 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property string $state
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @property ShopItemRevision[] $revisions
+ * @property ShopItemRevision $activeRevision
+ * @property ShopItemRating[] $ratings
  */
 class ShopItem extends Eloquent
 {
@@ -109,5 +113,10 @@ class ShopItem extends Eloquent
 	{
 		$latestRevision = $this->latestRevision();
 		return $latestRevision->review->state === Review::STATE_WAITING;
+	}
+
+	public function ratings()
+	{
+		return $this->hasMany('ShopItemRating');
 	}
 }
