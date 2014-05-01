@@ -7,6 +7,7 @@ namespace EDM\ModelTraits;
  *
  * @property int $user_tracking_session_id
  * @property \UserTrackingSession $userTrackingSession
+ * @property \User $submitter
  */
 trait UserTrackingSessionAware
 {
