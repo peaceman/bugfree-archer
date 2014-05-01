@@ -25,16 +25,10 @@
 								</a>
 							</h4>
 							Seller:
-							<a href="{{{ route('user.public-profile', [$shopItem->activeRevision->getSubmitter()->username]) }}}">
-								{{{ $shopItem->activeRevision->getSubmitter()->username }}}
+							<a href="{{{ route('user.public-profile', [$shopItem->activeRevision->submitter->username]) }}}">
+								{{{ $shopItem->activeRevision->submitter->username }}}
 							</a>
-							<div class="rating">
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star"></span>
-								<span class="glyphicon glyphicon-star-empty"></span>
-							</div>
+							@include('shop-item.rating-partial')
 						</div>
 						<div class="col-md-6">
 							<small>
