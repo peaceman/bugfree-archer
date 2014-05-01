@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class ShopItemRating
+ * Class ShopItemComment
  *
  * @property int $id
  * @property int $shop_item_id
