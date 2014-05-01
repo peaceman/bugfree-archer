@@ -119,4 +119,21 @@ class ShopItem extends Eloquent
 	{
 		return $this->hasMany('ShopItemRating');
 	}
+
+	public function getAverageRatingAttribute()
+	{
+		// todo cache
+		return $this->fetchAverageRating();
+	}
+
+	public function fetchAverageRating()
+	{
+		return $this->ratings()
+			->avg('rating');
+	}
+
+	public function getRoundedAverageRatingAttribute()
+	{
+		return round($this->getAverageRatingAttribute());
+	}
 }

@@ -25,14 +25,7 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-6">
-						<div class="rating">
-							<span class="glyphicon glyphicon-star"></span>
-							<span class="glyphicon glyphicon-star"></span>
-							<span class="glyphicon glyphicon-star"></span>
-							<span class="glyphicon glyphicon-star"></span>
-							<span class="glyphicon glyphicon-star-empty"></span>
-						</div>
-						<em>23 {{{ trans('shop.ratings') }}}</em>
+						@include('shop-item.rating-partial')
 					</div>
 					<div class="col-md-6">
 						<div class="price">{{{ $shopItem->activeRevision->price }}} &euro;</div>
