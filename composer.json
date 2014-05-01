@@ -13,7 +13,8 @@
         "supremenewmedia/finance": "dev-master",
         "baum/baum": "dev-develop",
         "doctrine/dbal": "dev-master",
-        "flowjs/flow-php-server": "dev-master"
+        "flowjs/flow-php-server": "dev-master",
+        "paypal/adaptivepayments-sdk-php": "v3.6.106"
     },
     "autoload": {
         "classmap": [
