@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property int $id
  * @property int $shop_item_revision_id
  * @property string $payment_state
+ * @property string $paypal_pay_key
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
