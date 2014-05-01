@@ -18,7 +18,7 @@ class ShopItemRating extends Eloquent
 {
 	use \EDM\ModelTraits\UserTrackingSessionAware;
 
-	protected $table = 'shop_item_revisions';
+	protected $table = 'shop_item_ratings';
 	protected $fillable = ['rating'];
 	public static $validationRules = [
 		'shop_item_id' => ['required', 'exists:shop_items,id'],
