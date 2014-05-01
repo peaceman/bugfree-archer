@@ -31,9 +31,7 @@
 							@include('shop-item.rating-partial')
 						</div>
 						<div class="col-md-6">
-							<small>
-								{{{ implode(', ', $shopItem->activeRevision->getMetaData()) }}}
-							</small>
+							@include('shop-item.listing-detail-partials.' . snake_case($shopItem->activeRevision->product_revision_type, '-'))
 						</div>
 						<div class="col-md-2">
 							<div class="price">{{{ $shopItem->activeRevision->price }}} &euro;</div>
