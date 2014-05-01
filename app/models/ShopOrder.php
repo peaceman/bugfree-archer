@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property Carbon $updated_at
  *
  * @property ShopItemRevision $shopItemRevision
+ * @property PaypalApiCall[] $paypalApiCalls
  */
 class ShopOrder extends Eloquent
 {
@@ -41,5 +42,10 @@ class ShopOrder extends Eloquent
 	public function shopItemRevision()
 	{
 		return $this->belongsTo('ShopItemRevision');
+	}
+
+	public function paypalApiCalls()
+	{
+		return $this->hasMany('PaypalApiCall');
 	}
 }
