@@ -14,8 +14,14 @@ class QualifiesAsVendorFilter
 		/** @var \User $user */
 		$user = Auth::user();
 		if (!$user->getQualifiesAsVendor()) {
-			Notification::info(trans('user.profile.missing_address_for_selling'));
-			return Redirect::guest(URL::route('user.profile', ['username' => $user->username]) . '#!address');
+			if (!$user->address) {
+				Notification::info(trans('user.profile.missing_address_for_selling'));
+				return Redirect::guest(URL::route('user.profile', ['username' => $user->username]) . '#!address');
+			} elseif (!$user->payoutDetail) {
+				Notification::info(trans('user.profile.missing_payout_detail_for_selling'));
+				return Redirect::guest(URL::route('user.profile', [$user->username]) . '#!payout-detail');
+			}
+
 		}
 	}
 }
