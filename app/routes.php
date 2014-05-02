@@ -110,7 +110,7 @@ Route::group(
 			);
 		});
 
-		Route::get('users/{username}', ['as' => 'user.public-profile', 'uses' => 'ProfileController@getPublicProfile']);
+		Route::get('', ['as' => 'user.public-profile', 'uses' => 'ProfileController@getPublicProfile']);
 	}
 );
 
