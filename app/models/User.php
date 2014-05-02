@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @property UserProfile $profile
  * @property UserAddress $address
+ * @property UserPayoutDetail $payoutDetail
  */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
@@ -173,6 +174,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->hasOne('UserAddress');
 	}
 
+	public function payoutDetail()
+	{
+		return $this->hasOne('UserPayoutDetail');
+	}
+
 	public function createTrackingSession()
 	{
 		$userAgent = UserAgent::firstOrCreate(['value' => Request::server('HTTP_USER_AGENT')]);
@@ -222,7 +228,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getQualifiesAsVendor()
 	{
-		return (bool)$this->address;
+		return (bool)$this->address && $this->payoutDetail;
 	}
 
 	public function getAmountOfSales()
