@@ -274,7 +274,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSalesOfThisWeek()
 	{
-		return 86;
+		$query = $this->generateGetAmountOfSalesQuery();
+		$query->whereBetween('shop_orders.created_at', [
+			Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()
+		]);
+
+		return $query->count();
 	}
 
 	public function getRevenue()
