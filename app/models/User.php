@@ -1,9 +1,9 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Carbon\Carbon;
 
 /**
  * Class User
@@ -252,14 +252,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $query->count();
 	}
 
-	public function getAmountOfSalesOfToday()
-	{
-		$query = $this->generateGetAmountOfSalesQuery();
-		$query->whereBetween('shop_orders.created_at', [Carbon::today(), Carbon::tomorrow()]);
-
-		return $query->count();
-	}
-
 	/**
 	 * @return mixed
 	 */
@@ -270,6 +262,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 			->join('shop_items', 'shop_item_revisions.shop_item_id', '=', 'shop_items.id')
 			->where('shop_items.owner_id', '=', $this->id);
 		return $query;
+	}
+
+	public function getAmountOfSalesOfToday()
+	{
+		$query = $this->generateGetAmountOfSalesQuery();
+		$query->whereBetween('shop_orders.created_at', [Carbon::today(), Carbon::tomorrow()]);
+
+		return $query->count();
 	}
 
 	public function getAmountOfSalesOfThisWeek()
