@@ -3,6 +3,7 @@
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Carbon\Carbon;
 
 /**
  * Class User
@@ -13,8 +14,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property string $password
  * @property string $real_name
  * @property string $state
- * @property Carbon\Carbon $created_at
- * @property Carbon\Carbon $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  *
  * @property UserProfile $profile
  * @property UserAddress $address
@@ -34,6 +35,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	const EVENT_LOGIN = 'auth.login';
 
 	public static $validLoginStates = [self::STATE_ACTIVE, self::STATE_TMP_BAN, self::STATE_PERMA_BAN];
+	public static $validationRules = [
+		'real_name' => ['required', 'max:255'],
+		'username' => ['required', 'max:255', 'alpha_dash', 'unique:users'],
+		'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+		'password' => ['required', 'confirmed'],
+	];
 	/**
 	 * The database table used by the model.
 	 *
@@ -47,13 +54,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 */
 	protected $hidden = array('password');
 	protected $fillable = ['email', 'username', 'real_name'];
-
-	public static $validationRules = [
-		'real_name' => ['required', 'max:255'],
-		'username' => ['required', 'max:255', 'alpha_dash', 'unique:users'],
-		'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-		'password' => ['required', 'confirmed'],
-	];
 
 	public function getEmailValidationRule()
 	{
@@ -156,19 +156,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->hasMany('UserEmailConfirmation');
 	}
 
-	public function trackingSessions()
-	{
-		return $this->hasMany('UserTrackingSession');
-	}
-
 	public function shopItems()
 	{
 		return $this->hasMany('ShopItem', 'owner_id');
-	}
-
-	public function profile()
-	{
-		return $this->hasOne('UserProfile');
 	}
 
 	public function address()
@@ -194,6 +184,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $trackingSession;
 	}
 
+	public function trackingSessions()
+	{
+		return $this->hasMany('UserTrackingSession');
+	}
+
 	public function fetchLastTrackingSession()
 	{
 		return $this->trackingSessions()
@@ -214,6 +209,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		}
 
 		return $this->profile;
+	}
+
+	public function profile()
+	{
+		return $this->hasOne('UserProfile');
 	}
 
 	public function getAddress()
@@ -247,17 +247,29 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSales()
 	{
-		$query = ShopOrder::withPaymentState(ShopOrder::PAYMENT_STATE_DONE)
-			->join('shop_item_revisions', 'shop_orders.shop_item_revision_id', '=', 'shop_item_revisions.id')
-			->join('shop_items', 'shop_item_revisions.shop_item_id', '=', 'shop_items.id')
-			->where('shop_items.owner_id', '=', $this->id);
+		$query = $this->generateGetAmountOfSalesQuery();
 
 		return $query->count();
 	}
 
 	public function getAmountOfSalesOfToday()
 	{
-		return 23;
+		$query = $this->generateGetAmountOfSalesQuery();
+		$query->whereBetween('shop_orders.created_at', [Carbon::today(), Carbon::tomorrow()]);
+
+		return $query->count();
+	}
+
+	/**
+	 * @return mixed
+	 */
+	protected function generateGetAmountOfSalesQuery()
+	{
+		$query = ShopOrder::withPaymentState(ShopOrder::PAYMENT_STATE_DONE)
+			->join('shop_item_revisions', 'shop_orders.shop_item_revision_id', '=', 'shop_item_revisions.id')
+			->join('shop_items', 'shop_item_revisions.shop_item_id', '=', 'shop_items.id')
+			->where('shop_items.owner_id', '=', $this->id);
+		return $query;
 	}
 
 	public function getAmountOfSalesOfThisWeek()
