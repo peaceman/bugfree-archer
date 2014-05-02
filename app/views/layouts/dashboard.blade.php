@@ -28,10 +28,10 @@
 				<a>{{{ trans('dashboard.nav.orders_header') }}}</a>
 			</li>
 			<li>
-				<a href="{{{ route('user.orders', ['username' => $user->username]) }}}">{{{ trans('dashboard.nav.orders.history') }}}</a>
+				<a href="{{{ route('users.orders.index', $user->username) }}}">{{{ trans('dashboard.nav.orders.history') }}}</a>
 			</li>
 			<li>
-				<a href="{{{ route('user.order-conflicts', ['username' => $user->username]) }}}">{{{ trans('dashboard.nav.orders.conflicts') }}}</a>
+				<a href="{{{ route('user.sales-conflicts', ['username' => $user->username]) }}}">{{{ trans('dashboard.nav.orders.conflicts') }}}</a>
 			</li>
 
 			<li class="nav-header disabled">

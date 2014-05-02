@@ -57,7 +57,7 @@ Route::get(
 	'categories/{categorySlugs}',
 	['as' => 'shop-items.index.by-category', 'uses' => 'ShopItemController@getIndexByCategory']
 )
-->where('categorySlugs', '[a-z-/]+');
+	->where('categorySlugs', '[a-z-/]+');
 
 Route::get(
 	'items/{itemSlug}',
@@ -65,31 +65,41 @@ Route::get(
 );
 
 Route::group(
-	['namespace' => 'EDM\Controllers\User'],
+	['namespace' => 'EDM\Controllers\User', 'prefix' => 'users/{username}'],
 	function () {
-		Route::get('users/{username}/dashboard', ['as' => 'user.dashboard', 'uses' => 'DashboardController@show']);
+		Route::get('dashboard', ['as' => 'user.dashboard', 'uses' => 'DashboardController@show']);
 		Route::get(
-			'users/{username}/private-messages',
+			'private-messages',
 			['as' => 'user.private-messages', 'uses' => 'PrivateMessageController@getIndex']
 		);
 
-		Route::get('users/{username}/profile', ['as' => 'user.profile', 'uses' => 'ProfileController@getIndex']);
-		Route::post('users/{username}/profile/password', ['as' => 'user.profile.perform.password', 'uses' => 'ProfileController@postChangePassword']);
-		Route::post('users/{username}/profile/account', ['as' => 'user.profile.perform.account', 'uses' => 'ProfileController@postAccount']);
-		Route::post('users/{username}/profile/basic', ['as' => 'user.profile.perform.basic', 'uses' => 'ProfileController@postBasic']);
-		Route::post('users/{username}/profile/address', ['as' => 'user.profile.perform.address', 'uses' => 'ProfileController@postAddress']);
-		Route::post('users/{username}/profile/payout-detail', ['as' => 'user.profile.perform.payout-detail', 'uses' => 'ProfileController@postPayoutDetail']);
+		Route::get('profile', ['as' => 'user.profile', 'uses' => 'ProfileController@getIndex']);
+		Route::post('profile/password', ['as' => 'user.profile.perform.password', 'uses' => 'ProfileController@postChangePassword']);
+		Route::post('profile/account', ['as' => 'user.profile.perform.account', 'uses' => 'ProfileController@postAccount']);
+		Route::post('profile/basic', ['as' => 'user.profile.perform.basic', 'uses' => 'ProfileController@postBasic']);
+		Route::post('profile/address', ['as' => 'user.profile.perform.address', 'uses' => 'ProfileController@postAddress']);
+		Route::post('profile/payout-detail', ['as' => 'user.profile.perform.payout-detail', 'uses' => 'ProfileController@postPayoutDetail']);
+
+		Route::resource('orders', 'OrderController', [
+			'only' => ['index', 'store', 'show'],
+			'names' => [
+				'index' => 'users.orders.index',
+				'create' => 'users.orders.create',
+				'store' => 'users.orders.store',
+				'show' => 'users.orders.show',
+			]
+		]);
 
 		Route::group(['before' => 'qualifies-as-vendor'], function () {
-			Route::get('users/{username}/orders', ['as' => 'user.orders', 'uses' => 'OrderController@getIndex']);
-			Route::get('users/{username}/order-conflicts', ['as' => 'user.order-conflicts', 'uses' => 'OrderConflictController@getIndex']);
+			Route::get('sales', ['as' => 'user.sales', 'uses' => 'SalesController@getIndex']);
+			Route::get('sales-conflicts', ['as' => 'user.sales-conflicts', 'uses' => 'SalesConflictsController@getIndex']);
 
-			Route::get('users/{username}/items', ['as' => 'user.items', 'uses' => 'ItemController@getIndex']);
-			Route::get('users/{username}/items/create', ['as' => 'user.items.create', 'uses' => 'ItemController@getCreate']);
-			Route::get('users/{username}/items/{item_id}/edit', ['as' => 'user.items.edit', 'uses' => 'ItemController@getEdit']);
-			Route::delete('users/{username}/items/{item_id}', ['as' => 'user.items.delete', 'uses' => 'ItemController@deleteDestroy']);
+			Route::get('items', ['as' => 'user.items', 'uses' => 'ItemController@getIndex']);
+			Route::get('items/create', ['as' => 'user.items.create', 'uses' => 'ItemController@getCreate']);
+			Route::get('items/{item_id}/edit', ['as' => 'user.items.edit', 'uses' => 'ItemController@getEdit']);
+			Route::delete('items/{item_id}', ['as' => 'user.items.delete', 'uses' => 'ItemController@deleteDestroy']);
 			Route::get(
-				'users/{username}/customer-questions',
+				'customer-questions',
 				['as' => 'user.customer-questions', 'uses' => 'CustomerQuestionController@getIndex']
 			);
 		});

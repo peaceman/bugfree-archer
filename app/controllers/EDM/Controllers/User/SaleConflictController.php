@@ -2,7 +2,7 @@
 namespace EDM\Controllers\User;
 use View;
 
-class OrderConflictController extends UserBaseController
+class SaleConflictController extends UserBaseController
 {
 	public function getIndex()
 	{
