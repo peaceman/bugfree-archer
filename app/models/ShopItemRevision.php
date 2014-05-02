@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @property ShopItem $shopItem
  * @property ShopCategory $shopCategory
- * @property mixed $productRevision
+ * @property ProductRevisionInterface $productRevision
  * @property ShopOrder[] $shopOrders
  */
 class ShopItemRevision extends Eloquent

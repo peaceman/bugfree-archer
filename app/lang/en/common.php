@@ -82,6 +82,7 @@ return [
 			'delete' => 'Delete',
 			'edit' => 'Edit',
 			'details' => 'Details',
+			'download' => 'Download',
 		],
 		'no_entries' => 'No entries available',
 	],

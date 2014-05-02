@@ -32,7 +32,10 @@ class ProcessorsServiceProvider extends ServiceProvider
 
 			$validatorBag->preSave[] = $app->make(\EDM\Common\Validators\BaseRules::class);
 
-			return new CreateProjectFileRevision($validatorBag);
+			$processor = $app->make(CreateProjectFileRevision::class);
+			$processor->injectValidatorBag($validatorBag);
+
+			return $processor;
 		});
 
 		$this->app->bind(UpdateProjectFileRevision::class, function ($app) {
@@ -41,7 +44,10 @@ class ProcessorsServiceProvider extends ServiceProvider
 
 			$validatorBag->preSave[] = $app->make(\EDM\Common\Validators\BaseRules::class);
 
-			return new UpdateProjectFileRevision($validatorBag);
+			$processor = $app->make(UpdateProjectFileRevision::class);
+			$processor->injectValidatorBag($validatorBag);
+
+			return $processor;
 		});
 	}
 
@@ -97,7 +103,10 @@ class ProcessorsServiceProvider extends ServiceProvider
 
 			$validatorBag->preSave[] = $app->make(\EDM\Common\Validators\BaseRules::class);
 
-			return new \EDM\ResourceLocation\Processors\UpdateResourceLocation($validatorBag);
+			$processor = $app->make(\EDM\ResourceLocation\Processors\UpdateResourceLocation::class);
+			$processor->injectValidatorBag($validatorBag);
+
+			return $processor;
 		});
 	}
 

@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property Carbon $updated_at
  *
  * @property MusicGenre $musicGenre
- * @property ResourceFile $archiveFile
  * @property ResourceFile $sampleFile
  * @property ShopItemRevision $shopItemRevision
  */

@@ -42,6 +42,14 @@ return [
 			'dashboard_header' => 'Sale history',
 		],
 	],
+	'orders' => [
+		'index' => [
+			'dashboard_header' => 'My orders',
+		],
+		'notifications' => [
+			'download_url_generation_failed' => 'Failed to generate a download url',
+		],
+	],
 	'items' => [
 		'notifications' => [
 			'created' => 'The shop item has been created',

@@ -62,4 +62,9 @@ class ShopOrder extends Eloquent
 	{
 		return $this->getSubmitter();
 	}
+
+	public function isProductDownloadable()
+	{
+		return $this->payment_state === static::PAYMENT_STATE_DONE;
+	}
 }

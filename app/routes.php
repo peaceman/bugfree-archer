@@ -80,6 +80,10 @@ Route::group(
 		Route::post('profile/address', ['as' => 'user.profile.perform.address', 'uses' => 'ProfileController@postAddress']);
 		Route::post('profile/payout-detail', ['as' => 'user.profile.perform.payout-detail', 'uses' => 'ProfileController@postPayoutDetail']);
 
+		Route::post('orders/{order_id}/download', [
+			'as' => 'user.orders.download',
+			'uses' => 'OrderController@postDownload',
+		]);
 		Route::resource('orders', 'OrderController', [
 			'only' => ['index', 'store', 'show'],
 			'names' => [

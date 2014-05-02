@@ -1,8 +1,12 @@
 <?php
 namespace EDM\ProjectFileRevision\Processors;
 
+use EDM\ValidatorBagInjection;
+
 class UpdateProjectFileRevision extends AbstractBaseProcessor
 {
+	use ValidatorBagInjection;
+
 	public function process(array $data = null)
 	{
 		/** @var \ProjectFileRevision $projectFileRevision */
@@ -15,12 +19,12 @@ class UpdateProjectFileRevision extends AbstractBaseProcessor
 		]);
 
 		$this->setMusicGenreOnProjectFileRevision($inputData, $projectFileRevision);
-		$this->executeValidatorsOnProjectFileRevision($this->validatorBag->preSave, $projectFileRevision);
+		$this->executeValidatorsOnModel($this->validatorBag->preSave, $projectFileRevision);
 
 		$projectFileRevision->save();
 
 		$this->setCompatibleSoftwareOnProjectFileRevision($inputData, $projectFileRevision);
-		$this->executeValidatorsOnProjectFileRevision($this->validatorBag->postSave, $projectFileRevision);
+		$this->executeValidatorsOnModel($this->validatorBag->postSave, $projectFileRevision);
 
 		return $projectFileRevision;
 	}

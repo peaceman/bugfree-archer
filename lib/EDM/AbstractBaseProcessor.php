@@ -4,23 +4,10 @@ namespace EDM;
 abstract class AbstractBaseProcessor implements ProcessorInterface
 {
 	/**
-	 * @var ValidatorBag
-	 */
-	protected $validatorBag;
-
-	/**
-	 * @param ValidatorBag
-	 */
-	public function __construct(ValidatorBag $validatorBag)
-	{
-		$this->validatorBag = $validatorBag;
-	}
-
-	/**
 	 * @param \EDM\ValidatorInterface[] $validators
 	 * @param object $model
 	 */
-	protected function executeValidatorsOnProjectFileRevision(array $validators, $model)
+	protected function executeValidatorsOnModel(array $validators, $model)
 	{
 		foreach ($validators as $validator) {
 			$validator->validate($model);
