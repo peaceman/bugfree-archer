@@ -30,6 +30,7 @@ return [
 	'settings' => 'Settings',
 	'change_state' => 'Change state',
 	'total_amount' => 'Total amount',
+	'paypal_email' => 'PayPal email',
 	'button' => [
 		'accept' => 'Accept',
 		'reject' => 'Reject',

@@ -16,7 +16,7 @@
 		<a href="#address" data-toggle="tab">{{{ trans('user.profile.nav.address') }}}</a>
 	</li>
 	<li>
-		<a href="#payment" data-toggle="tab">{{{ trans('user.profile.nav.payment') }}}</a>
+		<a href="#payout-detail" data-toggle="tab">{{{ trans('user.profile.nav.payout_detail') }}}</a>
 	</li>
 </ul>
 <div class="tab-content">
@@ -29,8 +29,8 @@
 	<div class="tab-pane" id="address">
 		@include('user.profile.tab.address')
 	</div>
-	<div class="tab-pane" id="payment">
-		@include('user.profile.tab.payment')
+	<div class="tab-pane" id="payout-detail">
+		@include('user.profile.tab.payout-detail')
 	</div>
 </div>
 @stop

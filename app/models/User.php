@@ -226,6 +226,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->address;
 	}
 
+	public function getPayoutDetail()
+	{
+		if (!$this->payoutDetail) {
+			$payoutDetail = new UserPayoutDetail();
+			$payoutDetail->user_id = $this->id;
+
+			return $payoutDetail;
+		}
+
+		return $this->payoutDetail;
+	}
+
 	public function getQualifiesAsVendor()
 	{
 		return (bool)$this->address && $this->payoutDetail;

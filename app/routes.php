@@ -78,6 +78,7 @@ Route::group(
 		Route::post('users/{username}/profile/account', ['as' => 'user.profile.perform.account', 'uses' => 'ProfileController@postAccount']);
 		Route::post('users/{username}/profile/basic', ['as' => 'user.profile.perform.basic', 'uses' => 'ProfileController@postBasic']);
 		Route::post('users/{username}/profile/address', ['as' => 'user.profile.perform.address', 'uses' => 'ProfileController@postAddress']);
+		Route::post('users/{username}/profile/payout-detail', ['as' => 'user.profile.perform.payout-detail', 'uses' => 'ProfileController@postPayoutDetail']);
 
 		Route::group(['before' => 'qualifies-as-vendor'], function () {
 			Route::get('users/{username}/orders', ['as' => 'user.orders', 'uses' => 'OrderController@getIndex']);

@@ -23,11 +23,12 @@ class ProfileController extends UserBaseController
 		$userProfile = $this->user->getProfile();
 		$userAvatar = $userProfile ? $userProfile->avatar : null;
 		$userAddress = $this->user->getAddress();
+		$userPayoutDetail = $this->user->getPayoutDetail();
 		$countries = array_map(function ($country) {
 			return $country['name'];
 		}, \Countries::getList());
 
-		return View::make('user.profile.index', compact('userProfile', 'userAvatar', 'userAddress', 'countries'));
+		return View::make('user.profile.index', compact('userProfile', 'userAvatar', 'userAddress', 'userPayoutDetail', 'countries'));
 	}
 
 	protected function getRedirectForTab($tabName)
@@ -86,6 +87,35 @@ class ProfileController extends UserBaseController
 		Notification::success(trans('user.profile.updated_basic_profile'));
 
 		return $profileRedirect;
+	}
+
+	public function postPayoutDetail()
+	{
+		$profileRedirect = $this->getRedirectForTab('payout-detail');
+		$validator = Validator::make(
+			Input::all(),
+			\UserPayoutDetail::$validationRules
+		);
+
+		if ($validator->fails()) {
+			return $profileRedirect
+				->withInput()
+				->withErrors($validator);
+		}
+
+		$payoutDetail = $this->user->getPayoutDetail();
+		$payoutDetail->paypal_email = Input::get('paypal_email');
+		$payoutDetail->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
+
+		if (!$payoutDetail->save()) {
+			Notification::error(trans('common.save_failed'));
+
+			return $profileRedirect;
+		}
+
+		Notification::success(trans('common.data_update_successful'));
+
+		return Redirect::intended($profileRedirect->getTargetUrl());
 	}
 
 	public function postChangePassword()
