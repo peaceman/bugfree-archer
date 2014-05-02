@@ -74,6 +74,9 @@ return [
 			'is_protected' => 'Is protected',
 			'parent' => 'Parent',
 			'owner' => 'Owner',
+			'product' => 'Product',
+			'payment_state' => 'Payment state',
+			'buyer' => 'Buyer',
 		],
 		'actions' => [
 			'delete' => 'Delete',

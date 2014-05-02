@@ -37,6 +37,11 @@ return [
 		'avatar_upload_failed' => 'Avatar upload failed',
 		'payout_detail' => 'Payout detail',
 	],
+	'sales' => [
+		'index' => [
+			'dashboard_header' => 'Sale history',
+		],
+	],
 	'items' => [
 		'notifications' => [
 			'created' => 'The shop item has been created',

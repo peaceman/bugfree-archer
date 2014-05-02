@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @property ShopItemRevision $shopItemRevision
  * @property PaypalApiCall[] $paypalApiCalls
+ * @property \User $buyer
  *
  * @method static Illuminate\Database\Eloquent\Builder withPaymentState(string $state)
  */
@@ -55,5 +56,10 @@ class ShopOrder extends Eloquent
 	public function scopeWithPaymentState(Illuminate\Database\Eloquent\Builder $query, $state)
 	{
 		return $query->where('payment_state', '=', $state);
+	}
+
+	public function getBuyerAttribute()
+	{
+		return $this->getSubmitter();
 	}
 }

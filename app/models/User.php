@@ -247,17 +247,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSales()
 	{
-		$query = $this->generateGetAmountOfSalesQuery();
+		$query = $this->generateGetSalesQuery();
 
 		return $query->count();
 	}
 
 	/**
-	 * @return mixed
+	 * @return Illuminate\Database\Eloquent\Builder
 	 */
-	protected function generateGetAmountOfSalesQuery()
+	public function generateGetSalesQuery()
 	{
 		$query = ShopOrder::withPaymentState(ShopOrder::PAYMENT_STATE_DONE)
+			->select('shop_orders.*')
 			->join('shop_item_revisions', 'shop_orders.shop_item_revision_id', '=', 'shop_item_revisions.id')
 			->join('shop_items', 'shop_item_revisions.shop_item_id', '=', 'shop_items.id')
 			->where('shop_items.owner_id', '=', $this->id);
@@ -266,7 +267,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSalesOfToday()
 	{
-		$query = $this->generateGetAmountOfSalesQuery();
+		$query = $this->generateGetSalesQuery();
 		$query->whereBetween('shop_orders.created_at', [Carbon::today(), Carbon::tomorrow()]);
 
 		return $query->count();
@@ -274,7 +275,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSalesOfThisWeek()
 	{
-		$query = $this->generateGetAmountOfSalesQuery();
+		$query = $this->generateGetSalesQuery();
 		$query->whereBetween('shop_orders.created_at', [
 			Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()
 		]);

@@ -3,8 +3,11 @@
 }
 
 .price {
-    font-size: 33px;
     text-align: right;
+}
+
+div.price {
+    font-size: 33px;
 }
 
 .list-group-item > .label {
