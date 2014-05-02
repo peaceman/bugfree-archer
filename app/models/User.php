@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property UserProfile $profile
  * @property UserAddress $address
  * @property UserPayoutDetail $payoutDetail
+ *
+ * @property ShopItem[] $shopItems
  */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
@@ -245,7 +247,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
 	public function getAmountOfSales()
 	{
-		return 923;
+		$query = ShopOrder::withPaymentState(ShopOrder::PAYMENT_STATE_DONE)
+			->join('shop_item_revisions', 'shop_orders.shop_item_revision_id', '=', 'shop_item_revisions.id')
+			->join('shop_items', 'shop_item_revisions.shop_item_id', '=', 'shop_items.id')
+			->where('shop_items.owner_id', '=', $this->id);
+
+		return $query->count();
 	}
 
 	public function getAmountOfSalesOfToday()

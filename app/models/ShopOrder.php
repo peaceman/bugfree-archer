@@ -28,6 +28,7 @@ class ShopOrder extends Eloquent
 	];
 
 	protected $table = 'shop_orders';
+	protected $fillable = ['payment_state'];
 
 	public function __construct(array $attributes = [])
 	{
@@ -47,5 +48,10 @@ class ShopOrder extends Eloquent
 	public function paypalApiCalls()
 	{
 		return $this->hasMany('PaypalApiCall');
+	}
+
+	public function scopeWithPaymentState($query, $state)
+	{
+		return $query->where('payment_state', '=', $state);
 	}
 }

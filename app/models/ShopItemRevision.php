@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property ShopItem $shopItem
  * @property ShopCategory $shopCategory
  * @property mixed $productRevision
+ * @property ShopOrder[] $shopOrders
  */
 class ShopItemRevision extends Eloquent
 {
@@ -83,6 +84,11 @@ class ShopItemRevision extends Eloquent
 	public function productRevision()
 	{
 		return $this->morphTo();
+	}
+
+	public function shopOrders()
+	{
+		return $this->hasMany('ShopOrder');
 	}
 
 	public function resourceFiles()
