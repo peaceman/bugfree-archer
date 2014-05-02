@@ -5,10 +5,11 @@ return [
 		'home' => 'Home',
 		'profile' => 'Profile',
 		'private_messages' => 'Private messages',
-		'orders_header' => 'Orders',
-		'orders' => [
-			'history' => 'Order history',
-			'conflicts' => 'Order conflicts',
+		'my_orders' => 'My orders',
+		'sales_header' => 'Sales',
+		'sales' => [
+			'history' => 'Sale history',
+			'conflicts' => 'Sale conflicts',
 		],
 		'items_header' => 'Shop Items',
 		'items' => [

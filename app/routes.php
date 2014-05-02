@@ -91,7 +91,13 @@ Route::group(
 		]);
 
 		Route::group(['before' => 'qualifies-as-vendor'], function () {
-			Route::get('sales', ['as' => 'user.sales', 'uses' => 'SalesController@getIndex']);
+			Route::resource('sales', 'SaleController', [
+				'only' => ['index'],
+				'names' => [
+					'index' => 'users.sales.index',
+				],
+			]);
+
 			Route::get('sales-conflicts', ['as' => 'user.sales-conflicts', 'uses' => 'SalesConflictsController@getIndex']);
 
 			Route::get('items', ['as' => 'user.items', 'uses' => 'ItemController@getIndex']);
