@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property string $state
  * @property Carbon\Carbon $created_at
  * @property Carbon\Carbon $updated_at
+ *
+ * @method Illuminate\Database\Eloquent\Builder unused()
  */
 class UserEmailConfirmation extends Eloquent
 {
@@ -33,7 +35,7 @@ class UserEmailConfirmation extends Eloquent
 		return $this->belongsTo('User');
 	}
 
-	public function scopeUnused($query)
+	public function scopeUnused(Illuminate\Database\Eloquent\Builder $query)
 	{
 		return $query->where('used', false);
 	}

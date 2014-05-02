@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property string $result_reasoning
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @method static Illuminate\Database\Eloquent\Builder withState(string $state)
  */
 class Review extends Eloquent
 {
@@ -92,7 +94,7 @@ class Review extends Eloquent
 		return $this->morphTo();
 	}
 
-	public function scopeWithState($query, $state)
+	public function scopeWithState(Illuminate\Database\Eloquent\Builder $query, $state)
 	{
 		return $query->where('state', $state);
 	}

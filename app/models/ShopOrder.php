@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @property ShopItemRevision $shopItemRevision
  * @property PaypalApiCall[] $paypalApiCalls
+ *
+ * @method static Illuminate\Database\Eloquent\Builder withPaymentState(string $state)
  */
 class ShopOrder extends Eloquent
 {
@@ -50,7 +52,7 @@ class ShopOrder extends Eloquent
 		return $this->hasMany('PaypalApiCall');
 	}
 
-	public function scopeWithPaymentState($query, $state)
+	public function scopeWithPaymentState(Illuminate\Database\Eloquent\Builder $query, $state)
 	{
 		return $query->where('payment_state', '=', $state);
 	}
