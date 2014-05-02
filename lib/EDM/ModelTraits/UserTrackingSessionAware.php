@@ -8,6 +8,9 @@ namespace EDM\ModelTraits;
  * @property int $user_tracking_session_id
  * @property \UserTrackingSession $userTrackingSession
  * @property \User $submitter
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder onlyFromUser(\User $user)
+ * @method static \Illuminate\Database\Eloquent\Builder asUser(\User $user)
  */
 trait UserTrackingSessionAware
 {
