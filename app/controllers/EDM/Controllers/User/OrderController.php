@@ -1,5 +1,6 @@
 <?php
 namespace EDM\Controllers\User;
+
 use View;
 
 class OrderController extends UserBaseController
@@ -11,6 +12,23 @@ class OrderController extends UserBaseController
 		$orders = $ordersQuery->paginate();
 
 		return $this->response->view('user.orders.index', compact('orders'));
+	}
+
+	/**
+	 * displays the purchase confirmation page
+	 */
+	public function create()
+	{
+		$shopItemSlug = $this->request->get('shop_item_slug');
+		$shopItem = \ShopItem::fetchActiveShopItemWithSlug($shopItemSlug);
+		$shopItemRevision = $shopItem->activeRevision;
+		$productRevision = $shopItemRevision->productRevision;
+		$seller = $shopItem->owner;
+
+		return $this->response->view(
+			'user.orders.create',
+			compact('shopItem', 'shopItemRevision', 'productRevision', 'seller')
+		);
 	}
 
 	public function postDownload($username, $orderId)

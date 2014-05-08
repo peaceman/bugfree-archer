@@ -49,6 +49,10 @@ return [
 		'notifications' => [
 			'download_url_generation_failed' => 'Failed to generate a download url',
 		],
+		'confirm_purchase' => 'Confirm purchase',
+		'buy_now' => 'Buy Now',
+		'with_paypal' => 'with PayPal',
+		'from_seller' => 'from seller',
 	],
 	'items' => [
 		'notifications' => [
