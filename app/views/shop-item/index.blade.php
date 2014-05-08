@@ -41,6 +41,7 @@
 			</li>
 			@endforeach
 		</ul>
+		{{ $shopItems->links() }}
 	</div>
 	<div class="col-md-3">
 		<div class="panel panel-default">
