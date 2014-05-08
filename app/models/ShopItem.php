@@ -164,4 +164,24 @@ class ShopItem extends Eloquent
 
 		return $shopItem;
 	}
+
+	/**
+	 * @param int $revisionId
+	 * @return ShopItem
+	 */
+	public static function fetchActiveShopItemWithRevisionId($revisionId)
+	{
+		$shopItem = ShopItem::withState(ShopItem::STATE_ACTIVE)
+			->whereHas('activeRevision', function ($query) use ($revisionId) {
+				$query->where('id', '=', $revisionId);
+			})
+			->firstOrFail();
+
+		return $shopItem;
+	}
+
+	public function isInABuyableState()
+	{
+		return $this->state === static::STATE_ACTIVE;
+	}
 }

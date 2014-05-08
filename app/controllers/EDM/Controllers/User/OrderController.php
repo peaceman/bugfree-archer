@@ -1,10 +1,14 @@
 <?php
 namespace EDM\Controllers\User;
 
-use View;
+use EDM\Common\Injections\LogWriterInjection;
+use EDM\Common\Injections\NotificationContainerInjection;
 
 class OrderController extends UserBaseController
 {
+	use NotificationContainerInjection;
+	use LogWriterInjection;
+
 	public function index()
 	{
 		$ordersQuery = \ShopOrder::onlyFromUser($this->user)
@@ -29,6 +33,30 @@ class OrderController extends UserBaseController
 			'user.orders.create',
 			compact('shopItem', 'shopItemRevision', 'productRevision', 'seller')
 		);
+	}
+
+	public function store()
+	{
+		$shopItem = \ShopItem::fetchActiveShopItemWithRevisionId($this->request->get('shop_item_revision_id'));
+
+		try {
+			/** @var $createOrder \EDM\ShopOrder\Processors\CreateOrder */
+			$createOrder = $this->app->make(\EDM\ShopOrder\Processors\CreateOrder::class);
+
+			$userResponse = $createOrder->process([
+				'shop_item' => $shopItem,
+				'buyer' => $this->user,
+			]);
+
+			return $userResponse;
+		} catch (\Exception $e) {
+			$this->log->error('failed to create an order', [
+				'context' => ['exception_class' => get_class($e)],
+			]);
+
+			$this->notification->error(trans('user.orders.notification.creation_failed'));
+			return $this->redirector->back();
+		}
 	}
 
 	public function postDownload($username, $orderId)

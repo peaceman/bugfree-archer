@@ -287,4 +287,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	{
 		return 42.23;
 	}
+
+	public function hasAlreadyBoughtShopItem(ShopItem $shopItem)
+	{
+		$query = ShopOrder::query()
+			->join('user_tracking_sessions AS uts', 'shop_orders.user_tracking_session_id', '=', 'uts.id')
+			->join('shop_item_revisions as sir', 'shop_orders.shop_item_revision_id', '=', 'sir.id')
+			->where('sir.shop_item_id', '=', $shopItem->id)
+			->where('uts.user_id', '=', $this->id)
+			->groupBy('sir.shop_item_id');
+
+		return (int)$query->count() !== 0;
+	}
 }
