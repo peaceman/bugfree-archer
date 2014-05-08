@@ -7,3 +7,4 @@ edm-market.iml
 *.swp
 public/storage/*
 app/config/packages/aws/aws-sdk-php-laravel/config.php
+.env.local.php
