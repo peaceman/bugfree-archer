@@ -14,6 +14,9 @@ namespace EDM\ModelTraits;
  */
 trait UserTrackingSessionAware
 {
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
 	public function userTrackingSession()
 	{
 		return $this->belongsTo('UserTrackingSession');
