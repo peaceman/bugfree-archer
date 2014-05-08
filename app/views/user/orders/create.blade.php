@@ -29,7 +29,7 @@
 			</div>
 
 			<div class="panel-footer">
-				{{ Form::open(['route' => ['users.orders.create', $user->username], 'method' => 'post']) }}
+				{{ Form::open(['route' => ['users.orders.store', $user->username], 'method' => 'post']) }}
 				<input name="shop_item_revision_id" value="{{{ $shopItemRevision->id }}}" type="hidden"/>
 				<button type="submit" class="btn btn-primary btn-lg btn-block">
 					<strong>{{{ trans('user.orders.buy_now') }}}</strong>
