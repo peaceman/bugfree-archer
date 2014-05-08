@@ -22,12 +22,12 @@ class CreateShopOrder extends AbstractBaseProcessor
 		$this->ensureBuyerIsNotSeller($shopItem, $buyer, $seller);
 		$this->ensureBuyerHasNotAlreadyBoughtTheShopItem($shopItem, $buyer);
 
-		dd([
-			'precondition checks were successful',
-			'shop_item' => $shopItem->getAttributes(),
-			'seller' => $seller->getAttributes(),
-			'buyer' => $buyer->getAttributes(),
-		]);
+		$shopOrder = new \ShopOrder;
+		$shopOrder->shopItemRevision()->associate($shopItem->activeRevision);
+		$shopOrder->userTrackingSession()->associate($buyer->fetchLastTrackingSession());
+		$shopOrder->save();
+
+		return $shopOrder;
 	}
 
 	protected function ensureShopItemIsInABuyableState(\ShopItem $shopItem)
