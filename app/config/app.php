@@ -115,7 +115,7 @@ return array(
 		'Krucas\Notification\NotificationServiceProvider',
 		'Aws\Laravel\AwsServiceProvider',
 		'Baum\BaumServiceProvider',
-		'Clockwork\Support\Laravel\ClockworkServiceProvider',
+//		'Clockwork\Support\Laravel\ClockworkServiceProvider',
 
 		// app
 		'EDM\Resource\Storage\StorageServiceProvider',
