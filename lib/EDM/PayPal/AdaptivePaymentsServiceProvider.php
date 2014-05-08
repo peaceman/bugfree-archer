@@ -11,7 +11,7 @@ class AdaptivePaymentsServiceProvider extends ServiceProvider
 		$this->app->bind(
 			AdaptivePaymentsService::class,
 			function ($app) {
-				$config = $app->config->get('paypal');
+				$config = $app->config->get('paypal.service');
 				return new AdaptivePaymentsService($config);
 			}
 		);

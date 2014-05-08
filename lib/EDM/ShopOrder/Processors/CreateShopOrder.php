@@ -5,7 +5,7 @@ use EDM\AbstractBaseProcessor;
 use EDM\Common\Injections\LogWriterInjection;
 use EDM\ShopOrder\Exception as PE; // PE -> ProcessorException
 
-class CreateOrder extends AbstractBaseProcessor
+class CreateShopOrder extends AbstractBaseProcessor
 {
 	use LogWriterInjection;
 
