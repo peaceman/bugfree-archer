@@ -142,10 +142,24 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 
 	public function getArchiveFileAttribute()
 	{
-		$archiveFile = $this->shopItemRevision->resourceFiles()
-			->wherePivot('file_type', '=', 'archive')
-			->first();
+		$archiveFile = $this->getResourceFileWithType('archive');
 
 		return $archiveFile ?: null;
+	}
+
+	public function getListingPictureFileAttribute()
+	{
+		$pictureFile = $this->getResourceFileWithType('listing-picture');
+
+		return $pictureFile ?: null;
+	}
+
+	protected function getResourceFileWithType($fileType)
+	{
+		$file = $this->shopItemRevision->resourceFiles()
+			->wherePivot('file_type', '=', $fileType)
+			->first();
+
+		return $file;
 	}
 }

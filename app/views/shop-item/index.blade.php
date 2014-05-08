@@ -14,7 +14,7 @@
 			@foreach($shopItems as $shopItem)
 			<li class="media">
 				<a class="pull-left" href="{{{ route('shop-items.show', [$shopItem->activeRevision->slug]) }}}">
-					<img class="media-object" src="" alt="" style="height: 78px; width: 130px;"/>
+					<img class="media-object" src="{{{ $shopItem->activeRevision->productRevision->getListingPictureFileAttribute()->getUrl() }}}" alt="" style="width: 130px;"/>
 				</a>
 				<div class="media-body">
 					<div class="row">
