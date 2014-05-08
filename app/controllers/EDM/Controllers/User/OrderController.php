@@ -28,6 +28,7 @@ class OrderController extends UserBaseController
 			\Notification::error(trans('user.orders.notifications.download_url_generation_failed'));
 			\Log::info('failed to generate the order download url, because of an invalid payment state', [
 				'shop_order' => $e->shopOrder->getAttributes(),
+				'username' => $username,
 			]);
 			return $this->redirector->back();
 		} catch (\EDM\ShopOrder\Exception\UserIsNotBuyer $e) {
