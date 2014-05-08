@@ -18,11 +18,7 @@ class ShopItemController extends BaseController
 
 	public function getShow($itemSlug)
 	{
-		$shopItem = ShopItem::withState(ShopItem::STATE_ACTIVE)
-			->whereHas('activeRevision', function ($query) use ($itemSlug) {
-				$query->where('slug', '=', $itemSlug);
-			})
-			->firstOrFail();
+		$shopItem = ShopItem::fetchActiveShopItemWithSlug($itemSlug);
 
 		return $this->response->view('shop-item.show', [
 			'shopItem' => $shopItem,

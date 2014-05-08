@@ -149,4 +149,15 @@ class ShopItem extends Eloquent
 	{
 		return $query->where('state', '=', $state);
 	}
+
+	public static function fetchActiveShopItemWithSlug($slug)
+	{
+		$shopItem = ShopItem::withState(ShopItem::STATE_ACTIVE)
+			->whereHas('activeRevision', function ($query) use ($slug) {
+				$query->where('slug', '=', $slug);
+			})
+			->firstOrFail();
+
+		return $shopItem;
+	}
 }
