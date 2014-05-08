@@ -2,7 +2,7 @@
 namespace EDM\Controllers\User;
 
 use BaseController;
-use App;
+use EDM\Common\Injections\AppContainerInjection;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Response;
@@ -11,6 +11,8 @@ use User;
 
 class UserBaseController extends BaseController
 {
+	use AppContainerInjection;
+
 	/**
 	 * @var \User
 	 */
@@ -26,13 +28,13 @@ class UserBaseController extends BaseController
 	{
 		$routeParameters = $route->parametersWithoutNulls();
 		if (!isset($routeParameters['username'])) {
-			App::abort(404);
+			$this->app->abort(404);
 		}
 
 		$username = $routeParameters['username'];
 		$user = User::where('username', '=', $username)->firstOrFail();
 		$this->user = $user;
 
-		App::make('view')->share('user', $user);
+		$this->app->make('view')->share('user', $user);
 	}
 }
