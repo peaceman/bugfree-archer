@@ -33,7 +33,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<a class="btn btn-primary btn-block" href="">{{{ trans('shop.buy_now') }}}</a>
+						<a class="btn btn-primary btn-block" href="{{{ route('users.orders.create', [$user->username, 'shop_item_slug' => $shopItemRevision->slug]) }}}">{{{ trans('shop.buy_now') }}}</a>
 					</div>
 				</div>
 			</div>

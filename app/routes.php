@@ -85,7 +85,7 @@ Route::group(
 			'uses' => 'OrderController@postDownload',
 		]);
 		Route::resource('orders', 'OrderController', [
-			'only' => ['index', 'store', 'show'],
+			'only' => ['index', 'store', 'show', 'create'],
 			'names' => [
 				'index' => 'users.orders.index',
 				'create' => 'users.orders.create',
