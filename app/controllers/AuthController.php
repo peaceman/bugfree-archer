@@ -1,14 +1,16 @@
 <?php
 class AuthController extends BaseController
 {
+	use \EDM\Common\Injections\AuthManagerInjection;
+
 	public function showLogInForm()
 	{
-		return View::make('common.login-signup-form');
+		return $this->views->make('common.login-signup-form');
 	}
 
 	public function performLogin()
 	{
-		$credentials = Input::get('login');
+		$credentials = $this->request->get('login');
 
 		$remember = false;
 		if (array_key_exists('remember', $credentials)) {
@@ -16,21 +18,21 @@ class AuthController extends BaseController
 			unset($credentials['remember']);
 		}
 
-		if (Auth::attempt($credentials, $remember) && Auth::user()->isAllowedToLogin()) {
+		if ($this->auth->attempt($credentials, $remember) && $this->auth->user()->isAllowedToLogin()) {
 			Notification::success(trans('flash.auth.login_successful'));
 
-			return Redirect::intended(URL::route('frontpage'));
+			return $this->redirector->intended(route('frontpage'));
 		} else {
-			Auth::logout();
-			return Redirect::route('auth.log-in')
+			$this->auth->logout();
+			return $this->redirector->route('auth.log-in')
 				->withErrors(['login' => trans('flash.auth.invalid_credentials')]);
 		}
 	}
 
 	public function performLogOut()
 	{
-		Auth::logout();
+		$this->auth->logout();
 		Notification::info(trans('flash.auth.logout_successful'));
-		return Redirect::route('frontpage');
+		return $this->redirector->route('frontpage');
 	}
 }
