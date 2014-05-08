@@ -18,8 +18,7 @@ class ShopItemController extends BaseController
 
 	public function getShow($itemSlug)
 	{
-		$shopItem = ShopItem::query()
-			->where('state', '=', ShopItem::STATE_ACTIVE)
+		$shopItem = ShopItem::withState(ShopItem::STATE_ACTIVE)
 			->whereHas('activeRevision', function ($query) use ($itemSlug) {
 				$query->where('slug', '=', $itemSlug);
 			})

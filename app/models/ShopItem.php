@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property ShopItemRevision $activeRevision
  * @property ShopItemComment[] $comments
  * @property ShopItemRating[] $ratings
+ *
+ * @method static Illuminate\Database\Eloquent\Builder withState(string $state)
  */
 class ShopItem extends Eloquent
 {
@@ -141,5 +143,10 @@ class ShopItem extends Eloquent
 	public function getRoundedAverageRatingAttribute()
 	{
 		return round($this->getAverageRatingAttribute());
+	}
+
+	public function scopeWithState(Illuminate\Database\Eloquent\Builder $query, $state)
+	{
+		return $query->where('state', '=', $state);
 	}
 }
