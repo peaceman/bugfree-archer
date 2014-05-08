@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b6a9f946efe6a44b9b35c998ec35a759",
+    "hash": "30b75fc607c4259e1b8d5fc84550bfb9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "649950c8d35cfd08fc8616cb3562df8a3ab7a5ea"
+                "reference": "629c5ba5b419d2730c0823d5c95ae03066b6817f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/649950c8d35cfd08fc8616cb3562df8a3ab7a5ea",
-                "reference": "649950c8d35cfd08fc8616cb3562df8a3ab7a5ea",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/629c5ba5b419d2730c0823d5c95ae03066b6817f",
+                "reference": "629c5ba5b419d2730c0823d5c95ae03066b6817f",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2014-05-01 22:02:23"
+            "time": "2014-05-06 19:14:32"
         },
         {
             "name": "aws/aws-sdk-php-laravel",
@@ -413,12 +413,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2"
+                "reference": "97475b2761f22cd9817c135283ad1079543a4586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/b99c5c46c87126201899afe88ec490a25eedd6a2",
-                "reference": "b99c5c46c87126201899afe88ec490a25eedd6a2",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/97475b2761f22cd9817c135283ad1079543a4586",
+                "reference": "97475b2761f22cd9817c135283ad1079543a4586",
                 "shasum": ""
             },
             "require": {
@@ -441,7 +441,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -473,7 +473,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2014-02-03 23:07:43"
+            "time": "2014-05-07 01:20:20"
         },
         {
             "name": "doctrine/common",
@@ -556,12 +556,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "5c54cfdab2908e0a5bcb57f530c1d1060d6cf429"
+                "reference": "321e496350c55b326940ffde86f4c9efb87f8736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/5c54cfdab2908e0a5bcb57f530c1d1060d6cf429",
-                "reference": "5c54cfdab2908e0a5bcb57f530c1d1060d6cf429",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/321e496350c55b326940ffde86f4c9efb87f8736",
+                "reference": "321e496350c55b326940ffde86f4c9efb87f8736",
                 "shasum": ""
             },
             "require": {
@@ -569,7 +569,7 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
+                "phpunit/phpunit": "4.0.*",
                 "symfony/console": "2.*"
             },
             "suggest": {
@@ -619,7 +619,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-05-01 02:21:58"
+            "time": "2014-05-05 19:57:41"
         },
         {
             "name": "doctrine/inflector",
@@ -899,16 +899,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.9.0",
+            "version": "v3.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "e4d12d7d6acccf75a5e504114e2df9195e494108"
+                "reference": "92d9934f2fca1da15178c91239576ae26e505e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/e4d12d7d6acccf75a5e504114e2df9195e494108",
-                "reference": "e4d12d7d6acccf75a5e504114e2df9195e494108",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/92d9934f2fca1da15178c91239576ae26e505e60",
+                "reference": "92d9934f2fca1da15178c91239576ae26e505e60",
                 "shasum": ""
             },
             "require": {
@@ -987,7 +987,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-04-23 21:43:40"
+            "time": "2014-05-07 17:04:22"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1082,12 +1082,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "dde53a39385435649ab42626d21cde9a4c1e85fd"
+                "reference": "ff2f1fdc2ce49b83645ef045691c2514b9b6d5ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/dde53a39385435649ab42626d21cde9a4c1e85fd",
-                "reference": "dde53a39385435649ab42626d21cde9a4c1e85fd",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ff2f1fdc2ce49b83645ef045691c2514b9b6d5ed",
+                "reference": "ff2f1fdc2ce49b83645ef045691c2514b9b6d5ed",
                 "shasum": ""
             },
             "require": {
@@ -1114,7 +1114,7 @@
                 "symfony/http-kernel": "2.4.*",
                 "symfony/process": "2.4.*",
                 "symfony/routing": "2.4.*",
-                "symfony/security": "2.4.*",
+                "symfony/security-core": "2.4.*",
                 "symfony/translation": "2.4.*"
             },
             "replace": {
@@ -1182,7 +1182,7 @@
                     "name": "Taylor Otwell",
                     "email": "taylorotwell@gmail.com",
                     "homepage": "https://github.com/taylorotwell",
-                    "role": "Developer"
+                    "role": "Creator of Laravel"
                 }
             ],
             "description": "The Laravel Framework.",
@@ -1190,7 +1190,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2014-04-29 23:26:59"
+            "time": "2014-05-04 15:13:30"
         },
         {
             "name": "monolog/monolog",
@@ -1353,16 +1353,16 @@
         },
         {
             "name": "patchwork/utf8",
-            "version": "v1.1.21",
+            "version": "v1.1.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nicolas-grekas/Patchwork-UTF8.git",
-                "reference": "f45ba8bc7962b7356847724989a6949b68d975a2"
+                "reference": "156e66249f48e439a31df2347290bb9ab1d3d242"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/f45ba8bc7962b7356847724989a6949b68d975a2",
-                "reference": "f45ba8bc7962b7356847724989a6949b68d975a2",
+                "url": "https://api.github.com/repos/nicolas-grekas/Patchwork-UTF8/zipball/156e66249f48e439a31df2347290bb9ab1d3d242",
+                "reference": "156e66249f48e439a31df2347290bb9ab1d3d242",
                 "shasum": ""
             },
             "require": {
@@ -1400,7 +1400,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2014-03-26 10:52:02"
+            "time": "2014-05-06 15:47:10"
         },
         {
             "name": "paypal/adaptivepayments-sdk-php",
@@ -1496,12 +1496,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "431e3a04c73c72b516b6b11bd23d93c36115f01d"
+                "reference": "3a309d36edd85451cf51b63adcbc6899c5211ae2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/431e3a04c73c72b516b6b11bd23d93c36115f01d",
-                "reference": "431e3a04c73c72b516b6b11bd23d93c36115f01d",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/3a309d36edd85451cf51b63adcbc6899c5211ae2",
+                "reference": "3a309d36edd85451cf51b63adcbc6899c5211ae2",
                 "shasum": ""
             },
             "require": {
@@ -1585,7 +1585,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2014-04-29 14:32:49"
+            "time": "2014-05-05 22:49:44"
         },
         {
             "name": "predis/predis",
@@ -1855,19 +1855,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "bcb025ef81285d0a2ee8c65352c4e5a3359185ca"
+                "reference": "8443b5ca82b360a62c0c8ba04598e476076bbe2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/bcb025ef81285d0a2ee8c65352c4e5a3359185ca",
-                "reference": "bcb025ef81285d0a2ee8c65352c4e5a3359185ca",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8443b5ca82b360a62c0c8ba04598e476076bbe2d",
+                "reference": "8443b5ca82b360a62c0c8ba04598e476076bbe2d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9@dev"
+                "mockery/mockery": "~0.9.1"
             },
             "type": "library",
             "extra": {
@@ -1901,7 +1901,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-05-01 06:41:55"
+            "time": "2014-05-05 09:37:46"
         },
         {
             "name": "symfony/browser-kit",
@@ -2589,12 +2589,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Security.git",
-                "reference": "1f2b6d8dfea39071748becf040c8d8a23288e725"
+                "reference": "cfe0fa933ce71c14fa0675af131a3797e4a88045"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Security/zipball/1f2b6d8dfea39071748becf040c8d8a23288e725",
-                "reference": "1f2b6d8dfea39071748becf040c8d8a23288e725",
+                "url": "https://api.github.com/repos/symfony/Security/zipball/cfe0fa933ce71c14fa0675af131a3797e4a88045",
+                "reference": "cfe0fa933ce71c14fa0675af131a3797e4a88045",
                 "shasum": ""
             },
             "require": {
@@ -2656,7 +2656,7 @@
             ],
             "description": "Symfony Security Component",
             "homepage": "http://symfony.com",
-            "time": "2014-04-25 07:06:20"
+            "time": "2014-05-02 13:46:37"
         },
         {
             "name": "symfony/translation",
@@ -2769,7 +2769,51 @@
         }
     ],
     "packages-dev": [
-
+        {
+            "name": "itsgoingd/clockwork",
+            "version": "v1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itsgoingd/clockwork.git",
+                "reference": "c49de25cdb43c58579d6d1c9c9abbf083300dcaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itsgoingd/clockwork/zipball/c49de25cdb43c58579d6d1c9c9abbf083300dcaa",
+                "reference": "c49de25cdb43c58579d6d1c9c9abbf083300dcaa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9",
+                "psr/log": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Clockwork": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "itsgoingd",
+                    "email": "itsgoingd@luzer.sk",
+                    "homepage": "http://twitter.com/itsgoingd"
+                }
+            ],
+            "description": "Server-side component of Clockwork, a Chrome extension for PHP development",
+            "homepage": "http://github.com/itsgoingd/clockwork",
+            "keywords": [
+                "debugging",
+                "laravel",
+                "logging",
+                "profiling"
+            ],
+            "time": "2014-02-13 23:08:01"
+        }
     ],
     "aliases": [
 

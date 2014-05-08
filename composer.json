@@ -16,6 +16,9 @@
         "flowjs/flow-php-server": "dev-master",
         "paypal/adaptivepayments-sdk-php": "v3.6.106"
     },
+    "require-dev": {
+        "itsgoingd/clockwork": "1.*"
+    },
     "autoload": {
         "classmap": [
             "app/commands",

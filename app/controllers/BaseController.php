@@ -1,9 +1,9 @@
 <?php
-use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
-use Illuminate\View\Environment as ViewFactory;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Response;
+use Illuminate\View\Environment as ViewFactory;
 
 class BaseController extends Controller
 {
@@ -39,6 +39,14 @@ class BaseController extends Controller
 		$this->redirector = $redirector;
 		$this->request = $request;
 		$this->views = $view;
+
+		$this->beforeFilter(function () {
+			Event::fire('clockwork.controller.start');
+		});
+
+		$this->afterFilter(function () {
+			Event::fire('clockwork.controller.end');
+		});
 	}
 
 	/**
