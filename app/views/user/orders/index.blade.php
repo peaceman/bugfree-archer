@@ -26,7 +26,7 @@
 		<td>{{{ $order->created_at }}}</td>
 		<td>
 			@if ($order->isProductDownloadable())
-			{{ Form::post(route('user.orders.download', [$user->username, $order->id]), trans('common.table.actions.download'), [], ['class' => 'btn btn-default btn-xs']) }}
+			{{ Form::post(route('users.orders.download', [$user->username, $order->id]), trans('common.table.actions.download'), [], ['class' => 'btn btn-default btn-xs']) }}
 			@endif
 		</td>
 	</tr>
