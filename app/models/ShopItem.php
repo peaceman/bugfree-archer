@@ -150,6 +150,10 @@ class ShopItem extends Eloquent
 		return $query->where('state', '=', $state);
 	}
 
+	/**
+	 * @param string $slug
+	 * @return ShopItem
+	 */
 	public static function fetchActiveShopItemWithSlug($slug)
 	{
 		$shopItem = ShopItem::withState(ShopItem::STATE_ACTIVE)
