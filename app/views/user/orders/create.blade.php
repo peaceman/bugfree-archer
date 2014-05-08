@@ -29,9 +29,14 @@
 			</div>
 
 			<div class="panel-footer">
-				<button type="button" class="btn btn-primary btn-lg btn-block">
-					<strong>{{{ trans('user.orders.buy_now') }}}</strong> {{{ trans('user.orders.with_paypal') }}} - <span class="price">{{{ $shopItemRevision->price }}} &euro;</span>
+				{{ Form::open(['route' => ['users.orders.create', $user->username], 'method' => 'post']) }}
+				<input name="shop_item_revision_id" value="{{{ $shopItemRevision->id }}}" type="hidden"/>
+				<button type="submit" class="btn btn-primary btn-lg btn-block">
+					<strong>{{{ trans('user.orders.buy_now') }}}</strong>
+					{{{ trans('user.orders.with_paypal') }}} -
+					<span class="price">{{{ $shopItemRevision->price }}} &euro;</span>
 				</button>
+				{{ Form::close() }}
 			</div>
 		</div>
 
