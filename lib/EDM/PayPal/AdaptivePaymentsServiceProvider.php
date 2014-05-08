@@ -15,5 +15,15 @@ class AdaptivePaymentsServiceProvider extends ServiceProvider
 				return new AdaptivePaymentsService($config);
 			}
 		);
+
+		$this->app->bind(
+			\EDM\PayPal\Processors\StartPayment::class,
+			function ($app) {
+				$paymentsService = $app->make(AdaptivePaymentsService::class);
+				$config = $app->config->get('paypal.app');
+
+				return new \EDM\PayPal\Processors\StartPayment($paymentsService, $config);
+			}
+		);
 	}
 }

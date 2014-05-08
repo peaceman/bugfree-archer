@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property ShopItemRevision $shopItemRevision
  * @property PaypalApiCall[] $paypalApiCalls
  * @property \User $buyer
+ * @property \User $seller
  *
  * @method static Illuminate\Database\Eloquent\Builder withPaymentState(string $state)
  */
@@ -61,6 +62,14 @@ class ShopOrder extends Eloquent
 	public function getBuyerAttribute()
 	{
 		return $this->getSubmitter();
+	}
+
+	public function getSellerAttribute()
+	{
+		$shopItem = $this->shopItemRevision->shopItem;
+		$seller = $shopItem->owner;
+
+		return $seller;
 	}
 
 	public function isProductDownloadable()

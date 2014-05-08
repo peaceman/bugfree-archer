@@ -32,6 +32,15 @@ Route::get(
 	}
 );
 
+Route::group(
+	['prefix' => 'paypal-endpoints'],
+	function () {
+		Route::get('return', ['as' => 'pp-endpoints.return', 'uses' => 'PPEndPointsController@getReturn']);
+		Route::get('cancel', ['as' => 'pp-endpoints.cancel', 'uses' => 'PPEndPointsController@getCancel']);
+		Route::any('ipn', ['as' => 'pp-endpoints.ipn', 'uses' => 'PPEndPointsController@ipn']);
+	}
+);
+
 Route::get('error', ['as' => 'full-page-error', 'uses' => 'HomeController@showFullPageError']);
 Route::get('start-selling', ['as' => 'start-selling', 'before' => 'qualifies-as-vendor', 'uses' => 'HomeController@startSelling']);
 

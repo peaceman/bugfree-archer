@@ -40,21 +40,37 @@ class OrderController extends UserBaseController
 		$shopItem = \ShopItem::fetchActiveShopItemWithRevisionId($this->request->get('shop_item_revision_id'));
 
 		try {
-			/** @var $createOrder \EDM\ShopOrder\Processors\CreateOrder */
-			$createOrder = $this->app->make(\EDM\ShopOrder\Processors\CreateOrder::class);
+			/** @var $createOrder \EDM\ShopOrder\Processors\CreateShopOrder */
+			$createOrder = $this->app->make(\EDM\ShopOrder\Processors\CreateShopOrder::class);
 
-			$userResponse = $createOrder->process([
+			$order = $createOrder->process([
 				'shop_item' => $shopItem,
 				'buyer' => $this->user,
 			]);
-
-			return $userResponse;
 		} catch (\Exception $e) {
 			$this->log->error('failed to create an order', [
 				'context' => ['exception_class' => get_class($e)],
 			]);
 
 			$this->notification->error(trans('user.orders.notification.creation_failed'));
+			return $this->redirector->back();
+		}
+
+		try {
+			/** @var $startPayment \EDM\PayPal\Processors\StartPayment */
+			$startPayment = $this->app->make(\EDM\PayPal\Processors\StartPayment::class);
+
+			$redirectUrl = $startPayment->process([
+				'shop_order' => $order,
+			]);
+
+			return $this->redirector->away($redirectUrl);
+		} catch (\Exception $e) {
+			$this->log->error('failed to start the paypal payment', [
+				'context' => ['exception_class' => get_class($e)],
+			]);
+
+			$this->notification->error(trans('user.orders.notification.payment_failed'));
 			return $this->redirector->back();
 		}
 	}
