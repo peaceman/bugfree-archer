@@ -17,6 +17,11 @@
 		</tr>
 		</thead>
 		<tbody>
+		@if(!$shopCategories->count())
+		<tr>
+			<td colspan="5" style="text-align: center">{{{ trans('common.table.no_entries') }}}</td>
+		</tr>
+		@endif
 		@foreach($shopCategories as $sC)
 		<tr>
 			<td>{{{ $sC->id }}}</td>

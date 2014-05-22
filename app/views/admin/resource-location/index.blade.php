@@ -25,6 +25,11 @@
 		</tr>
 		</thead>
 		<tbody>
+		@if(!$resourceLocations->count())
+		<tr>
+			<td colspan="10" style="text-align: center">{{{ trans('common.table.no_entries') }}}</td>
+		</tr>
+		@endif
 		@foreach($resourceLocations as $resourceLocation)
 		<tr>
 			<td>{{{ $resourceLocation->id }}}</td>

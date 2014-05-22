@@ -27,6 +27,11 @@
 		</tr>
 		</thead>
 		<tbody>
+		@if(!$resourceFiles->count())
+		<tr>
+			<td colspan="8" style="text-align: center">{{{ trans('common.table.no_entries') }}}</td>
+		</tr>
+		@endif
 		@foreach($resourceFiles as $rF)
 		<tr>
 			<td>{{{ $rF->id }}}</td>

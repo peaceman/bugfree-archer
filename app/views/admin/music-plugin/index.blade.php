@@ -20,6 +20,11 @@
 		</tr>
 		</thead>
 		<tbody>
+		@if(!$musicPlugins->count())
+		<tr>
+			<td colspan="5" style="text-align: center">{{{ trans('common.table.no_entries') }}}</td>
+		</tr>
+		@endif
 		@foreach($musicPlugins as $mG)
 		<tr>
 			<td>{{{ $mG->id }}}</td>
