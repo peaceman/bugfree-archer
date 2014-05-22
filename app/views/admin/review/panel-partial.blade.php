@@ -17,6 +17,11 @@
 		</tr>
 		</thead>
 		<tbody>
+		@if(!$reviews->count())
+		<tr>
+			<td colspan="9" style="text-align: center;">{{{ trans('common.table.no_entries') }}}</td>
+		</tr>
+		@endif
 		@foreach($reviews as $review)
 		<tr>
 			<td>{{{ $review->id }}}</td>
