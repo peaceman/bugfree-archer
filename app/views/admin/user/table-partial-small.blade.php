@@ -10,6 +10,11 @@
 	</tr>
 	</thead>
 	<tbody>
+	@if(!$users->count())
+	<tr>
+		<td colspan="6" style="text-align: center">{{{ trans('common.table.no_entries') }}}</td>
+	</tr>
+	@endif
 	@foreach($users as $user)
 	<tr>
 		<td>{{{ $user->id }}}</td>
