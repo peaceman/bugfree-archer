@@ -1,5 +1,10 @@
 @extends('layouts/master')
 
+@section('scripts.header')
+<script src="{{{ asset('/assets/mediaelement-and-player.min.js') }}}"></script>
+<link rel="stylesheet" href="{{{ asset('/assets/mediaelementplayer.css') }}}" />
+@stop
+
 @section('content')
 <div class="row">
 	<div class="col-md-12">
@@ -12,7 +17,7 @@
 	<div class="col-md-9">
 		<div class="panel panel-default">
 			<div class="panel-body" style="height: 200px;">
-				preview player
+				<audio class="mejs-player" src="{{{ $productRevision->sampleFile->getUrl() }}}" style="height: 100%; width: 100%;"></audio>
 			</div>
 		</div>
 		<p>
