@@ -59,6 +59,13 @@ class UploadController extends AuthenticatedBaseController
 
 			if ($resourceFile->save()) {
 				$this->storageDirector->initialStorageTransport($resourceFile, $infoFile->getRealPath(), true);
+
+				if (str_contains($resourceFile->mime_type, 'image')) {
+					$resourceImage = new \ResourceImage();
+					$resourceImage->originResourceFile()->associate($resourceFile);
+					$resourceImage->save();
+				}
+
 				unlink($infoFile->getRealPath());
 				return $this->response->json($resourceFile->toArray());
 			} else {

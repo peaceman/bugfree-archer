@@ -36,17 +36,30 @@ abstract class AbstractBaseProcessor implements ProcessorInterface
 	{
 		$resourceFileTypes = $productRevision->getResourceFileTypes();
 
-		$syncData = [];
+		$syncData = [
+			'generic' => [],
+			'images' => [],
+		];
+
 		foreach ($resourceFiles as $resourceFileInfo) {
 			$fileType = $resourceFileInfo['use_as'];
 			if (!in_array($fileType, $resourceFileTypes)) {
 				continue;
 			}
 
+			/** @var \ResourceFile $resourceFile */
 			$resourceFile = \ResourceFile::findOrFail($resourceFileInfo['id']);
-			$syncData[$resourceFile->id] = ['file_type' => $fileType];
+			$resourceImage = \ResourceImage::where('origin_resource_file_id', '=', $resourceFile->id)
+				->first();
+
+			if ($resourceImage) {
+				$syncData['images'][$resourceImage->id] = ['image_type' => $fileType];
+			} else {
+				$syncData['generic'][$resourceFile->id] = ['file_type' => $fileType];
+			}
 		}
 
-		$shopItemRevision->resourceFiles()->sync($syncData);
+		$shopItemRevision->resourceFiles()->sync($syncData['generic']);
+		$shopItemRevision->resourceImages()->sync($syncData['images']);
 	}
 }
