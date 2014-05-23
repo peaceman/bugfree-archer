@@ -11,6 +11,7 @@ interface ProductRevisionInterface
 	public function getFiles();
 	public function getMetaData();
 
+	public function generateStepData();
 	public function getArchiveFileAttribute();
 	public function getListingPictureFileAttribute();
 }
