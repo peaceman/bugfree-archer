@@ -31,11 +31,13 @@
 						<div class="price">{{{ $shopItem->activeRevision->price }}} &euro;</div>
 					</div>
 				</div>
+				@if(isset($user) && !$shopItem->isSeller($user))
 				<div class="row">
 					<div class="col-md-12">
 						<a class="btn btn-primary btn-block" href="{{{ $buyNowLink }}}">{{{ trans('shop.buy_now') }}}</a>
 					</div>
 				</div>
+				@endif
 			</div>
 		</div>
 
