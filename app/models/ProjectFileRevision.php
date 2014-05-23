@@ -137,25 +137,39 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 
 	protected function getFilesForStepData()
 	{
-		$files = $this->shopItemRevision->resourceFiles()
+		$genericFiles = $this->shopItemRevision->resourceFiles()
 			->get()
 			->map(function ($resourceFile) {
 				/** @var \ResourceFile $resourceFile */
 				return array_merge($resourceFile->toArray(), ['use_as' => $resourceFile->pivot->file_type]);
 			});
 
-		return $files->toArray();
+		$imageFiles = $this->shopItemRevision->resourceImages()
+			->get()
+			->map(function ($resourceImage) {
+				/** @var \ResourceImage $resourceImage */
+				return array_merge($resourceImage->originResourceFile->toArray(), ['use_as' => $resourceImage->pivot->image_type]);
+			});
+
+		return array_merge($genericFiles->toArray(), $imageFiles->toArray());
 	}
 
 	public function getFiles()
 	{
-		$files = $this->shopItemRevision->resourceFiles()
+		$genericFiles = $this->shopItemRevision->resourceFiles()
 			->get()
 			->map(function ($resourceFile) {
 				return ['use_as' => $resourceFile->pivot->file_type, 'file' => $resourceFile];
 			});
 
-		return $files;
+		$imageFiles = $this->shopItemRevision->resourceImages()
+			->get()
+			->map(function ($resourceImage) {
+				/** @var \ResourceImage $resourceImage */
+				return ['use_as' => $resourceImage->pivot->image_type, 'file' => $resourceImage->originResourceFile];
+			});
+
+		return array_merge($genericFiles->toArray(), $imageFiles->toArray());
 	}
 
 	public function getSampleFileAttribute()
