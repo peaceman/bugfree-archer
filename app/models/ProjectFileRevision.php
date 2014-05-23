@@ -45,9 +45,9 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 		return [
 			'bpm' => $this->bpm,
 			'music_genre' => $this->musicGenre->name,
-			'music_programs' => implode(', ', $this->getNamesOfCompatibleMusicPrograms()),
-			'music_plugins' => implode(', ', $this->getNamesOfCompatibleMusicPlugins()),
-			'music_plugin_banks' => implode(', ', $this->getNamesOfCompatibleMusicPluginBanks()),
+			'music_programs' => implode(', ', $this->getNamesOfAcceptedCompatibleMusicPrograms()),
+			'music_plugins' => implode(', ', $this->getNamesOfAcceptedCompatibleMusicPlugins()),
+			'music_plugin_banks' => implode(', ', $this->getNamesOfAcceptedCompatibleMusicPluginBanks()),
 		];
 	}
 
@@ -93,17 +93,41 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 
 	public function getNamesOfCompatibleMusicPrograms()
 	{
-		return $this->compatiblePrograms()->lists('name');
+		return $this->compatiblePrograms()
+			->lists('name');
 	}
 
 	public function getNamesOfCompatibleMusicPlugins()
 	{
-		return $this->compatiblePlugins()->lists('name');
+		return $this->compatiblePlugins()
+			->lists('name');
 	}
 
 	public function getNamesOfCompatibleMusicPluginBanks()
 	{
-		return $this->compatibleBanks()->lists('name');
+		return $this->compatibleBanks()
+			->lists('name');
+	}
+
+	public function getNamesOfAcceptedCompatibleMusicPrograms()
+	{
+		return $this->compatiblePrograms()
+			->accepted()
+			->lists('name');
+	}
+
+	public function getNamesOfAcceptedCompatibleMusicPlugins()
+	{
+		return $this->compatiblePlugins()
+			->accepted()
+			->lists('name');
+	}
+
+	public function getNamesOfAcceptedCompatibleMusicPluginBanks()
+	{
+		return $this->compatibleBanks()
+			->accepted()
+			->lists('name');
 	}
 
 	public function getResourceFileTypes()

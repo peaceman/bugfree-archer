@@ -14,13 +14,13 @@
 			<dd>{{{ $productRevision->bpm }}}</dd>
 
 			<dt>Music programs</dt>
-			<dd>{{{ implode(', ', $productRevision->getNamesOfCompatibleMusicPrograms()) }}}</dd>
+			<dd>{{{ implode(', ', $productRevision->getNamesOfAcceptedCompatibleMusicPrograms()) }}}</dd>
 
 			<dt>Music plugins</dt>
-			<dd>{{{ implode(', ', $productRevision->getNamesOfCompatibleMusicPlugins()) }}}</dd>
+			<dd>{{{ implode(', ', $productRevision->getNamesOfAcceptedCompatibleMusicPlugins()) }}}</dd>
 
 			<dt>Music plugin banks</dt>
-			<dd>{{{ implode(', ', $productRevision->getNamesOfCompatibleMusicPluginBanks()) }}}</dd>
+			<dd>{{{ implode(', ', $productRevision->getNamesOfAcceptedCompatibleMusicPluginBanks()) }}}</dd>
 		</dl>
 	</div>
 </div>
