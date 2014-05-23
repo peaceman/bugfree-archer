@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property ShopCategory $shopCategory
  * @property ProductRevisionInterface $productRevision
  * @property ShopOrder[] $shopOrders
+ * @property ResourceImage[] $resourceImages
  * @property ResourceFile[] $resourceFiles
  */
 class ShopItemRevision extends Eloquent
@@ -90,6 +91,13 @@ class ShopItemRevision extends Eloquent
 	public function shopOrders()
 	{
 		return $this->hasMany('ShopOrder');
+	}
+
+	public function resourceImages()
+	{
+		return $this->belongsToMany('ResourceImages', 'shop_item_revision_images')
+			->withPivot('image_type')
+			->withTimestamps();
 	}
 
 	public function resourceFiles()
