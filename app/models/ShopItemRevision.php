@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property ShopCategory $shopCategory
  * @property ProductRevisionInterface $productRevision
  * @property ShopOrder[] $shopOrders
+ * @property ResourceFile[] $resourceFiles
  */
 class ShopItemRevision extends Eloquent
 {
