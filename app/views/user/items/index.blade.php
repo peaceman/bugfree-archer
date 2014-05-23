@@ -8,7 +8,7 @@
 		<th>{{{ trans('common.table.headers.state') }}}</th>
 		<th>{{{ trans('common.table.headers.review_state') }}}</th>
 		<th>{{{ trans('common.table.headers.category') }}}</th>
-		<th>{{{ trans('common.table.headers.price') }}}</th>
+		<th style="text-align: right">{{{ trans('common.table.headers.price') }}}</th>
 		<th>{{{ trans('common.table.headers.actions') }}}</th>
 	</tr>
 	</thead>
@@ -19,7 +19,7 @@
 		<td>{{{ $shopItem->latestRevision()->title }}}</td>
 		<td>{{{ $shopItem->state }}}</td>
 		<td>{{{ trans('admin.review.states.' . $shopItem->latestRevision()->review->state) }}}</td>
-		<td>{{{ $shopItem->latestRevision()->shopCategory->name }}}</td>
+		<td>{{{ trans($shopItem->latestRevision()->shopCategory->name) }}}</td>
 		<td style="text-align: right;">{{{ $shopItem->latestRevision()->price }}} EUR</td>
 		<td>
 			<a class="btn btn-primary btn-xs table-action-button"
