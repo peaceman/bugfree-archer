@@ -30,12 +30,16 @@ class CreateAvatar implements ProcessorInterface
 
 		$this->ensureFileValidity($avatarFile);
 
-		$resourceFile = \ResourceFile::create([
+		/** @var \ResourceFile $resourceFile */
+		$resourceFile = new \ResourceFile([
 			'protected' => false,
 			'original_name' => $avatarFile->getClientOriginalName(),
 			'mime_type' => $avatarFile->getMimeType(),
 			'size' => $avatarFile->getSize(),
 		]);
+
+		$resourceFile->userTrackingSession()->associate($this->user->fetchLastTrackingSession());
+		$resourceFile->save();
 
 		$this->storageDirector->initialStorageTransport($resourceFile, $avatarFile->getRealPath());
 
