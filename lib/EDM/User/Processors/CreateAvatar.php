@@ -1,6 +1,7 @@
 <?php
 namespace EDM\User\Processors;
 
+use EDM\Common\Injections\AppContainerInjection;
 use EDM\ProcessorInterface;
 use EDM\Resource\Storage\StorageDirector;
 use EDM\User\UserInjection;
@@ -11,6 +12,7 @@ use User;
 class CreateAvatar implements ProcessorInterface
 {
 	use UserInjection;
+	use AppContainerInjection;
 
 	/**
 	 * @var \EDM\Resource\Storage\StorageDirector
@@ -57,8 +59,8 @@ class CreateAvatar implements ProcessorInterface
 
 	protected function deleteOldAvatar()
 	{
-		$userProfile = $this->user->profile;
-		$this->storageDirector->queueWipingOfResourceFile($userProfile->avatar);
+		$deleteProcess = $this->app->make(DeleteAvatar::class);
+		$deleteProcess->process();
 	}
 
 	protected function ensureFileValidity(UploadedFile $file)
