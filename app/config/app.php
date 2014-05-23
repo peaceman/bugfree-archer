@@ -115,6 +115,7 @@ return array(
 		'Krucas\Notification\NotificationServiceProvider',
 		'Aws\Laravel\AwsServiceProvider',
 		'Baum\BaumServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
 //		'Clockwork\Support\Laravel\ClockworkServiceProvider',
 
 		// app
@@ -195,6 +196,7 @@ return array(
 		// third party
 		'Countries' => 'Webpatser\Countries\CountriesFacade',
 		'Notification' => 'Krucas\Notification\Facades\Notification',
+		'Image' => 'Intervention\Image\Facades\Image',
 	),
 
 );
