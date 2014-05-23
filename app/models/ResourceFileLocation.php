@@ -45,6 +45,18 @@ class ResourceFileLocation extends Eloquent
 		$this->save();
 	}
 
+	public function getFileName()
+	{
+		$fileName = $this->identifier;
+		$extension = $this->resourceFile->getFileExtension();
+
+		if (!empty($extension)) {
+			$fileName .= ".$extension";
+		}
+
+		return $fileName;
+	}
+
 	public function getUrl()
 	{
 		$storage = $this->resourceLocation->getStorage();

@@ -37,7 +37,7 @@ class AWSStorage implements StorageInterface
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADING);
 			$s3->upload(
 				$this->config['bucket'],
-				$resourceFileLocation->identifier,
+				$resourceFileLocation->getFileName(),
 				fopen($filePath, 'r'),
 				$resourceFileLocation->resourceFile->protected ? CannedAcl::PRIVATE_ACCESS : CannedAcl::PUBLIC_READ,
 				[
@@ -69,7 +69,7 @@ class AWSStorage implements StorageInterface
 			$s3->deleteObject(
 				[
 					'Bucket' => $this->config['bucket'],
-					'Key' => $resourceFileLocation->identifier,
+					'Key' => $resourceFileLocation->getFileName(),
 				]
 			);
 			$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_DELETED);
@@ -92,7 +92,7 @@ class AWSStorage implements StorageInterface
 		try {
 			return $s3->getObjectUrl(
 				$this->config['bucket'],
-				$resourceFileLocation->identifier,
+				$resourceFileLocation->getFileName(),
 				'+' . Config::get('storage.protected_url_lifetime_in_minutes') . ' minutes'
 			);
 		} catch (\Exception $e) {
@@ -110,7 +110,7 @@ class AWSStorage implements StorageInterface
 		$s3 = $this->aws->get('s3');
 
 		try {
-			return $s3->getObjectUrl($this->config['bucket'], $resourceFileLocation->identifier);
+			return $s3->getObjectUrl($this->config['bucket'], $resourceFileLocation->getFileName());
 		} catch (\Exception $e) {
 			Log::error(
 				'getObjectUrl on amazon s3 failed',

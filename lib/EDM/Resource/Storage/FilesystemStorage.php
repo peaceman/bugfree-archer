@@ -54,7 +54,7 @@ class FilesystemStorage implements StorageInterface
 		$this->checkResourceFileLocation($resourceFileLocation);
 		$this->checkFile($filePath);
 
-		$targetFilePath = $this->generateFilePath($resourceFileLocation->identifier);
+		$targetFilePath = $this->generateFilePath($resourceFileLocation->getFileName());
 		$originFileChecksum = md5_file($filePath);
 
 		$resourceFileLocation->saveWithState(\ResourceFileLocation::STATE_UPLOADING);
@@ -103,15 +103,15 @@ class FilesystemStorage implements StorageInterface
 		}
 	}
 
-	public function generateFilePath($identifier)
+	public function generateFilePath($fileName)
 	{
-		return sprintf('%s/%s', $this->storagePath, $identifier);
+		return sprintf('%s/%s', $this->storagePath, $fileName);
 	}
 
 	public function delete(\ResourceFileLocation $resourceFileLocation)
 	{
 		$this->checkResourceFileLocation($resourceFileLocation);
-		$filePath = $this->generateFilePath($resourceFileLocation->identifier);
+		$filePath = $this->generateFilePath($resourceFileLocation->getFileName());
 		$this->checkFile($filePath);
 
 		unlink($filePath);
@@ -120,7 +120,7 @@ class FilesystemStorage implements StorageInterface
 
 	public function getUrl(\ResourceFileLocation $resourceFileLocation)
 	{
-		return asset($this->urlPrefix . '/' . $resourceFileLocation->identifier);
+		return asset($this->urlPrefix . '/' . $resourceFileLocation->getFileName());
 	}
 
 	public function getProtectedUrl(\ResourceFileLocation $resourceFileLocation)

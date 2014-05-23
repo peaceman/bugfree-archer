@@ -65,6 +65,12 @@ class ResourceFile extends Eloquent
 		return $resourceFileLocation->getUrl();
 	}
 
+	public function getFileExtension()
+	{
+		$fileInfo = new \SplFileInfo($this->original_name);
+		return $fileInfo->getExtension();
+	}
+
 	/**
 	 * @return ResourceFileLocation|null
 	 */
@@ -109,7 +115,7 @@ class ResourceFile extends Eloquent
 
 		/** @var FilesystemStorage $localStorage */
 		$localStorage = $localResourceFileLocation->resourceLocation->getStorage();
-		return $localStorage->generateFilePath($localResourceFileLocation->identifier);
+		return $localStorage->generateFilePath($localResourceFileLocation->getFileName());
 	}
 
 	public function resourceFileLocations()
