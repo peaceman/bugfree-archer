@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @property ResourceFile $originResourceFile
  * @property ResourceImageFile[] $resourceImageFiles
- * @property ResourceFile[] $resourceFiles
  */
 class ResourceImage extends Eloquent
 {
@@ -29,11 +28,6 @@ class ResourceImage extends Eloquent
 	public function resourceImageFiles()
 	{
 		return $this->hasMany('ResourceImageFile');
-	}
-
-	public function resourceFiles()
-	{
-		return $this->hasManyThrough('ResourceFile', 'ResourceImageFile');
 	}
 
 	public function fetchResourceImageFileForFormat($format)
