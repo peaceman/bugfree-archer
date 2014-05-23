@@ -29,6 +29,7 @@ class ItemController extends UserBaseController
 
 	public function getEdit($username, $itemId)
 	{
+		/** @var \ShopItem $shopItem */
 		$shopItem = ShopItem::onlyFromOwner($this->user)
 			->findOrFail($itemId);
 
