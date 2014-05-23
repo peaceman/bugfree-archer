@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-3" style="padding-right: 0px;">
 				@if($seller->getProfile()->hasAvatar())
-				<img class="img-rounded" src="{{{ $seller->getProfile()->avatar->getUrl() }}}" alt="" style="width: 100%;"/>
+				<img class="img-rounded" src="{{{ $imageUrls->getUrlForFormat($seller->getProfile()->avatar, 'profile-avatar-product-details') }}}" alt="" style="width: 100%;"/>
 				@endif
 			</div>
 			<div class="col-md-9">
