@@ -190,7 +190,7 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 
 	public function getListingPictureFileAttribute()
 	{
-		$pictureFile = $this->getResourceFileWithType('listing-picture');
+		$pictureFile = $this->getResourceImageWithType('listing-picture');
 
 		return $pictureFile ?: null;
 	}
@@ -202,5 +202,14 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 			->first();
 
 		return $file;
+	}
+
+	protected function getResourceImageWithType($imageType)
+	{
+		$image = $this->shopItemRevision->resourceImages()
+			->wherePivot('image_type', '=', $imageType)
+			->first();
+
+		return $image;
 	}
 }
