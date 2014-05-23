@@ -116,6 +116,7 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 		$files = $this->shopItemRevision->resourceFiles()
 			->get()
 			->map(function ($resourceFile) {
+				/** @var \ResourceFile $resourceFile */
 				return array_merge($resourceFile->toArray(), ['use_as' => $resourceFile->pivot->file_type]);
 			});
 
