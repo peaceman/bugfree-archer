@@ -122,6 +122,7 @@ return array(
 		'EDM\Resource\Storage\StorageServiceProvider',
 		'EDM\Resource\UploadServiceProvider',
 		'EDM\Common\ProcessorsServiceProvider',
+		'EDM\Common\ViewHelperServiceProvider',
 		'EDM\PayPal\AdaptivePaymentsServiceProvider',
 	),
 

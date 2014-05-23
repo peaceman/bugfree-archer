@@ -28,7 +28,7 @@ class DeleteAvatar implements ProcessorInterface
 		}
 
 		$this->storageDirector->queueWipingOfResourceFile($userProfile->avatar);
-		$userProfile->picture_file_id = null;
+		$userProfile->avatar_resource_image_id = null;
 		$userProfile->save();
 	}
 }

@@ -43,10 +43,15 @@ class CreateAvatar implements ProcessorInterface
 
 		$this->storageDirector->initialStorageTransport($resourceFile, $avatarFile->getRealPath());
 
-		if ($userProfile->picture_file_id !== null) {
+		$resourceImage = new \ResourceImage();
+		$resourceImage->originResourceFile()->associate($resourceFile);
+		$resourceImage->save();
+
+		if ($userProfile->hasAvatar()) {
 			$this->deleteOldAvatar();
 		}
-		$userProfile->picture_file_id = $resourceFile->id;
+
+		$userProfile->avatar()->associate($resourceImage);
 		$userProfile->save();
 	}
 

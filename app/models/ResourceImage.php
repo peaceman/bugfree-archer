@@ -35,4 +35,13 @@ class ResourceImage extends Eloquent
 	{
 		return $this->hasManyThrough('ResourceFile', 'ResourceImageFile');
 	}
+
+	public function fetchResourceImageFileForFormat($format)
+	{
+		$resourceImageFile = $this->resourceImageFiles()
+			->withFormat($format)
+			->first();
+
+		return $resourceImageFile;
+	}
 }

@@ -35,7 +35,7 @@
 		</div>
 		<div class="col-md-4">
 			@if ($userAvatar)
-			<img class="img-rounded" src="{{{ $userAvatar->getUrl() }}}" style="height: 75px"/>
+			<img class="img-rounded" src="{{{ $imageUrls->getUrlForFormat($userAvatar, 'profile-avatar-preview') }}}" style="height: 75px"/>
 			<div class="checkbox">
 				<label>
 					{{ Form::checkbox('avatar-delete', true) }}

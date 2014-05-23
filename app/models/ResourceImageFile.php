@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  *
  * @property ResourceImage $resourceImage
  * @property ResourceFile $resourceFile
+ *
+ * @method static Illuminate\Database\Eloquent\Builder withFormat(string $format)
  */
 class ResourceImageFile extends Eloquent
 {
@@ -32,5 +34,10 @@ class ResourceImageFile extends Eloquent
 	public function resourceFile()
 	{
 		return $this->belongsTo('ResourceFile');
+	}
+
+	public function scopeWithFormat($query, $format)
+	{
+		return $query->where('image_format_identifier', '=', $format);
 	}
 }

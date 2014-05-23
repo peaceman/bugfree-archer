@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
  * @property int $user_id
  * @property string $website
  * @property string $about
- * @property int $picture_file_id
+ * @property int $avatar_resource_image_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
  * @property User $user
- * @property ResourceFile $avatar
+ * @property ResourceImage $avatar
  */
 class UserProfile extends Eloquent
 {
@@ -44,11 +44,11 @@ class UserProfile extends Eloquent
 
 	public function avatar()
 	{
-		return $this->belongsTo('ResourceFile', 'picture_file_id');
+		return $this->belongsTo('ResourceImage', 'avatar_resource_image_id');
 	}
 
 	public function hasAvatar()
 	{
-		return $this->picture_file_id !== null;
+		return $this->avatar_resource_image_id !== null;
 	}
 }
