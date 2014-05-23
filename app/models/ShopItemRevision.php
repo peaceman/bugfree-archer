@@ -95,7 +95,7 @@ class ShopItemRevision extends Eloquent
 
 	public function resourceImages()
 	{
-		return $this->belongsToMany('ResourceImages', 'shop_item_revision_images')
+		return $this->belongsToMany('ResourceImage', 'shop_item_revision_images')
 			->withPivot('image_type')
 			->withTimestamps();
 	}
