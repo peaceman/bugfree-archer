@@ -15,11 +15,9 @@ class CreateShopOrder extends AbstractBaseProcessor
 		$shopItem = $this->requireData($data, 'shop_item');
 		/** @var $buyer \User */
 		$buyer = $this->requireData($data, 'buyer');
-		/** @var $seller \User */
-		$seller = $shopItem->owner;
 
 		$this->ensureShopItemIsInABuyableState($shopItem);
-		$this->ensureBuyerIsNotSeller($shopItem, $buyer, $seller);
+		$this->ensureBuyerIsNotSeller($shopItem, $buyer);
 		$this->ensureBuyerHasNotAlreadyBoughtTheShopItem($shopItem, $buyer);
 
 		$shopOrder = new \ShopOrder;
@@ -43,9 +41,11 @@ class CreateShopOrder extends AbstractBaseProcessor
 		}
 	}
 
-	protected function ensureBuyerIsNotSeller(\ShopItem $shopItem, \User $buyer, \User $seller)
+	protected function ensureBuyerIsNotSeller(\ShopItem $shopItem, \User $buyer)
 	{
-		if ((int)$buyer->id === (int)$seller->id) {
+		if ($shopItem->isSeller($buyer)) {
+			$seller = $shopItem->owner;
+
 			$this->log->error('buyer is also seller of the shop item', [
 				'context' => [
 					'shop_item' => $shopItem->getAttributes(),

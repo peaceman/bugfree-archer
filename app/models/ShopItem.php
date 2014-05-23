@@ -184,4 +184,9 @@ class ShopItem extends Eloquent
 	{
 		return $this->state === static::STATE_ACTIVE;
 	}
+
+	public function isSeller(User $user)
+	{
+		return (int)$this->owner->id === (int)$user->id;
+	}
 }
