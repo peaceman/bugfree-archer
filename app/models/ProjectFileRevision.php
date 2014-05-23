@@ -53,20 +53,11 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 
 	public function generateStepData()
 	{
-		$archiveFileData = $this->archiveFile->toArray();
-		$archiveFileData['use_as'] = 'archive';
-
-		$sampleFileData = $this->sampleFile->toArray();
-		$sampleFileData['use_as'] = 'sample';
-
 		$stepData = [
 			'upload-file' => [
 				'state' => 'done',
 				'inputData' => [
-					'selectedFiles' => [
-						$archiveFileData,
-						$sampleFileData,
-					],
+					'selectedFiles' => $this->getFilesForStepData(),
 				],
 			],
 			'project-file' => [
@@ -118,6 +109,17 @@ class ProjectFileRevision extends Eloquent implements ProductRevisionInterface
 	public function getResourceFileTypes()
 	{
 		return ['sample', 'archive', 'listing-picture'];
+	}
+
+	protected function getFilesForStepData()
+	{
+		$files = $this->shopItemRevision->resourceFiles()
+			->get()
+			->map(function ($resourceFile) {
+				return array_merge($resourceFile->toArray(), ['use_as' => $resourceFile->pivot->file_type]);
+			});
+
+		return $files->toArray();
 	}
 
 	public function getFiles()
