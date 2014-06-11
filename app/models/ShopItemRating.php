@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class ShopItemRating extends Eloquent
 {
 	use \EDM\ModelTraits\UserTrackingSessionAware;
+	const MIN_RATING = 1;
+	const MAX_RATING = 5;
 
 	protected $table = 'shop_item_ratings';
 	protected $fillable = ['rating'];
